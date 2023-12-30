@@ -3,6 +3,10 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+
+# Exclude smoe temporary files
+**/script_block.txt
+
 # Exclude any "tmp/" folders
 tmp/
 
