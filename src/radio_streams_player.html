@@ -83,31 +83,7 @@
 
 <body>
 
-  <main>
-    <section>
-      <header>
-        <h1>NRK Radio</h1>
-        <h2>(high resolution streams - AAC)</h2>
-      </header>
-      <div id="playerContainerNO"></div>
-    </section>
-
-    <section>
-      <header>
-        <h1>SR Radio</h1>
-        <h2>(high resolution streams - AAC)</h2>
-      </header>
-      <div id="playerContainerSE"></div>
-    </section>
-
-    <section>
-      <header>
-        <h1>DR Radio</h1>
-        <h2>(high resolution streams - MP3)</h2>
-      </header>
-      <div id="playerContainerDK"></div>
-    </section>
-  </main>
+  <main id="radioSections"></main>
 
 
   <script>
@@ -140,29 +116,41 @@
 
     // NRK uses "Icecast Streaming Media Server"
     const streams = [
-      { title: "P1", group: "NO", url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h", type: "audio/aac" },
-      { title: "P1+", group: "NO", url: "http://lyd.nrk.no/nrk_radio_p1pluss_aac_h", type: "audio/aac" },
-      { title: "P13", group: "NO", url: "http://lyd.nrk.no/nrk_radio_p13_aac_h", type: "audio/aac" },
-      { title: "P2", group: "NO", url: "https://lyd.nrk.no/nrk_radio_p2_aac_h", type: "audio/aac" },
-      { title: "P3", group: "NO", url: "http://lyd.nrk.no/nrk_radio_p3_aac_h", type: "audio/aac" },
-      { title: "Jazz", group: "NO", url: "https://lyd.nrk.no/nrk_radio_jazz_aac_h", type: "audio/aac" },
-      { title: "Klassisk", group: "NO", url: "http://lyd.nrk.no/nrk_radio_klassisk_aac_h", type: "audio/aac" },
-      { title: "Folkemusikk", group: "NO", url: "https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h", type: "audio/aac" },
-      { title: "Alltid nyheter", group: "NO", url: "http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h", type: "audio/aac" },
-      { title: "mp3", group: "NO", url: "https://lyd.nrk.no/nrk_radio_mp3_aac_h", type: "audio/aac" },
-      { title: "Sport", group: "NO", url: "https://lyd.nrk.no/nrk_radio_sport_aac_h", type: "audio/aac" },
-
-      { title: "P1", group: "SE", url: "https://sverigesradio.se/topsy/direkt/132-hi-aac", type: "audio/aac" },
-      { title: "P2", group: "SE", url: "https://sverigesradio.se/topsy/direkt/2562-hi-aac", type: "audio/aac" },
-      { title: "P3", group: "SE", url: "https://sverigesradio.se/topsy/direkt/164-hi-aac", type: "audio/aac" },
-      { title: "P4 Värmland", group: "SE", url: "https://sverigesradio.se/topsy/direkt/204-hi-aac", type: "audio/aac" },
-      { title: "P4 Plus", group: "SE", url: "https://sverigesradio.se/topsy/direkt/4951-hi-aac", type: "audio/aac" },
-
-      { title: "P1", group: "DK", url: "http://live-icy.dr.dk/A/A03H.mp3", type: "audio/mpeg" },
-      { title: "P2", group: "DK", url: "http://live-icy.dr.dk/A/A04H.mp3", type: "audio/mpeg" },
-      { title: "P3", group: "DK", url: "http://live-icy.dr.dk/A/A05H.mp3", type: "audio/mpeg" },
-      { title: "P4 Kbh", group: "DK", url: "http://live-icy.dr.dk/A/A08H.mp3", type: "audio/mpeg" },
-
+      {
+        category: "NO",
+        streams: [
+          { title: "P1", url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h", type: "audio/aac" },
+          { title: "P1+", url: "http://lyd.nrk.no/nrk_radio_p1pluss_aac_h", type: "audio/aac" },
+          { title: "P13", url: "http://lyd.nrk.no/nrk_radio_p13_aac_h", type: "audio/aac" },
+          { title: "P2", url: "https://lyd.nrk.no/nrk_radio_p2_aac_h", type: "audio/aac" },
+          { title: "P3", url: "http://lyd.nrk.no/nrk_radio_p3_aac_h", type: "audio/aac" },
+          { title: "Jazz", url: "https://lyd.nrk.no/nrk_radio_jazz_aac_h", type: "audio/aac" },
+          { title: "Klassisk", url: "http://lyd.nrk.no/nrk_radio_klassisk_aac_h", type: "audio/aac" },
+          { title: "Folkemusikk", url: "https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h", type: "audio/aac" },
+          { title: "Alltid nyheter", url: "http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h", type: "audio/aac" },
+          { title: "mp3", url: "https://lyd.nrk.no/nrk_radio_mp3_aac_h", type: "audio/aac" },
+          { title: "Sport", url: "https://lyd.nrk.no/nrk_radio_sport_aac_h", type: "audio/aac" }
+        ]
+      },
+      {
+        category: "SE",
+        streams: [
+          { title: "P1", url: "https://sverigesradio.se/topsy/direkt/132-hi-aac", type: "audio/aac" },
+          { title: "P2", url: "https://sverigesradio.se/topsy/direkt/2562-hi-aac", type: "audio/aac" },
+          { title: "P3", url: "https://sverigesradio.se/topsy/direkt/164-hi-aac", type: "audio/aac" },
+          { title: "P4 Värmland", url: "https://sverigesradio.se/topsy/direkt/204-hi-aac", type: "audio/aac" },
+          { title: "P4 Plus", url: "https://sverigesradio.se/topsy/direkt/4951-hi-aac", type: "audio/aac" }
+        ]
+      },
+      {
+        category: "DK",
+        streams: [
+          { title: "P1", url: "http://live-icy.dr.dk/A/A03H.mp3", type: "audio/mpeg" },
+          { title: "P2", url: "http://live-icy.dr.dk/A/A04H.mp3", type: "audio/mpeg" },
+          { title: "P3", url: "http://live-icy.dr.dk/A/A05H.mp3", type: "audio/mpeg" },
+          { title: "P4 Kbh", url: "http://live-icy.dr.dk/A/A08H.mp3", type: "audio/mpeg" }
+        ]
+      }
     ];
 
     let currentAudio = null;
@@ -200,21 +188,40 @@
       }
     }
 
-    streams.forEach(stream => {
-      const audio = document.createElement("audio");
-      const source = document.createElement("source");
-      source.src = stream.url;
-      source.type = stream.type;
-      audio.appendChild(source);
-      audio.className = "player";
+    streams.forEach(category => {
+      const categoryContainer = document.createElement("section");
 
-      const button = document.createElement("button");
-      button.textContent = stream.title;
-      button.title = stream.url;  // tooltip text
-      button.addEventListener("click", () => handleButtonClick(button, audio, stream));
-      const playerContainer = document.getElementById(`playerContainer${stream.group}`);
-      playerContainer.appendChild(audio);
-      playerContainer.appendChild(button);
+      const categoryHeader = document.createElement("header");
+      const categoryTitle = document.createElement("h1");
+      categoryTitle.textContent = category.category + " Radio";
+      const categorySubtitle = document.createElement("h2");
+      categorySubtitle.textContent = "(high resolution streams - " + category.streams[0].type.split("/")[1].toUpperCase() + ")";
+      categoryHeader.appendChild(categoryTitle);
+      categoryHeader.appendChild(categorySubtitle);
+      categoryContainer.appendChild(categoryHeader);
+
+      const playerContainer = document.createElement("div");
+      playerContainer.id = "playerContainer" + category.category.toUpperCase();
+      categoryContainer.appendChild(playerContainer);
+
+      const radioSections = document.getElementById("radioSections");
+      radioSections.appendChild(categoryContainer);
+
+      category.streams.forEach(stream => {
+        const audio = document.createElement("audio");
+        const source = document.createElement("source");
+        source.src = stream.url;
+        source.type = stream.type;
+        audio.appendChild(source);
+        audio.className = "player";
+
+        const button = document.createElement("button");
+        button.textContent = stream.title;
+        button.title = stream.url;  // tooltip text
+        button.addEventListener("click", () => handleButtonClick(button, audio, stream));
+        playerContainer.appendChild(audio);
+        playerContainer.appendChild(button);
+      });
     });
 
   </script>

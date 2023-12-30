@@ -24,6 +24,10 @@ The static HTML file will open as a "minmal" web app on your local machine.
 2. Edit the "streams" JSON in the "script" section of the HTML page to add your preferred radio stations / streams.
 3. Open  <https://yourdomain/radio_streams_player.html> in your browser.
 
+## HOW TO: Scrape the loaded web page, to get the Javascript-generated HTML
+
+* See [HOW TO: Scrape the loaded web page](scraped_html__from_loaded_web_page/README.md)
+
 ### Contribution guidelines
 
 * Writing tests (TBD)
