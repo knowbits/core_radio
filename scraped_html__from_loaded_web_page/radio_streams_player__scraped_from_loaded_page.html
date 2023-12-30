@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>NRK Radio - High Resolution Streams</title>
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-
   <style>
+    /* Choose among Roboto fonts:
+     *    https://fonts.google.com/specimen/Roboto
+     *
+     * Use the "Light 300" Roboto font:
+     */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
     :root {
       /* Some HTML colours here:
        * https://html-color.codes/color-chart
@@ -34,6 +40,156 @@
       border-color: var(--button-border-colour-active);
     }
 
+    /* ==== START: Meyer's CSS Reset ================================ */
+
+    /* "Meyer's CSS Reset"
+    *
+     * A CSS reset scheme is a set of CSS rules that resets the styling of all HTML elements to a consistent baseline.
+     * This means that, instead of having to deal with different default styles in different browsers,
+     * you can start with a clean slate and build your own styles from there.
+     *
+     A CSS reset can help ensure that elements like button, h1, h2, body, main, section, etc., look the same across all browsers.
+     * This can make it easier to style these elements to match your desired layout and design.
+     *
+     * "Meyer's CSS Reset" is a popular CSS reset scheme created by Eric Meyer.:
+     * http://meyerweb.com/eric/tools/css/reset/
+     *   v2.0 | 20110126
+     *   License: none (public domain)
+     */
+
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td,
+    article,
+    aside,
+    canvas,
+    details,
+    embed,
+    figure,
+    figcaption,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    output,
+    ruby,
+    section,
+    summary,
+    time,
+    mark,
+    audio,
+    video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+
+    /* HTML5 display-role reset for older browsers */
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    section {
+      display: block;
+    }
+
+    body {
+      line-height: 1;
+    }
+
+    ol,
+    ul {
+      list-style: none;
+    }
+
+    blockquote,
+    q {
+      quotes: none;
+    }
+
+    blockquote:before,
+    blockquote:after,
+    q:before,
+    q:after {
+      content: '';
+      content: none;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /* ==== END: Meyer's CSS Reset ================================ */
+
     * {
       /* Set colour of all text: */
       color: var(--text-colour);
@@ -41,29 +197,33 @@
 
     body {
       font-family: 'Roboto', sans-serif;
-      margin: 0;
       padding: 20px;
       background-color: var(--background-colour);
     }
 
-    header {
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+    }
+
+    section header {
       display: flex;
       align-items: baseline;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
 
     h1 {
+      font-weight: lighter;
       font-size: 2em;
-      font-weight: 100;
+      /* line-height: 1.5; */
       margin-right: 10px;
     }
 
+
     h2 {
       font-size: 0.7em;
-      font-weight: 100;
-    }
-
-    .player {
-      margin-bottom: 20px;
     }
 
     button {
@@ -80,38 +240,78 @@
 </head>
 
 <body>
-
-  <main>
+  <main id="radioSections">
     <section>
       <header>
-        <h1>NRK Radio</h1>
-        <h2>(high resolution streams - AAC)</h2>
+        <h1>NRK radio</h1>
       </header>
-      <div id="playerContainerNO"><audio class="player"><source src="http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h" type="audio/aac"></audio><button title="http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h">P1</button><audio class="player"><source src="http://lyd.nrk.no/nrk_radio_p1pluss_aac_h" type="audio/aac"></audio><button title="http://lyd.nrk.no/nrk_radio_p1pluss_aac_h">P1+</button><audio class="player"><source src="http://lyd.nrk.no/nrk_radio_p13_aac_h" type="audio/aac"></audio><button title="http://lyd.nrk.no/nrk_radio_p13_aac_h">P13</button><audio class="player"><source src="https://lyd.nrk.no/nrk_radio_p2_aac_h" type="audio/aac"></audio><button title="https://lyd.nrk.no/nrk_radio_p2_aac_h">P2</button><audio class="player"><source src="http://lyd.nrk.no/nrk_radio_p3_aac_h" type="audio/aac"></audio><button title="http://lyd.nrk.no/nrk_radio_p3_aac_h">P3</button><audio class="player"><source src="https://lyd.nrk.no/nrk_radio_jazz_aac_h" type="audio/aac"></audio><button title="https://lyd.nrk.no/nrk_radio_jazz_aac_h">Jazz</button><audio class="player"><source src="http://lyd.nrk.no/nrk_radio_klassisk_aac_h" type="audio/aac"></audio><button title="http://lyd.nrk.no/nrk_radio_klassisk_aac_h">Klassisk</button><audio class="player"><source src="https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h" type="audio/aac"></audio><button title="https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h">Folkemusikk</button><audio class="player"><source src="http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h" type="audio/aac"></audio><button title="http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h">Alltid nyheter</button><audio class="player"><source src="https://lyd.nrk.no/nrk_radio_mp3_aac_h" type="audio/aac"></audio><button title="https://lyd.nrk.no/nrk_radio_mp3_aac_h">mp3</button><audio class="player"><source src="https://lyd.nrk.no/nrk_radio_sport_aac_h" type="audio/aac"></audio><button title="https://lyd.nrk.no/nrk_radio_sport_aac_h">Sport</button></div>
+      <div id="playerContainerNO">
+        <audio class="player">
+          <source src="http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h" type="audio/aac">
+        </audio><button title="http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h">P1</button><audio class="player">
+          <source src="http://lyd.nrk.no/nrk_radio_p1pluss_aac_h" type="audio/aac">
+        </audio><button title="http://lyd.nrk.no/nrk_radio_p1pluss_aac_h">P1+</button><audio class="player">
+          <source src="http://lyd.nrk.no/nrk_radio_p13_aac_h" type="audio/aac">
+        </audio><button title="http://lyd.nrk.no/nrk_radio_p13_aac_h">P13</button><audio class="player">
+          <source src="https://lyd.nrk.no/nrk_radio_p2_aac_h" type="audio/aac">
+        </audio><button title="https://lyd.nrk.no/nrk_radio_p2_aac_h">P2</button><audio class="player">
+          <source src="http://lyd.nrk.no/nrk_radio_p3_aac_h" type="audio/aac">
+        </audio><button title="http://lyd.nrk.no/nrk_radio_p3_aac_h">P3</button><audio class="player">
+          <source src="https://lyd.nrk.no/nrk_radio_jazz_aac_h" type="audio/aac">
+        </audio><button title="https://lyd.nrk.no/nrk_radio_jazz_aac_h">Jazz</button><audio class="player">
+          <source src="http://lyd.nrk.no/nrk_radio_klassisk_aac_h" type="audio/aac">
+        </audio><button title="http://lyd.nrk.no/nrk_radio_klassisk_aac_h">Klassisk</button><audio class="player">
+          <source src="https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h" type="audio/aac">
+        </audio><button title="https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h">Folkemusikk</button><audio
+          class="player">
+          <source src="http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h" type="audio/aac">
+        </audio><button title="http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h">Alltid nyheter</button><audio
+          class="player">
+          <source src="https://lyd.nrk.no/nrk_radio_mp3_aac_h" type="audio/aac">
+        </audio><button title="https://lyd.nrk.no/nrk_radio_mp3_aac_h">mp3</button><audio class="player">
+          <source src="https://lyd.nrk.no/nrk_radio_sport_aac_h" type="audio/aac">
+        </audio><button title="https://lyd.nrk.no/nrk_radio_sport_aac_h">Sport</button>
+      </div>
     </section>
-
     <section>
       <header>
-        <h1>SR Radio</h1>
-        <h2>(high resolution streams - AAC)</h2>
+        <h1>SR radio</h1>
       </header>
-      <div id="playerContainerSE"><audio class="player"><source src="https://sverigesradio.se/topsy/direkt/132-hi-aac" type="audio/aac"></audio><button title="https://sverigesradio.se/topsy/direkt/132-hi-aac">P1</button><audio class="player"><source src="https://sverigesradio.se/topsy/direkt/2562-hi-aac" type="audio/aac"></audio><button title="https://sverigesradio.se/topsy/direkt/2562-hi-aac">P2</button><audio class="player"><source src="https://sverigesradio.se/topsy/direkt/164-hi-aac" type="audio/aac"></audio><button title="https://sverigesradio.se/topsy/direkt/164-hi-aac">P3</button><audio class="player"><source src="https://sverigesradio.se/topsy/direkt/204-hi-aac" type="audio/aac"></audio><button title="https://sverigesradio.se/topsy/direkt/204-hi-aac">P4 Värmland</button><audio class="player"><source src="https://sverigesradio.se/topsy/direkt/4951-hi-aac" type="audio/aac"></audio><button title="https://sverigesradio.se/topsy/direkt/4951-hi-aac">P4 Plus</button></div>
+      <div id="playerContainerSE">
+        <audio class="player">
+          <source src="https://sverigesradio.se/topsy/direkt/132-hi-aac" type="audio/aac">
+        </audio><button title="https://sverigesradio.se/topsy/direkt/132-hi-aac">P1</button><audio class="player">
+          <source src="https://sverigesradio.se/topsy/direkt/2562-hi-aac" type="audio/aac">
+        </audio><button title="https://sverigesradio.se/topsy/direkt/2562-hi-aac">P2</button><audio class="player">
+          <source src="https://sverigesradio.se/topsy/direkt/164-hi-aac" type="audio/aac">
+        </audio><button title="https://sverigesradio.se/topsy/direkt/164-hi-aac">P3</button><audio class="player">
+          <source src="https://sverigesradio.se/topsy/direkt/204-hi-aac" type="audio/aac">
+        </audio><button title="https://sverigesradio.se/topsy/direkt/204-hi-aac">P4 Värmland</button><audio
+          class="player">
+          <source src="https://sverigesradio.se/topsy/direkt/4951-hi-aac" type="audio/aac">
+        </audio><button title="https://sverigesradio.se/topsy/direkt/4951-hi-aac">P4 Plus</button>
+      </div>
     </section>
-
     <section>
       <header>
-        <h1>DR Radio</h1>
-        <h2>(high resolution streams - MP3)</h2>
+        <h1>DK radio</h1>
       </header>
-      <div id="playerContainerDK"><audio class="player"><source src="http://live-icy.dr.dk/A/A03H.mp3" type="audio/mpeg"></audio><button title="http://live-icy.dr.dk/A/A03H.mp3">P1</button><audio class="player"><source src="http://live-icy.dr.dk/A/A04H.mp3" type="audio/mpeg"></audio><button title="http://live-icy.dr.dk/A/A04H.mp3">P2</button><audio class="player"><source src="http://live-icy.dr.dk/A/A05H.mp3" type="audio/mpeg"></audio><button title="http://live-icy.dr.dk/A/A05H.mp3">P3</button><audio class="player"><source src="http://live-icy.dr.dk/A/A08H.mp3" type="audio/mpeg"></audio><button title="http://live-icy.dr.dk/A/A08H.mp3">P4 Kbh</button></div>
+      <div id="playerContainerDK">
+        <audio class="player">
+          <source src="http://live-icy.dr.dk/A/A03H.mp3" type="audio/mpeg">
+        </audio><button title="http://live-icy.dr.dk/A/A03H.mp3">P1</button><audio class="player">
+          <source src="http://live-icy.dr.dk/A/A04H.mp3" type="audio/mpeg">
+        </audio><button title="http://live-icy.dr.dk/A/A04H.mp3">P2</button><audio class="player">
+          <source src="http://live-icy.dr.dk/A/A05H.mp3" type="audio/mpeg">
+        </audio><button title="http://live-icy.dr.dk/A/A05H.mp3">P3</button><audio class="player">
+          <source src="http://live-icy.dr.dk/A/A08H.mp3" type="audio/mpeg">
+        </audio><button title="http://live-icy.dr.dk/A/A08H.mp3">P4 Kbh</button>
+      </div>
     </section>
   </main>
-
-
   <script>
 
-
-    // NRK uses "Icecast Streaming Media Server"
+    /* for loop removed by the "web scraping" shell script */
 
     let currentAudio = null;
     let currentButton = null;
@@ -148,28 +348,26 @@
       }
     }
 
+    // Get all buttons
+    const buttons = document.getElementsByTagName('button');
 
-      // Get all buttons
-      const buttons = document.getElementsByTagName('button');
+    // Loop through buttons and add event listener
+    for (let i = 0; i < buttons.length; i++) {
+      const audio = buttons[i].previousElementSibling;
+      const url = buttons[i].getAttribute("title");
 
-      // Loop through buttons and add event listener
-      for (let i = 0; i < buttons.length; i++) {
-        const audio = buttons[i].previousElementSibling;
-        const url = buttons[i].getAttribute("title");
-
-        // Check if the URL is not undefined or empty
-        if (url) {
-          buttons[i].addEventListener("click", function () {
-            handleButtonClick(this, audio, url);
-          });
-        } else {
-          console.error(`Button ${i} does not have a valid URL`);
-        }
+      // Check if the URL is not undefined or empty
+      if (url) {
+        buttons[i].addEventListener("click", function () {
+          handleButtonClick(this, audio, url);
+        });
+      } else {
+        console.error(`Button ${i} does not have a valid URL`);
       }
+    }
+
 
   </script>
+</body>
 
-
-
-
-</body></html>
+</html>

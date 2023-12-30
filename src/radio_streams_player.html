@@ -244,38 +244,37 @@
 
   <main id="radioSections"></main>
 
-
   <script>
 
-    /* START:
-      Audio formats supported by html5 "audio" element:
-
-        MP3: MPEG Audio Layer III (MP3) is a widely supported audio format.
-
-        WAV: Waveform Audio File Format (WAV) is an audio format developed by Microsoft and IBM.
-
-        Ogg: Ogg is a free, open container format maintained by the Xiph.Org Foundation.
-              The creators of the Ogg format state that it is unrestricted by software patents
-              and is designed to provide efficient streaming and manipulation of high-quality digital multimedia.
-
-        AAC: Advanced Audio Coding (AAC) is an audio coding standard for lossy digital audio compression. It is supported by Chrome.
-
-        FLAC: Free Lossless Audio Codec. Supported by:
-
-      NOTE: Supported by all modern browsers: MP3, WAV.
-
-      MIME types for the audio formats:
-
-        MP3:  audio/mpeg
-        WAV:  audio/wav
-        Ogg:  audio/ogg
-        AAC:  audio/aac (or audio/mp4 ?)
-        FLAC: audio/flac
-    END: */
-
-    // NRK uses "Icecast Streaming Media Server"
+    /* SECTION_TO_REMOVE_1__START */  // Used by our "web scraping" shell script
+    /*
+     * Audio formats supported by html5 "audio" element:
+     *
+     *   MP3: MPEG Audio Layer III (MP3) is a widely supported audio format.
+     *
+     *   WAV: Waveform Audio File Format (WAV) is an audio format developed by Microsoft and IBM.
+     *
+     *   Ogg: Ogg is a free, open container format maintained by the Xiph.Org Foundation.
+     *        The creators of the Ogg format state that it is unrestricted by software patents
+     *        and is designed to provide efficient streaming and manipulation of high-quality digital multimedia.
+     *
+     *   AAC: Advanced Audio Coding (AAC) is an audio coding standard for lossy digital audio compression. It is supported by Chrome.
+     *
+     *   FLAC: Free Lossless Audio Codec. Supported by:
+     *
+     * NOTE: Supported by all modern browsers: MP3, WAV.
+     *
+     * MIME types for the audio formats:
+     *
+     *   MP3:  audio/mpeg
+     *   WAV:  audio/wav
+     *   Ogg:  audio/ogg
+     *   AAC:  audio/aac (or audio/mp4 ?)
+     *   FLAC: audio/flac
+     */
     const streams = [
       {
+        // NOTE: NRK uses "Icecast Streaming Media Server"
         category: "NO",
         categoryTitle: "NRK radio",
         streams: [
@@ -314,6 +313,7 @@
         ]
       }
     ];
+    /* SECTION_TO_REMOVE_1__END */
 
     let currentAudio = null;
     let currentButton = null;
@@ -350,6 +350,7 @@
       }
     }
 
+    /* SECTION_TO_REMOVE_2__START */  // Used by our "web scraping" shell script
     streams.forEach(category => {
       const categoryContainer = document.createElement("section");
 
@@ -385,6 +386,7 @@
         playerContainer.appendChild(button);
       });
     });
+    /* SECTION_TO_REMOVE_2__END */
 
   </script>
 
