@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>NRK Radio - High Resolution Streams</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+  <style>
+    :root {
+      /* Some HTML colours here:
+       * https://html-color.codes/color-chart
+       */
+      --button-colour-stopped: none;
+      --button-colour-playing: none;
+      --button-border-colour-inactive: #ECF0F1;
+      /* Bright Gray */
+      /* Bright Gray */
+      --button-border-colour-active: Coral;
+      --background-colour: #262626;
+      --text-colour: #ECF0F1;
+      /* Bright Gray */
+    }
+
+    * {
+      /* Set colour of all text: */
+      color: var(--text-colour);
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+
+      margin: 0;
+      padding: 20px;
+      background-color: var(--background-colour);
+    }
+
+    header {
+      display: flex;
+      align-items: baseline;
+    }
+
+    h1 {
+      font-size: 2em;
+      font-weight: 100;
+      margin-right: 10px;
+    }
+
+    h2 {
+      font-size: 0.7em;
+      font-weight: 100;
+    }
+
+    .player {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: 2px solid var(--button-border-colour-inactive);
+      border-radius: 10px;
+      background-color: var(--button-colour-stopped);
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button.active {
+      border: 2px solid var(--button-border-colour-active);
+      background-color: var(--button-colour-playing);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>NRK Radio</h1>
+    <h2>(high resolution streams - AAC)</h2>
+  </header>
+  <main></main>
+  <p id="playerContainerNO"><audio class="player">
+      <source src="http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h" type="audio/aac">
+    </audio><button title="http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h">P1</button><audio class="player">
+      <source src="http://lyd.nrk.no/nrk_radio_p1pluss_aac_h" type="audio/aac">
+    </audio><button title="http://lyd.nrk.no/nrk_radio_p1pluss_aac_h">P1+</button><audio class="player">
+      <source src="http://lyd.nrk.no/nrk_radio_p13_aac_h" type="audio/aac">
+    </audio><button title="http://lyd.nrk.no/nrk_radio_p13_aac_h">P13</button><audio class="player">
+      <source src="https://lyd.nrk.no/nrk_radio_p2_aac_h" type="audio/aac">
+    </audio><button title="https://lyd.nrk.no/nrk_radio_p2_aac_h">P2</button><audio class="player">
+      <source src="http://lyd.nrk.no/nrk_radio_p3_aac_h" type="audio/aac">
+    </audio><button title="http://lyd.nrk.no/nrk_radio_p3_aac_h">P3</button><audio class="player">
+      <source src="https://lyd.nrk.no/nrk_radio_jazz_aac_h" type="audio/aac">
+    </audio><button title="https://lyd.nrk.no/nrk_radio_jazz_aac_h">Jazz</button><audio class="player">
+      <source src="http://lyd.nrk.no/nrk_radio_klassisk_aac_h" type="audio/aac">
+    </audio><button title="http://lyd.nrk.no/nrk_radio_klassisk_aac_h">Klassisk</button><audio class="player">
+      <source src="https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h" type="audio/aac">
+    </audio><button title="https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h">Folkemusikk</button><audio class="player">
+      <source src="http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h" type="audio/aac">
+    </audio><button title="http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h">Alltid nyheter</button><audio
+      class="player">
+      <source src="https://lyd.nrk.no/nrk_radio_mp3_aac_h" type="audio/aac">
+    </audio><button title="https://lyd.nrk.no/nrk_radio_mp3_aac_h">mp3</button><audio class="player">
+      <source src="https://lyd.nrk.no/nrk_radio_sport_aac_h" type="audio/aac">
+    </audio><button title="https://lyd.nrk.no/nrk_radio_sport_aac_h">Sport</button></p>
+
+  <header>
+    <h1>SR Radio</h1>
+    <h2>(high resolution streams - AAC)</h2>
+  </header>
+  <p id="playerContainerSE"><audio class="player">
+      <source src="https://sverigesradio.se/topsy/direkt/132-hi-aac" type="audio/aac">
+    </audio><button title="https://sverigesradio.se/topsy/direkt/132-hi-aac">P1</button><audio class="player">
+      <source src="https://sverigesradio.se/topsy/direkt/2562-hi-aac" type="audio/aac">
+    </audio><button title="https://sverigesradio.se/topsy/direkt/2562-hi-aac">P2</button><audio class="player">
+      <source src="https://sverigesradio.se/topsy/direkt/164-hi-aac" type="audio/aac">
+    </audio><button title="https://sverigesradio.se/topsy/direkt/164-hi-aac">P3</button><audio class="player">
+      <source src="https://sverigesradio.se/topsy/direkt/204-hi-aac" type="audio/aac">
+    </audio><button title="https://sverigesradio.se/topsy/direkt/204-hi-aac">P4 Värmland</button><audio class="player">
+      <source src="https://sverigesradio.se/topsy/direkt/4951-hi-aac" type="audio/aac">
+    </audio><button title="https://sverigesradio.se/topsy/direkt/4951-hi-aac">P4 Plus</button></p>
+
+  <header>
+    <h1>DK Radio</h1>
+    <h2>(high resolution streams - MP3)</h2>
+  </header>
+  <p id="playerContainerDK">
+    <audio class="player">
+      <source src="http://live-icy.dr.dk/A/A03H.mp3" type="audio/mpeg">
+    </audio>
+    <button title="http://live-icy.dr.dk/A/A03H.mp3">P1</button>
+    <audio class="player">
+      <source src="http://live-icy.dr.dk/A/A04H.mp3" type="audio/mpeg">
+    </audio><button title="http://live-icy.dr.dk/A/A04H.mp3">P2</button>
+    <audio class="player">
+      <source src="http://live-icy.dr.dk/A/A05H.mp3" type="audio/mpeg">
+    </audio>
+    <button title="http://live-icy.dr.dk/A/A05H.mp3">P3</button>
+    <audio class="player">
+      <source src="http://live-icy.dr.dk/A/A08H.mp3" type="audio/mpeg">
+    </audio>
+    <button title="http://live-icy.dr.dk/A/A08H.mp3">P4 Kbh</button>
+  </p>
+
+  <script>
+
+    let currentAudio = null;
+    let currentButton = null;
+
+    function handleButtonClick(button, audio, stream) {
+      if (currentAudio && currentAudio !== audio) {
+        currentAudio.pause();
+        currentButton.style.backgroundColor = "var(--button-colour-stopped)";
+        currentButton.classList.remove("active");
+      }
+
+      if (audio.paused) {
+        /* The HTML5 "audio" element automatically buffers audio.
+         * To ensure that the playing stream is always live
+         * => force a reload of the audio element
+         *    when the play button is pressed:
+         */
+        audio.load();
+        audio.play();
+        button.style.backgroundColor = "var(--button-colour-playing)";
+        button.classList.add("active");
+        currentAudio = audio;
+        currentButton = button;
+      } else {
+        audio.pause();
+        button.style.backgroundColor = "var(--button-colour-stopped)";
+        button.classList.remove("active");
+        // Reset the source to start the stream from "live" when played again
+        audio.src = stream;
+        audio.load();
+        currentAudio = null;
+        currentButton = null;
+      }
+    }
+
+// Get all buttons
+var buttons = document.getElementsByTagName('button');
+
+// Loop through buttons and add event listener
+for (var i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener("click", function () {
+    let audio = this.previousElementSibling; // Define the audio element inside the callback
+    handleButtonClick(this, audio, this.getAttribute("title"));
+  });
+}
+
+  </script>
+
+</body>
+
+</html>

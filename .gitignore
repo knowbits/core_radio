@@ -6,6 +6,9 @@
 # Exclude any "tmp/" folders
 tmp/
 
+# Exclude any ".log" files
+**/*.log
+
 # Node artifact files
 node_modules/
 dist/
