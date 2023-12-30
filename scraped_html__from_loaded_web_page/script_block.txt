@@ -1,0 +1,17 @@
+      // Get all buttons
+      const buttons = document.getElementsByTagName('button');
+
+      // Loop through buttons and add event listener
+      for (let i = 0; i < buttons.length; i++) {
+        const audio = buttons[i].previousElementSibling;
+        const url = buttons[i].getAttribute("title");
+
+        // Check if the URL is not undefined or empty
+        if (url) {
+          buttons[i].addEventListener("click", function () {
+            handleButtonClick(this, audio, url);
+          });
+        } else {
+          console.error(`Button ${i} does not have a valid URL`);
+        }
+      }
