@@ -7,9 +7,14 @@
 
   <title>NRK Radio - High Resolution Streams</title>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-
   <style>
+    /* Choose among Roboto fonts:
+     *    https://fonts.google.com/specimen/Roboto
+     *
+     * Use the "Light 300" Roboto font:
+     */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
     :root {
       /* Some HTML colours here:
        * https://html-color.codes/color-chart
@@ -37,6 +42,7 @@
     }
 
     * {
+      margin: 0;
       /* Set colour of all text: */
       color: var(--text-colour);
     }
@@ -48,24 +54,29 @@
       background-color: var(--background-colour);
     }
 
-    header {
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+    }
+
+    section header {
       display: flex;
       align-items: baseline;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
 
     h1 {
+      font-weight: lighter;
       font-size: 2em;
-      font-weight: 100;
+      /* line-height: 1.5; */
       margin-right: 10px;
     }
 
+
     h2 {
       font-size: 0.7em;
-      font-weight: 100;
-    }
-
-    .player {
-      margin-bottom: 20px;
     }
 
     button {
@@ -118,6 +129,7 @@
     const streams = [
       {
         category: "NO",
+        categoryTitle: "NRK radio",
         streams: [
           { title: "P1", url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h", type: "audio/aac" },
           { title: "P1+", url: "http://lyd.nrk.no/nrk_radio_p1pluss_aac_h", type: "audio/aac" },
@@ -134,6 +146,7 @@
       },
       {
         category: "SE",
+        categoryTitle: "SR radio",
         streams: [
           { title: "P1", url: "https://sverigesradio.se/topsy/direkt/132-hi-aac", type: "audio/aac" },
           { title: "P2", url: "https://sverigesradio.se/topsy/direkt/2562-hi-aac", type: "audio/aac" },
@@ -144,6 +157,7 @@
       },
       {
         category: "DK",
+        categoryTitle: "DK radio",
         streams: [
           { title: "P1", url: "http://live-icy.dr.dk/A/A03H.mp3", type: "audio/mpeg" },
           { title: "P2", url: "http://live-icy.dr.dk/A/A04H.mp3", type: "audio/mpeg" },
@@ -193,11 +207,11 @@
 
       const categoryHeader = document.createElement("header");
       const categoryTitle = document.createElement("h1");
-      categoryTitle.textContent = category.category + " Radio";
-      const categorySubtitle = document.createElement("h2");
-      categorySubtitle.textContent = "(high resolution streams - " + category.streams[0].type.split("/")[1].toUpperCase() + ")";
+      categoryTitle.textContent = category.categoryTitle;
+      // const categorySubtitle = document.createElement("h2");
+      // categorySubtitle.textContent = "(high resolution streams - " + category.streams[0].type.split("/")[1].toUpperCase() + ")";
       categoryHeader.appendChild(categoryTitle);
-      categoryHeader.appendChild(categorySubtitle);
+      // categoryHeader.appendChild(categorySubtitle);
       categoryContainer.appendChild(categoryHeader);
 
       const playerContainer = document.createElement("div");

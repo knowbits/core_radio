@@ -1,5 +1,7 @@
 # How to get the Javascript-generated HTML (innerHTML) of the loaded page using "Chromium"
 
+// TODO: GO THROUGH EVERYTHING: IT IS PROBABLY OUTDATED NOW...
+
 NOTE: Chromium is maintained by Ubuntu
 
 ## Run this command to scrape the
