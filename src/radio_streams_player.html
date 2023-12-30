@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NRK Radio - High Resolution Streams</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+  <style>
+    :root {
+      /* Some HTML colours here:
+       * https://html-color.codes/color-chart
+       */
+      --button-colour-stopped: none;
+      --button-colour-playing: none;
+      --button-border-colour-inactive: #ECF0F1;
+      /* Bright Gray */
+      /* Bright Gray */
+      --button-border-colour-active: Coral;
+      --background-colour: #262626;
+      --text-colour: #ECF0F1;
+      /* Bright Gray */
+    }
+
+    /* Add new CSS classes for button states */
+    .button-stopped {
+      background-color: var(--button-colour-stopped);
+      border-color: var(--button-border-colour-inactive);
+    }
+
+    .button-playing {
+      background-color: var(--button-colour-playing);
+      border-color: var(--button-border-colour-active);
+    }
+
+    * {
+      /* Set colour of all text: */
+      color: var(--text-colour);
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--background-colour);
+    }
+
+    header {
+      display: flex;
+      align-items: baseline;
+    }
+
+    h1 {
+      font-size: 2em;
+      font-weight: 100;
+      margin-right: 10px;
+    }
+
+    h2 {
+      font-size: 0.7em;
+      font-weight: 100;
+    }
+
+    .player {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: 2px solid var(--button-border-colour-inactive);
+      border-radius: 10px;
+      background-color: var(--button-colour-stopped);
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+    <section>
+      <header>
+        <h1>NRK Radio</h1>
+        <h2>(high resolution streams - AAC)</h2>
+      </header>
+      <div id="playerContainerNO"></div>
+    </section>
+
+    <section>
+      <header>
+        <h1>SR Radio</h1>
+        <h2>(high resolution streams - AAC)</h2>
+      </header>
+      <div id="playerContainerSE"></div>
+    </section>
+
+    <section>
+      <header>
+        <h1>DR Radio</h1>
+        <h2>(high resolution streams - MP3)</h2>
+      </header>
+      <div id="playerContainerDK"></div>
+    </section>
+  </main>
+
+
+  <script>
+
+    /*
+      Audio formats supported by html5 "audio" element:
+
+        MP3: MPEG Audio Layer III (MP3) is a widely supported audio format.
+
+        WAV: Waveform Audio File Format (WAV) is an audio format
+developed by Microsoft and IBM.
+
+        Ogg: Ogg is a free, open container format maintained by the
+Xiph.Org Foundation. The creators of the Ogg format state that it is
+unrestricted by software patents and is designed to provide efficient
+streaming and manipulation of high-quality digital multimedia.
+
+        AAC: Advanced Audio Coding (AAC) is an audio coding standard
+for lossy digital audio compression. It is supported by Chrome.
+
+        FLAC: Free Lossless Audio Codec. Supported by:
+
+      NOTE: Supported by all modern browsers: MP3, WAV.
+
+      MIME types for the audio formats:
+
+        MP3:  audio/mpeg
+        WAV:  audio/wav
+        Ogg:  audio/ogg
+        AAC:  audio/aac (or audio/mp4 ?)
+        FLAC: audio/flac
+    */
+
+    // NRK uses "Icecast Streaming Media Server"
+    const streams = [
+      { title: "P1", group: "NO", url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h", type: "audio/aac" },
+      { title: "P1+", group: "NO", url: "http://lyd.nrk.no/nrk_radio_p1pluss_aac_h", type: "audio/aac" },
+      { title: "P13", group: "NO", url: "http://lyd.nrk.no/nrk_radio_p13_aac_h", type: "audio/aac" },
+      { title: "P2", group: "NO", url: "https://lyd.nrk.no/nrk_radio_p2_aac_h", type: "audio/aac" },
+      { title: "P3", group: "NO", url: "http://lyd.nrk.no/nrk_radio_p3_aac_h", type: "audio/aac" },
+      { title: "Jazz", group: "NO", url: "https://lyd.nrk.no/nrk_radio_jazz_aac_h", type: "audio/aac" },
+      { title: "Klassisk", group: "NO", url: "http://lyd.nrk.no/nrk_radio_klassisk_aac_h", type: "audio/aac" },
+      { title: "Folkemusikk", group: "NO", url: "https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h", type: "audio/aac" },
+      { title: "Alltid nyheter", group: "NO", url: "http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h", type: "audio/aac" },
+      { title: "mp3", group: "NO", url: "https://lyd.nrk.no/nrk_radio_mp3_aac_h", type: "audio/aac" },
+      { title: "Sport", group: "NO", url: "https://lyd.nrk.no/nrk_radio_sport_aac_h", type: "audio/aac" },
+
+      { title: "P1", group: "SE", url: "https://sverigesradio.se/topsy/direkt/132-hi-aac", type: "audio/aac" },
+      { title: "P2", group: "SE", url: "https://sverigesradio.se/topsy/direkt/2562-hi-aac", type: "audio/aac" },
+      { title: "P3", group: "SE", url: "https://sverigesradio.se/topsy/direkt/164-hi-aac", type: "audio/aac" },
+      { title: "P4 Värmland", group: "SE", url: "https://sverigesradio.se/topsy/direkt/204-hi-aac", type: "audio/aac" },
+      { title: "P4 Plus", group: "SE", url: "https://sverigesradio.se/topsy/direkt/4951-hi-aac", type: "audio/aac" },
+
+      { title: "P1", group: "DK", url: "http://live-icy.dr.dk/A/A03H.mp3", type: "audio/mpeg" },
+      { title: "P2", group: "DK", url: "http://live-icy.dr.dk/A/A04H.mp3", type: "audio/mpeg" },
+      { title: "P3", group: "DK", url: "http://live-icy.dr.dk/A/A05H.mp3", type: "audio/mpeg" },
+      { title: "P4 Kbh", group: "DK", url: "http://live-icy.dr.dk/A/A08H.mp3", type: "audio/mpeg" },
+
+    ];
+
+    let currentAudio = null;
+    let currentButton = null;
+
+    const handleButtonClick = (button, audio, stream) => {
+      if (currentAudio && currentAudio !== audio) {
+        currentAudio.pause();
+        currentButton.classList.remove("button-playing");
+        currentButton.classList.add("button-stopped");
+      }
+
+      if (audio.paused) {
+        /* The HTML5 "audio" element automatically buffers audio.
+         * To ensure that the playing stream is always live
+         * => force a reload of the audio element
+         *    when the play button is pressed:
+         */
+        audio.load();
+        audio.play();
+        button.classList.remove("button-stopped");
+        button.classList.add("button-playing");
+        currentAudio = audio;
+        currentButton = button;
+      } else {
+        audio.pause();
+        button.classList.remove("button-playing");
+        button.classList.add("button-stopped");
+        audio.src = stream.url;
+        audio.load();
+        if (currentButton === button) {
+          currentAudio = null;
+          currentButton = null;
+        }
+      }
+    }
+
+    streams.forEach(stream => {
+      const audio = document.createElement("audio");
+      const source = document.createElement("source");
+      source.src = stream.url;
+      source.type = stream.type;
+      audio.appendChild(source);
+      audio.className = "player";
+
+      const button = document.createElement("button");
+      button.textContent = stream.title;
+      button.title = stream.url;  // tooltip text
+      button.addEventListener("click", () => handleButtonClick(button, audio, stream));
+      const playerContainer = document.getElementById(`playerContainer${stream.group}`);
+      playerContainer.appendChild(audio);
+      playerContainer.appendChild(button);
+    });
+
+  </script>
+
+</body>
+
+</html>
