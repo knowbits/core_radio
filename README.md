@@ -8,6 +8,39 @@ Here is how it looks on my desktop:
 
 ![Radio Streams Player](./docs/Streaming_Radio_Player_as_minmal_web_app.png)
 
+## Curated list of radio stations (streaming URLs)
+
+* See [Curated list of radio stations](./docs/curated_list_of_radio_stations.md)
+
+* See also [Related Radio Player prjects on GitHub](./docs/related_radio_player_projects.md)
+
+## HOW TO: Play the radio streams on your local machine
+
+1. Download "radio_streams_player.html" and save it to your local machine.
+2. Open the "radio_streams_player.html" file in your preferred browser.
+3. Click on the radio station you want to listen to.
+
+## HOW TO: Add a new radio station / stream
+
+1. Edit the "streams" JSON in the "script" section of the HTML page.
+
+2. Add a new category of radio stations to the "streams" JSON
+
+   * By adding a new JSON object to the "streams" JSON array:
+
+    ```javascript
+        {
+            category: "SELF-1",
+            categoryTitle: "My stations",
+            streams: [
+              { title: "P1", url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h", type: "audio/aac" },
+              { title: "Sport", url: "https://lyd.nrk.no/nrk_radio_sport_aac_h", type: "audio/aac" }
+            ]
+          },
+    ```
+
+3. Save the HTML page.
+
 ## HOW TO: Create a desktop shurtcut to a minimal "web app"
 
 Create a shortcut on your desktop to open the html page as a minimal "web app".
