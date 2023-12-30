@@ -6,7 +6,7 @@ Easily edit the list of stations by modifying the "streams" JSON in the "script"
 
 Here is how it looks on my desktop:
 
-![Radio Streams Player](./docs/Streaming_Radio_Player_as_minmal_web_app.png)
+![Radio Streams Player](./docs/SCREENSHOT_Streaming_Radio_Player__as_web_app.png)
 
 ## Curated list of radio stations (streaming URLs)
 
