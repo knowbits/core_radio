@@ -120,3 +120,6 @@ sed -i '/INSERT_SCRIPT_HERE/{
     s/INSERT_SCRIPT_HERE//g
     r script_block.txt
 }' "$SCRIPT_DIR/radio_streams_player__scraped_from_loaded_page.html"
+
+# Remove the temporary file
+rm script_block.txt
