@@ -53,26 +53,6 @@ until curl -s http://127.0.0.1:8000 >/dev/null; do
   sleep 1
 done
 
-# ====================================================================================================
-# TODO: OBOSOLETE CODE: Python web server is no longer needed
-#
-# Start the python simple web server to serve the static html page
-# The server will run in the background on: http://localhost:8000
-# NOTE: The web server will run in the background
-#
-# (
-#  cd "$STATIC_HTML_FOLDER" && python3 -m http.server &
-#  echo $! >"$SCRIPT_DIR/python_server.pid"
-#
-#  # Wait until the server is responding
-#  until curl -s http://127.0.0.1:8000 >/dev/null; do
-#    echo "Waiting for the Python server to start..."
-#    sleep 1
-#  done
-#)
-# => The PID is saved in the file: $SCRIPT_DIR/python_server.pid
-# ====================================================================================================
-
 # Set the CHROME_LOG_FILE environment variable
 export CHROME_LOG_FILE="$SCRIPT_DIR/chrome_debug.log"
 
@@ -96,19 +76,6 @@ if ps -p "$HTTP_PID" >/dev/null; then
 fi
 
 # ====================================================================================================
-# TODO: OBOSOLETE CODE: Python web server is no longer needed
-kill -9 "$HTTP_PID"
-# Check if the python web server process exists before killing it
-if [ -f "$SCRIPT_DIR/python_server.pid" ]; then
-  PID=$(cat "$SCRIPT_DIR/python_server.pid")
-  if ps -p "$PID" >/dev/null; then
-    kill -9 "$PID"
-  fi
-  rm "$SCRIPT_DIR/python_server.pid"
-fi
-# ====================================================================================================
-
-# ====================================================================================================
 # Now remove the parts of the JavaScript that cannot be part of the "scraped" version of the loaded page
 
 # Remove the "streams" array and preceding comment block:
@@ -129,6 +96,10 @@ sed -i '/\/\* SECTION_TO_REMOVE_2__START \*\//,/\/\* SECTION_TO_REMOVE_2__END \*
 #
 NEW_SCRIPT=$(
   cat <<'EOF'
+      /* The web scraping script replaced the original DOM-generating Javascript with this minimal script: */
+
+      // PURPOSE: Add an event handler to all buttons
+
       // Get all buttons
       const buttons = document.getElementsByTagName('button');
 
