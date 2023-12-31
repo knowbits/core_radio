@@ -239,7 +239,13 @@
       }
     }
 
+
     /* SECTION_TO_REMOVE_2__START */  // Used by our "web scraping" shell script
+
+    const radioSections = document.getElementById("radioSections");
+    /* Use "DocumentFragment" for efficient batch DOM manipulation (memory based) */
+    const fragment = document.createDocumentFragment();
+
     streams.forEach(category => {
       const categoryContainer = document.createElement("section");
 
@@ -252,12 +258,12 @@
       // categoryHeader.appendChild(categorySubtitle);
       categoryContainer.appendChild(categoryHeader);
 
+      // Now add the audio players and the buttons for each stream:
       const playerContainer = document.createElement("div");
       playerContainer.id = "playerContainer" + category.category.toUpperCase();
       categoryContainer.appendChild(playerContainer);
 
-      const radioSections = document.getElementById("radioSections");
-      radioSections.appendChild(categoryContainer);
+      // radioSections.appendChild(categoryContainer);
 
       category.streams.forEach(stream => {
         const audio = document.createElement("audio");
@@ -274,7 +280,12 @@
         playerContainer.appendChild(audio);
         playerContainer.appendChild(button);
       });
+
+      fragment.appendChild(categoryContainer);
     });
+
+    radioSections.appendChild(fragment);
+
     /* SECTION_TO_REMOVE_2__END */
 
   </script>
