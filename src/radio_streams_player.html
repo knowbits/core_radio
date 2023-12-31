@@ -207,60 +207,82 @@
     let currentAudio = null;
     let currentButton = null;
 
-    const handleButtonClick = (button, audio, stream) => {
+    const handleButtonClick = (button, newAudio, stream) => {
 
       // Remove any existing event listeners from previous clicks
-      audio.onerror = null;
-      audio.onloadstart = null;
-      audio.oncanplay = null;
+      newAudio.onerror = null;
+      newAudio.onloadstart = null;
+      newAudio.oncanplay = null;
 
       // Add misc listeners for events on the "audio" element:
 
       // Called if an error occurs while loading or playing the audio
-      audio.onerror = () => {
+      newAudio.onerror = () => {
         console.error('Error playing audio for stream:', stream);
         button.style.color = 'red';
         button.textContent = 'ERROR (see console)';
       };
 
       // Called when the audio starts loading
-      audio.onloadstart = () => {
+      newAudio.onloadstart = () => {
         button.style.color = 'red';
         /* button.textContent = 'Loading...'; */
       };
 
       // Called when the audio can be played
-      audio.oncanplay = () => {
+      newAudio.oncanplay = () => {
         button.style.color = ''; // Reset the text color
         button.textContent = stream.title;
       };
 
-      // Handle the button click
+      // ========================================
 
-      if (currentAudio && currentAudio !== audio) {
+      // Check if audio is already playing, but another button was pressed
+
+      if (currentAudio && currentAudio !== newAudio) {
+        // Stop and reset the currently playing stream
         currentAudio.pause();
+        currentAudio.currentTime = 0; // Reset its time, effectively stopping the audio
+        const currentSource = currentAudio.querySelector('source');
+        currentSource.src = ''; // // BENEFIT: Prevents downloading the "audio file" for this stream
         currentButton.classList.remove("button-playing");
         currentButton.classList.add("button-stopped");
       }
 
-      if (audio.paused) {
-        /* The HTML5 "audio" element automatically buffers audio.
-         * To ensure that the playing stream is always live
-         * => force a reload of the audio element
-         *    when the play button is pressed:
+      if (newAudio.paused) {
+        /*
+         * If the "radio stream" of the pressed button is paused:
+         *   1. Get the "source" element of the "audio" element
+         *   2. Set it's "src" attribute using the streaming URL from it's "data-src" attribute
+         *   3. Finally load and play the audio using the stream we just set.
+         *   4. Update the button's CSS classes
          */
-        audio.load();
-        audio.play();
+        const source = newAudio.querySelector('source');
+        source.src = source.dataset.src;
+        /*
+        * The HTML5 "audio" element automatically buffers audio.
+         * To ensure that the playing stream is always _live_,
+         * we need to force a reload of the "audio" element when the play button is pressed.
+         */
+        newAudio.load();
+        newAudio.play();
         button.classList.remove("button-stopped");
         button.classList.add("button-playing");
-        currentAudio = audio;
+        currentAudio = newAudio;
         currentButton = button;
       } else {
-        audio.pause();
+        // If the "radio stream" of pressed button is already playing => Pause it.
+
+        // Remove the "src" attribute from the "source" of the "audio" element.
+        const source = newAudio.querySelector('source');
+        source.src = '';
+
+        newAudio.pause();
+        newAudio.currentTime = 0; // Reset its time, effectively stopping the audio
         button.classList.remove("button-playing");
         button.classList.add("button-stopped");
-        audio.src = stream.url;
-        audio.load();
+        // newAudio.src = stream.url;
+        // newAudio.load();
         if (currentButton === button) {
           currentAudio = null;
           currentButton = null;
@@ -281,10 +303,7 @@
       const categoryHeader = document.createElement("header");
       const categoryTitle = document.createElement("h1");
       categoryTitle.textContent = category.categoryTitle;
-      // const categorySubtitle = document.createElement("h2");
-      // categorySubtitle.textContent = "(high resolution streams - " + category.streams[0].type.split("/")[1].toUpperCase() + ")";
       categoryHeader.appendChild(categoryTitle);
-      // categoryHeader.appendChild(categorySubtitle);
       categoryContainer.appendChild(categoryHeader);
 
       // Now add the audio players and the buttons for each stream:
@@ -295,12 +314,19 @@
       // radioSections.appendChild(categoryContainer);
 
       category.streams.forEach(stream => {
-        const audio = document.createElement("audio");
+        // Create the "source" element of the "audio" element
         const source = document.createElement("source");
-        source.src = stream.url;
+        // source.src = stream.url; // DOWNSIDE: Will download the audio file when the page loads
+        source.src = '';            // BENEFIT: Prevents downloading the audio file when the page loads
+        source.dataset.src = stream.url; // Store the streaming URL in a "data-src" attribute
         source.type = stream.type;
+
+        const audio = document.createElement("audio");
         audio.appendChild(source);
-        audio.className = "player";
+
+        //        audio.dataset.src = stream.url; // Store the URL in a data-src attribute
+        // Create the audio element without setting the src attribute
+        // Instead, the URL of the audio file is stored in a data - src attribute.This ensures that the audio file is not downloaded when the page loads, which can improve page load times if you have a lot of audio streams.
 
         const button = document.createElement("button");
         button.textContent = stream.title;
