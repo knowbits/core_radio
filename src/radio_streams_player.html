@@ -15,6 +15,49 @@
      */
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
+    /* ==== START: CSS Reset ================================ */
+    /*
+     * "A CSS reset standardizes HTML elements across browsers, simplifying subsequent styling."
+     *
+     * This is a modified version of "Meyer's CSS Reset":
+     *   http://meyerweb.com/eric/tools/css/reset/
+     */
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+
+      /* Set colour of all text: */
+      color: var(--text-colour);
+    }
+
+    /* These "elements" are not in use on our HTML page:
+    ul {
+      list-style: none;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    */
+
+    /* HTML5 display-role reset for older browsers.
+     *
+     * The purpose of this part of the reset is to ensure that newer HTML5 elements,
+     * which older browsers may not recognize as block-level elements, are treated as such.
+     */
+    section,
+    main,
+    header {
+      display: block;
+    }
+
+    /* ==== END: CSS Reset ================================ */
+
     :root {
       /* Some HTML colours here:
        * https://html-color.codes/color-chart
@@ -22,182 +65,16 @@
       --button-colour-stopped: none;
       --button-colour-playing: none;
       --button-border-colour-inactive: #ECF0F1;
-      /* Bright Gray */
-      /* Bright Gray */
       --button-border-colour-active: Coral;
       --background-colour: #262626;
       --text-colour: #ECF0F1;
-      /* Bright Gray */
-    }
-
-    /* Add new CSS classes for button states */
-    .button-stopped {
-      background-color: var(--button-colour-stopped);
-      border-color: var(--button-border-colour-inactive);
-    }
-
-    .button-playing {
-      background-color: var(--button-colour-playing);
-      border-color: var(--button-border-colour-active);
-    }
-
-    /* ==== START: Meyer's CSS Reset ================================ */
-
-    /* "Meyer's CSS Reset"
-    *
-     * A CSS reset scheme is a set of CSS rules that resets the styling of all HTML elements to a consistent baseline.
-     * This means that, instead of having to deal with different default styles in different browsers,
-     * you can start with a clean slate and build your own styles from there.
-     *
-     A CSS reset can help ensure that elements like button, h1, h2, body, main, section, etc., look the same across all browsers.
-     * This can make it easier to style these elements to match your desired layout and design.
-     *
-     * "Meyer's CSS Reset" is a popular CSS reset scheme created by Eric Meyer.:
-     * http://meyerweb.com/eric/tools/css/reset/
-     *   v2.0 | 20110126
-     *   License: none (public domain)
-     */
-
-    html,
-    body,
-    div,
-    span,
-    applet,
-    object,
-    iframe,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    blockquote,
-    pre,
-    a,
-    abbr,
-    acronym,
-    address,
-    big,
-    cite,
-    code,
-    del,
-    dfn,
-    em,
-    img,
-    ins,
-    kbd,
-    q,
-    s,
-    samp,
-    small,
-    strike,
-    strong,
-    sub,
-    sup,
-    tt,
-    var,
-    b,
-    u,
-    i,
-    center,
-    dl,
-    dt,
-    dd,
-    ol,
-    ul,
-    li,
-    fieldset,
-    form,
-    label,
-    legend,
-    table,
-    caption,
-    tbody,
-    tfoot,
-    thead,
-    tr,
-    th,
-    td,
-    article,
-    aside,
-    canvas,
-    details,
-    embed,
-    figure,
-    figcaption,
-    footer,
-    header,
-    hgroup,
-    menu,
-    nav,
-    output,
-    ruby,
-    section,
-    summary,
-    time,
-    mark,
-    audio,
-    video {
-      margin: 0;
-      padding: 0;
-      border: 0;
-      font-size: 100%;
-      font: inherit;
-      vertical-align: baseline;
-    }
-
-    /* HTML5 display-role reset for older browsers */
-    article,
-    aside,
-    details,
-    figcaption,
-    figure,
-    footer,
-    header,
-    hgroup,
-    menu,
-    nav,
-    section {
-      display: block;
+      --font-family: 'Roboto', sans-serif;
     }
 
     body {
+      /* Typography */
+      font-family: var(--font-family);
       line-height: 1;
-    }
-
-    ol,
-    ul {
-      list-style: none;
-    }
-
-    blockquote,
-    q {
-      quotes: none;
-    }
-
-    blockquote:before,
-    blockquote:after,
-    q:before,
-    q:after {
-      content: '';
-      content: none;
-    }
-
-    table {
-      border-collapse: collapse;
-      border-spacing: 0;
-    }
-
-    /* ==== END: Meyer's CSS Reset ================================ */
-
-    * {
-      /* Set colour of all text: */
-      color: var(--text-colour);
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
       padding: 20px;
       background-color: var(--background-colour);
     }
@@ -214,6 +91,7 @@
       margin-top: 20px;
       margin-bottom: 10px;
     }
+
 
     h1 {
       font-weight: lighter;
@@ -235,7 +113,18 @@
       background-color: var(--button-colour-stopped);
       color: white;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      /* transition: background-color 0.3s ease; */
+    }
+
+    /* Add new CSS classes for button states */
+    .button-stopped {
+      background-color: var(--button-colour-stopped);
+      border-color: var(--button-border-colour-inactive);
+    }
+
+    .button-playing {
+      background-color: var(--button-colour-playing);
+      border-color: var(--button-border-colour-active);
     }
   </style>
 </head>
