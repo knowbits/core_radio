@@ -218,7 +218,28 @@
 
       // Called if an error occurs while loading or playing the audio
       newAudio.onerror = () => {
-        console.error('Error playing audio for stream:', stream);
+        let errorMessage;
+
+        switch (audio.error.code) {
+          case 1: // MEDIA_ERR_ABORTED
+            errorMessage = 'You aborted the audio playback.';
+            break;
+          case 2: // MEDIA_ERR_NETWORK
+            errorMessage = 'A network error caused the audio download to fail.';
+            break;
+          case 3: // MEDIA_ERR_DECODE
+            errorMessage = 'The audio playback was aborted due to a corruption problem or because the media used features your browser did not support.';
+            break;
+          case 4: // MEDIA_ERR_SRC_NOT_SUPPORTED
+            errorMessage = 'The audio could not be loaded, either because the server or network failed or because the format is not supported.';
+            break;
+          default:
+            errorMessage = 'An unknown error occurred.';
+            break;
+        }
+        const errorText = 'ERROR: ' + errorMessage + ". Got an error while playing audio stream: " + stream;
+        console.error(errorText);
+
         button.style.color = 'red';
         button.textContent = 'ERROR (see console)';
       };
