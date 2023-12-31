@@ -208,6 +208,35 @@
     let currentButton = null;
 
     const handleButtonClick = (button, audio, stream) => {
+
+      // Remove any existing event listeners from previous clicks
+      audio.onerror = null;
+      audio.onloadstart = null;
+      audio.oncanplay = null;
+
+      // Add misc listeners for events on the "audio" element:
+
+      // Called if an error occurs while loading or playing the audio
+      audio.onerror = () => {
+        console.error('Error playing audio for stream:', stream);
+        button.style.color = 'red';
+        button.textContent = 'ERROR (see console)';
+      };
+
+      // Called when the audio starts loading
+      audio.onloadstart = () => {
+        button.style.color = 'red';
+        /* button.textContent = 'Loading...'; */
+      };
+
+      // Called when the audio can be played
+      audio.oncanplay = () => {
+        button.style.color = ''; // Reset the text color
+        button.textContent = stream.title;
+      };
+
+      // Handle the button click
+
       if (currentAudio && currentAudio !== audio) {
         currentAudio.pause();
         currentButton.classList.remove("button-playing");
