@@ -101,11 +101,19 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 
 > It is a complete solution to package and build a ready for distribution Electron app for macOS, Windows and Linux with “auto update” support out of the box.
 
-1. Prerequisites: `npm install --save-dev electron-builder`
-  1. Adds `electron-builder` as a `"devDependencies":` entry in the `package.json` file.
-  2. Will output `"added 148 packages, ..."`
+### Prerequisites
 
-2. Make sure that package.json looks something like this:
+* The `electron-builder` tool needs `wine` to create Windows installers on non-Windows platforms, like Ubuntu.
+   * Firs, update the Ubuntu package index: `sudo apt update`
+   * Install `wine` on Ubuntu: `sudo apt-get install --install-recommends wine-stable`
+   * Verify installation: `wine --version`
+
+* Install the `electron-builder` npm package:
+  * Run `npm install --save-dev electron-builder`
+    1. Adds `electron-builder` as a `"devDependencies":` entry in the `package.json` file.
+    2. Will output `"added 148 packages, ..."`
+
+1. Make sure that package.json looks something like this:
     ```
     {
       "name": "streaming-radio-player",
