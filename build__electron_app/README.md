@@ -1,5 +1,11 @@
 # How to build an Electron app from the static html file
 
+// TODO: Consider using the "web scraped" version of the static html file =>
+// TODO: => The scraped HTML shows the generated "innerHTML" that is created by
+// TODO:    by Javascript when the page loads in the browser.
+// TODO:  BENEFITS: 1) User can see the generated HTML using "View source" : audio, button etc.
+// TODO:            2) The scraped page might be faster (load), since there is minimal Javascript to run.
+
 Describes how to build an Electron app from the static html file `.src\radio_streams_player.html` that will run on Windows 11 64-bit.
 
 These instructions only show build a binary exxecutable for the Windows 11 64-bit platform. Other target platforms, such as Linux and macOS, have not been tested yet, but should also work.
