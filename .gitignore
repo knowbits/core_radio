@@ -3,8 +3,10 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
-# Exclude smoe temporary files
-**/script_block.txt
+# Exclude the "index.html" used to buiild the Electron app.
+# Note: the "index.html should be copied from "src/radio_streams_player.html" 
+#       before each "Electron build"
+build__electron_app/index.html
 
 # Exclude any "tmp/" folders
 tmp/
