@@ -1,0 +1,37 @@
+{
+  "name": "streaming-radio-player",
+  "version": "0.1.0",
+  "description": "Streaming Radio Player",
+  "author": "Erlend Bleken <bleken@gmail.com>",
+  "license": "MIT",
+
+  "main": "main.js",
+  "build": {
+    "appId": "org.bleken.streamingRadioPlayer",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "favicon_256x256.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --windows --x64"
+  },
+  "devDependencies": {
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
+    "electron-packager": "^17.1.2"
+  }
+}

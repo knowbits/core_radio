@@ -51,6 +51,10 @@ The static HTML file will open as a "minmal" web app on your local machine.
 
 * Mac: [How to create a "web app" shortcut on your desktop](docs/how_to__create_a_desktop_shortcut_on_Mac.md)
 
+## HOW TO: Build an "Electron app" from the HTML page
+
+* See [HOW TO: Build an "Electron app" from the HTML page](build__electron_app_from_html_page/README.md)
+
 ## HOW TO: Serve the web page from a web server
 
 1. Copy the "radio_streams_player.html" file to your web server.
@@ -59,7 +63,7 @@ The static HTML file will open as a "minmal" web app on your local machine.
 
 ## HOW TO: Scrape the loaded web page, to get the Javascript-generated HTML
 
-* See [HOW TO: Scrape the loaded web page](scraped_html__from_loaded_web_page/README.md)
+* See [HOW TO: Scrape the loaded web page](build__scrape_html_after_page_load/README.md)
 
 ### Contribution guidelines
 
