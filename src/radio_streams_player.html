@@ -63,9 +63,10 @@
     body {
       font-family: 'Roboto', sans-serif;
       line-height: 1;
-      color: var(--text-colour);
       /* Sets colour of all text: */
-      padding: 20px;
+      color: var(--text-colour);
+      /* Edges (px): T, R, B, L :  */
+      padding: 5px 10px 5px 10px;
       background-color: var(--background-colour);
     }
 
@@ -78,14 +79,14 @@
     section header {
       display: flex;
       align-items: baseline;
-      margin-top: 20px;
-      margin-bottom: 10px;
+      margin-top: 15px;
+      margin-bottom: 5px;
     }
 
 
     h1 {
-      font-weight: lighter;
-      font-size: 2em;
+      font-weight: light;
+      font-size: 1.7em;
       /* line-height: 1.5; */
       margin-right: 10px;
     }
@@ -96,7 +97,9 @@
     }
 
     button {
-      padding: 10px 20px;
+      font-size: 0.9em;
+      font-weight: light;
+      padding: 7px 10px;
       margin: 5px;
       border: 2px solid var(--button-border-colour-inactive);
       border-radius: 10px;
