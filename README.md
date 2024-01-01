@@ -63,7 +63,7 @@ The static HTML file will open as a "minmal" web app on your local machine.
 
 ## HOW TO: Scrape the loaded web page, to get the Javascript-generated HTML
 
-* See [HOW TO: Scrape the loaded web page](build__scrape_html_after_page_load/README.md)
+* See [HOW TO: Scrape the loaded web page](build__scrape_loaded_html_page/README.md)
 
 ### Contribution guidelines
 

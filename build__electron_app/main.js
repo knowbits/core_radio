@@ -6,8 +6,8 @@ let mainWindow;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    width: 300,
-    height: 700
+    width: 400,
+    height: 750
   });
 
   mainWindow.setTitle('Streaming Radio Player');

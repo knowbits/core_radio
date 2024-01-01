@@ -31,17 +31,6 @@
       vertical-align: baseline;
     }
 
-    /* These "elements" are not in use on our HTML page:
-    ul {
-      list-style: none;
-    }
-
-    table {
-      border-collapse: collapse;
-      border-spacing: 0;
-    }
-    */
-
     /* HTML5 display-role reset for older browsers.
      *
      * The purpose of this part of the reset is to ensure that newer HTML5 elements,
@@ -56,38 +45,14 @@
     /* ==== END: CSS Reset ================================ */
 
     /*
-     * TODO: Define a "Colour scheme" for the page
-     *
-     *  Choose a Primary Color: This is the main color that represents your brand and will be the most frequently used color on your website.
-    *   Choose Secondary Colors: These colors complement the primary color and are used to create contrast in your design.
-    *   Choose a Background Color: This is usually a neutral color, such as white or light grey.
-    *   Choose Text Colors: Ensure there's enough contrast between the text color and the background color for readability.
-    *   Choose Feedback Colors: These are colors used to indicate success (usually green), error (usually red), and warning (usually yellow or orange).
-    *  EXTRA:
-    *  Choose Link Colors: These are colors used for hyperlinks.
-    *  Choose Button Colors: These are colors used for buttons.
-    *  Choose Input Colors: These are colors used for input fields.
-    *  Choose Navigation Colors: These are colors used for navigation elements, such as menus.
-    *  Choose Shadow Colors: These are colors used for shadows.
-    *  Choose Grayscale Colors: These are shades of grey used for text, backgrounds, borders, and shadows.
-    *  Choose a Font: Choose a font that's easy to read and reflects your brand.
-    *
-    * EXAMPLE:
-    *   https://www.lifewire.com/choose-colors-for-your-website-3469874
-    *   --primary-color: #007BFF;
-    *   --secondary-color: #6C757D;
-    *   --background-color: #FFFFFF;
-    *   --text-color: #212529;
-    *   --success-color: #28A745;
-    *   --error-color: #DC3545;
-    *   --warning-color: #FFC107;
-    */
+     * // TODO: Define a "Colour scheme" for the page
+     *    https://www.w3schools.com/css/css3_colors.asp
+     *    https://www.lifewire.com/choose-colors-for-your-website-3469874
+     */
     :root {
-      /* Some HTML colours here:
-       * https://html-color.codes/color-chart
-       */
-      --button-colour-stopped: none;
-      --button-colour-playing: none;
+      /* Some HTML colours here: https://html-color.codes/color-chart */
+      --button-colour-stopped: #262626;
+      --button-colour-playing: #262626;
       --button-border-colour-inactive: #ECF0F1;
       --button-border-colour-active: Coral;
       --background-colour: #262626;
@@ -96,12 +61,10 @@
 
 
     body {
-      /* Typography */
       font-family: 'Roboto', sans-serif;
-      ;
       line-height: 1;
-      /* Set colour of all text: */
       color: var(--text-colour);
+      /* Sets colour of all text: */
       padding: 20px;
       background-color: var(--background-colour);
     }
@@ -109,7 +72,7 @@
     main {
       display: flex;
       flex-direction: column;
-      align-items: left;
+      align-items: flex-start;
     }
 
     section header {
@@ -140,18 +103,18 @@
       background-color: var(--button-colour-stopped);
       color: white;
       cursor: pointer;
-      /* transition: background-color 0.3s ease; */
     }
 
     /* Add new CSS classes for button states */
+
     .button-stopped {
-      background-color: var(--button-colour-stopped);
       border-color: var(--button-border-colour-inactive);
+      background-color: var(--button-colour-stopped);
     }
 
     .button-playing {
-      background-color: var(--button-colour-playing);
       border-color: var(--button-border-colour-active);
+      background-color: var(--button-colour-playing);
     }
   </style>
 </head>
@@ -162,7 +125,10 @@
 
   <script>
 
-    /* SECTION_TO_REMOVE_1__START */  // Used by our "web scraping" shell script
+    /* SECTION_TO_REMOVE_1__START */
+
+    /* The "delimiter above is used by our "web scraping" shell script */
+
     /*
      * Audio formats supported by html5 "audio" element:
      *
@@ -234,7 +200,7 @@
     let currentAudio = null;
     let currentButton = null;
 
-    const handleButtonClick = (newButton, newAudio, stream) => {
+    const handleButtonClick = (newButton, newAudio, newStream) => {
 
       // Remove any existing event listeners from previous clicks
       newAudio.onerror = null;
@@ -247,7 +213,7 @@
       newAudio.onerror = () => {
         let errorMessage;
 
-        switch (audio.error.code) {
+        switch (newAudio.error.code) {
           case 1: // MEDIA_ERR_ABORTED
             errorMessage = 'You aborted the audio playback.';
             break;
@@ -264,25 +230,27 @@
             errorMessage = 'An unknown error occurred.';
             break;
         }
-        const errorText = 'ERROR: ' + errorMessage + ". Got an error while playing audio stream: " + stream;
+        const errorText = 'ERROR: ' + errorMessage + ". Got an error while playing audio stream: " + newStream;
         console.error(errorText);
 
         newButton.style.color = 'red';
         newButton.textContent = 'ERROR (see console)';
       };
 
+      /*
       // Called when the audio starts loading
       newAudio.onloadstart = () => {
         // AVOID: Since it creates a "blink" when pressed:
-        // newButton.style.color = 'orange';
+        newButton.style.color = 'orange';
         // button.textContent = 'Loading...';
       };
 
       // Called when the audio can be played
       newAudio.oncanplay = () => {
         newButton.style.color = ''; // Reset the text color
-        newButton.textContent = stream.title;
+        newButton.textContent = newStream.title;
       };
+      */
 
       // ========================================
 
@@ -313,7 +281,7 @@
          * To ensure that the playing stream is always _live_,
          * we need to force a reload of the "audio" element when the play button is pressed.
          */
-        newAudio.load();
+        newAudio.load(); // Force a reload of the "audio" element
         newAudio.play();
         newButton.classList.remove("button-stopped");
         newButton.classList.add("button-playing");
@@ -321,17 +289,14 @@
         currentButton = newButton;
       } else {
         // If the "radio stream" of pressed button is already playing => Pause it.
-
-        // Remove the "src" attribute from the "source" of the "audio" element.
-        const source = newAudio.querySelector('source');
-        source.src = '';
-
         newAudio.pause();
         newAudio.currentTime = 0; // Reset its time, effectively stopping the audio
         newButton.classList.remove("button-playing");
         newButton.classList.add("button-stopped");
-        // newAudio.src = stream.url;
-        // newAudio.load();
+        // Remove the "src" attribute from the "source" of the "audio" element.
+        const source = newAudio.querySelector('source');
+        source.src = ''; // Prevents downloading the "audio file" for this stream
+
         if (currentButton === newButton) {
           currentAudio = null;
           currentButton = null;
@@ -363,19 +328,27 @@
       // radioSections.appendChild(categoryContainer);
 
       category.streams.forEach(stream => {
-        // Create the "source" element of the "audio" element
+        // Create the "source" element of the "audio" element.
+        //
+        // NOTE: We don't set the "src" attribute here, since we want to prevent
+        //       the audio file from being downloaded when the page loads.
+        //       Instead, we store the URL in a "data-src" attribute.
+        // NOTE: Using the source element provides more flexibility than only using "audio"
+        //       as it allows you to specify multiple source files. The browser will choose
+        //       the most suitable one based on its capabilities and the file type
         const source = document.createElement("source");
         // source.src = stream.url; // DOWNSIDE: Will download the audio file when the page loads
-        source.src = '';            // BENEFIT: Prevents downloading the audio file when the page loads
+        // source.src = '';         // BENEFIT: Prevents downloading the audio file when the page loads
         source.dataset.src = stream.url; // Store the streaming URL in a "data-src" attribute
         source.type = stream.type;
 
         const audio = document.createElement("audio");
         audio.appendChild(source);
 
-        //        audio.dataset.src = stream.url; // Store the URL in a data-src attribute
         // Create the audio element without setting the src attribute
-        // Instead, the URL of the audio file is stored in a data - src attribute.This ensures that the audio file is not downloaded when the page loads, which can improve page load times if you have a lot of audio streams.
+        // Instead, the URL of the audio file is stored in a data - src attribute.
+        // This ensures that the audio file is not downloaded when the page loads,
+        // which can improve page load times if you have a lot of audio streams.
 
         const button = document.createElement("button");
         button.textContent = stream.title;

@@ -113,49 +113,10 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
     1. Adds `electron-builder` as a `"devDependencies":` entry in the `package.json` file.
     2. Will output `"added 148 packages, ..."`
 
-1. Make sure that package.json looks something like this:
-    ```
-    {
-      "name": "streaming-radio-player",
-      "version": "0.1.0",
-      "description": "Streaming Radio Player",
-      "author": "Erlend Bleken <bleken@gmail.com>",
-      "license": "MIT",
+1. Make sure that `package.json` is configured like this: [package.json](./package.json):
 
-      "main": "main.js",
-      "build": {
-        "appId": "org.bleken.streamingRadioPlayer",
-        "win": {
-          "target": [
-            {
-              "target": "nsis",
-              "arch": [
-                "x64"
-              ]
-            }
-          ],
-          "icon": "favicon_256x256.ico"
-        },
-        "nsis": {
-          "oneClick": false,
-          "allowToChangeInstallationDirectory": true
-        }
-      },
-      "scripts": {
-        "start": "electron .",
-        "pack": "electron-builder --dir",
-        "dist": "electron-builder --windows --x64"
-      },
-      "devDependencies": {
-        "electron": "^28.1.0",
-        "electron-builder": "^24.9.1",
-        "electron-packager": "^17.1.2"
-      }
-    }
-    ```
-
-* Options explained:
-   * `"dist": "electron-builder --windows --x64"`
+* Misc. `package.json` options explained (JSON does not allow comments):
+   * `"dist-windows-x64": "electron-builder --windows --x64"`
      * If you’re running the `npm run dist`` command on a non-Windows platform (like macOS or Linux), `electron-builder` will by default only build the installer for the current platform.
      * To build the installer for Windows on a non-Windows platform (like Ubuntu on WSL2), you need to specify the `--windows` and `--x64` flags like we have done.
    * `appId`: The appId in Electron is a unique identifier used by the OS to consistently recognize your app across different versions.
@@ -164,7 +125,7 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
      * "NSIS" allows for options like one-click or assisted install, directory selection, silent installs, and automatic updates.
      * NOTE: More "targets" can be specified such as: "zip", "7z", "msi", "nsis-web", "portable", "appx", "squirrel", "deb", "rpm", "freebsd", "pacman", "p5p", "apk", "dmg", "mas", "mas-dev", "pkg", "tar.gz", "tar.xz", "tar.lz", "tar.bz2", "dir", "custom".
    * `"arch": [ "x64" ]`: To create an installer for Windows 64-bit only.
-   * `"icon": "favicon.ico"`: The icon to use for the installer.
+   * `"icon": "favicon_256x256.ico"`: The icon to use for the installer.
    * `"oneClick": false`: To create an assisted installer.
    * `"allowToChangeInstallationDirectory": true`: Allow the user to change the installation directory.
 
@@ -203,26 +164,37 @@ Then run one of these commands for creating executable binaries for MacOS on the
 
 ## NOT TESTED: Create executable binaries for Linux
 
-It should be as easy as removing the two options `--windows --x64` from the `"scripts" > "dist"` section of `package.json`, and then running `npm run dist` again.
+This should be as easy as running `npx electron-builder .` without options. Because, since we are building on Ubuntu, the builder will assume that we want to build for Linux.
 
-By default, since we run `electron-builder` on Ubuntu, `.deb` file for a Debian-based Linux distributions like Ubuntu will be created.
+Also, by default, since we run `electron-builder` on Ubuntu, `.deb` file for a "Debian-based Linux distributions" like Ubuntu will be created.
+
+__Misc. options:__
+
+* You can also specify `--linux` to create binaries for the specific Linux platform you are building on. Run `npx electron-packager . --platform=linux`
+
+* To build a Linux `zip` target on Ubuntu, run: `npm run dist -- --linux --x64` add this to `package.json`:
+  ```json
+  "build": {
+    "linux": {
+      "target": "zip"
+    }
+  }
+  ```
+
+### To build for a specific Linux platform
+
+* Build an executable file for Linux 64-bit: `npx electron-packager . --platform=linux --arch=x64`
+* Build an executable file for Linux 32-bit: `npx electron-packager . --platform=linux --arch=ia32`
+* Build an executable file for Linux ARM: `npx electron-packager . --platform=linux --arch=armv7l`
+* Build an executable file for Linux ARM64: `npx electron-packager . --platform=linux --arch=arm64`
+* Build an executable file for Linux all architectures: `npx electron-packager . --platform=linux --all`
+
+## NOT TESTED: Create executable binaries for all platforms and all architectures
 
 * TODO: NOTE: The following commands need to be verified:
 
-* Build an executable file for Linux: `electron-packager . --platform=linux`
-
-* Build an executable file for Linux 64-bit: `electron-packager . --platform=linux --arch=x64`
-* Build an executable file for Linux 32-bit: `electron-packager . --platform=linux --arch=ia32`
-* Build an executable file for Linux ARM: `electron-packager . --platform=linux --arch=armv7l`
-* Build an executable file for Linux ARM64: `electron-packager . --platform=linux --arch=arm64`
-* Build an executable file for Linux all architectures: `electron-packager . --platform=linux --all`
-
-## NOT TESTED: Create executable binaries for all platforms
-
-* TODO: NOTE: The following commands need to be verified:
-
-* Build an executable file for all platforms: `electron-packager . --all`
-* Build an executable file for all platforms and all architectures: `electron-packager . --all --arch=all`
+* Build an executable file for all platforms: `npx electron-packager . --all`
+* Build an executable file for all platforms and all architectures: `npx electron-packager . --all --arch=all`
 
 ## USEFUL: Electron app development resources
 
