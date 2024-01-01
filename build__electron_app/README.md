@@ -173,17 +173,56 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 
 2. To copy the installer to your Windows Desktop, run: `cp "./dist/streaming-radio-player Setup 0.1.0.exe" /mnt/c/Users/<Insert Your Windows user name here>/Desktop/`
 
-## NOT TESTED: Create executable binaries for Linux or MacOS
+## NOT TESTED: Create executable binaries for MacOS
+
+> Unfortunately, you cannot build a .pkg or .dmg macOS installer on Ubuntu or WSL2 using electron-builder
+
+> Use a different target: If the above options are not feasible, consider using a different target that doesn’t require macOS-specific tools. For example, you could use `zip` or `dir` as your target.
+>
+> The `zip` target will create a zip file that you can distribute to macOS users.
+> The `dir` target will create a folder that you can distribute to macOS users.
+
+> Both of these targets can be created on non-macOS platforms.
+> However, they will not be signed or notarized, so macOS users will need to disable Gatekeeper to run them.
+
+> To install a "zip" or "dir" target on macOS, the user will need to unzip the file and then move the app to the Applications folder.
+
+* To build a macOS `zip` target on Ubuntu, run: `npm run dist -- --mac --x64` add this to `package.json`:
+  ```json
+  "build": {
+    "mac": {
+      "target": "zip"
+    }
+  }
+  ```
+Then run one of these commands for creating executable binaries for MacOS on the Intel or Apple silicone platforms:
+
+* For "Mac silicon": `npx electron-builder --mac --arm64`
+* For "Intel silicone": `npx electron-builder --mac --x64`
+* For both Mac and Intel silicone (combined image): `npx electron-builder --mac --universal`
+
+## NOT TESTED: Create executable binaries for Linux
 
 It should be as easy as removing the two options `--windows --x64` from the `"scripts" > "dist"` section of `package.json`, and then running `npm run dist` again.
 
-* _NOTE: The following commands have not been tested yet, but should work._
+By default, since we run `electron-builder` on Ubuntu, `.deb` file for a Debian-based Linux distributions like Ubuntu will be created.
+
+* TODO: NOTE: The following commands need to be verified:
 
 * Build an executable file for Linux: `electron-packager . --platform=linux`
 
-* Build an executable file for macOS: `electron-packager . --platform=darwin`
+* Build an executable file for Linux 64-bit: `electron-packager . --platform=linux --arch=x64`
+* Build an executable file for Linux 32-bit: `electron-packager . --platform=linux --arch=ia32`
+* Build an executable file for Linux ARM: `electron-packager . --platform=linux --arch=armv7l`
+* Build an executable file for Linux ARM64: `electron-packager . --platform=linux --arch=arm64`
+* Build an executable file for Linux all architectures: `electron-packager . --platform=linux --all`
+
+## NOT TESTED: Create executable binaries for all platforms
+
+* TODO: NOTE: The following commands need to be verified:
 
 * Build an executable file for all platforms: `electron-packager . --all`
+* Build an executable file for all platforms and all architectures: `electron-packager . --all --arch=all`
 
 ## USEFUL: Electron app development resources
 

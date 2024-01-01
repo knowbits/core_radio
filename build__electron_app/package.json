@@ -9,6 +9,7 @@
   "build": {
     "appId": "org.bleken.streamingRadioPlayer",
     "win": {
+      "icon": "favicon_256x256.ico",
       "target": [
         {
           "target": "nsis",
@@ -16,18 +17,24 @@
             "x64"
           ]
         }
-      ],
-      "icon": "favicon_256x256.ico"
+      ]
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "icon": "mac_icon.icns",
+      "target": "zip"
+    },
+    "linux": {
+      "icon": "build/icons/"
     }
   },
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --windows --x64"
+    "dist": "electron-builder"
   },
   "devDependencies": {
     "electron": "^28.1.0",
