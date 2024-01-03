@@ -4,9 +4,13 @@ const { app, BrowserWindow } = electron;
 
 let mainWindow;
 
+/*
+ * TODO: Hide the OS menu in the Electron app's target platform executable.
+ *  See research in docs/FEATURE_Electron_app__Hide_native_application_menu.md"
+*/
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    width: 270,
+    width: 290,
     height: 550
   });
 
@@ -18,3 +22,4 @@ app.on('ready', () => {
     mainWindow = null;
   });
 });
+
