@@ -1,4 +1,4 @@
-# Streaming Radio Player (as a static HTML page)
+# Core Radio (as a static HTML page)
 
 A static .html file for playing audio streams from selected radio stations.
 
@@ -8,13 +8,21 @@ Easily edit the list of stations by modifying the "streams" JSON in the "script"
 
 * [FEATURE: Electron app : Hide the "native" application menu](docs/FEATURE_Electron_app__Hide_native_application_menu.md)
 
+* FEATURE: Electron app : "Menu" - As a row of buttons:
+  * Buttons: Close app, Restore app (?), Open Chrome DevTools , Reload page
+    * .. About ("?" icon), Settings(cog wheel icon)
+  * Other: Minimize app, Maximize app,
+
+* [FEATURE: Electron app: How to move the app window](docs/FEATURE__Electron_app__How_to_move_the_app_window.md)
+  * NOTE Currently we cannot drag the title bar, since the window is frameless and transparent.
+
 * [FEATURE: HTML: Keep radio streams preferences in a local file](docs/FEATURE__HTML__Keep_radio_streams_preferences_in_a_local_filed.md)
 
 * [FEATURE: HTML: Button to view the full source of the loaded page](docs/FEATURE__HTML__Button_to_view_the_full_source_of_the_loaded_page.md)
 
 Here is how it looks on my desktop:
 
-![Radio Streams Player](./docs/SCREENSHOT_Streaming_Radio_Player__as_web_app.png)
+![Radio Streams Player](./docs/SCREENSHOT_Core_Radio__as_web_app.png)
 
 ## Curated list of radio stations (streaming URLs)
 
@@ -24,8 +32,8 @@ Here is how it looks on my desktop:
 
 ## HOW TO: Play the radio streams on your local machine
 
-1. Download "radio_streams_player.html" and save it to your local machine.
-2. Open the "radio_streams_player.html" file in your preferred browser.
+1. Download "core_radio.html" and save it to your local machine.
+2. Open the "core_radio.html" file in your preferred browser.
 3. Click on the radio station you want to listen to.
 
 ## HOW TO: Add a new radio station / stream
@@ -65,9 +73,9 @@ The static HTML file will open as a "minmal" web app on your local machine.
 
 ## HOW TO: Serve the web page from a web server
 
-1. Copy the "radio_streams_player.html" file to your web server.
+1. Copy the "core_radio.html" file to your web server.
 2. Edit the "streams" JSON in the "script" section of the HTML page to add your preferred radio stations / streams.
-3. Open  <https://yourdomain/radio_streams_player.html> in your browser.
+3. Open  <https://yourdomain/core_radio.html> in your browser.
 
 ## HOW TO: Scrape the loaded web page, to get the Javascript-generated HTML
 

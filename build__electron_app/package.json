@@ -1,13 +1,16 @@
 {
-  "name": "streaming-radio-player",
-  "version": "0.1.2",
-  "description": "Streaming Radio Player",
+  "name": "core-radio",
+  "version": "0.1.3",
+  "description": "Core Radio - A simple radio for listening to your favourite audio streams",
   "author": "Erlend Bleken <bleken@gmail.com>",
   "license": "MIT",
 
   "main": "main.js",
   "build": {
-    "appId": "org.bleken.streamingRadioPlayer",
+    "appId": "org.bleken.coreRadio",
+    "productName": "Core Radio",
+    "compression": "maximum",
+    "artifactName": "${name}_${version}_${env.TARGET_PLATFORM}_${arch}.${ext}",
     "directories": {
       "output": "dist"
     },
@@ -34,18 +37,18 @@
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist-all-platforms": "electron-builder --all",
-    "dist-all-platforms-and-architectures": "electron-builder --all --arch=all",
-    "dist-linux-all": "electron-builder --platform=linux --all",
-    "dist-linux-Intel-x64": "electron-builder --platform=linux --arch=x64",
-    "dist-linux-Intel-ia32": "electron-builder --platform=linux --arch=ia32",
-    "dist-linux-ARM": "electron-builder --platform=linux --arch=armv7l",
-    "dist-linux-ARM64": "electron-builder --platform=linux --arch=arm64",
-    "dist-windows-x64": "electron-builder --win --x64",
-    "dist-windows-ia32": "electron-builder --win --ia32",
-    "dist-mac-on-Intel": "electron-builder --mac --x64",
-    "dist-mac-on-M1": "electron-builder --mac --arm64",
-    "dist-mac-on-Intel-and-M1": "electron-builder --mac --universal"
+    "dist-all-platforms": "TARGET_PLATFORM=ALL electron-builder --all",
+    "dist-all-platforms-and-architectures": "TARGET_PLATFORM=ALL electron-builder --all --arch=all",
+    "dist-linux-all": "TARGET_PLATFORM=linux electron-builder --platform=linux --all",
+    "dist-linux-Intel-x64": "TARGET_PLATFORM=linux electron-builder --platform=linux --arch=x64",
+    "dist-linux-Intel-ia32": "TARGET_PLATFORM=linux electron-builder --platform=linux --arch=ia32",
+    "dist-linux-ARM": "TARGET_PLATFORM=linux electron-builder --platform=linux --arch=armv7l",
+    "dist-linux-ARM64": "TARGET_PLATFORM=linux electron-builder --platform=linux --arch=arm64",
+    "dist-windows-x64": "TARGET_PLATFORM=windows electron-builder --windows --x64",
+    "dist-windows-ia32": "TARGET_PLATFORM=windows electron-builder --windows --ia32",
+    "dist-mac-on-Intel": "TARGET_PLATFORM=mac electron-builder --mac --x64",
+    "dist-mac-on-M1": "TARGET_PLATFORM=mac electron-builder --mac --arm64",
+    "dist-mac-on-Intel-and-M1": "TARGET_PLATFORM=mac electron-builder --mac --universal"
   },
   "devDependencies": {
     "electron": "^28.1.0",

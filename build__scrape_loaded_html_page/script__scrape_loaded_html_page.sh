@@ -76,7 +76,7 @@ chromium-browser \
   --disable-dev-shm-usage \
   --disable-software-rasterizer \
   --enable-logging --v=1 \
-  --dump-dom 'http://127.0.0.1:8000/radio_streams_player.html' \
+  --dump-dom 'http://127.0.0.1:8000/core_radio.html' \
   >"$DIST_DIR"/radio_streams_player__scraped.html
 
 # Wait for the file to be created (is this NEEDED?)

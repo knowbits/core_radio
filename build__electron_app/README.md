@@ -6,7 +6,7 @@
 // TODO:  BENEFITS: 1) User can see the generated HTML using "View source" : audio, button etc.
 // TODO:            2) The scraped page might be faster (load), since there is minimal Javascript to run.
 
-Describes how to build an Electron app from the static html file `.src\radio_streams_player.html` that will run on Windows 11 64-bit.
+Describes how to build an Electron app from the static html file `.src\core_radio.html` that will run on Windows 11 64-bit.
 
 These instructions only show build a binary exxecutable for the Windows 11 64-bit platform. Other target platforms, such as Linux and macOS, have not been tested yet, but should also work.
 
@@ -80,7 +80,7 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 ## Create an executable binary for Windows 64-bit
 
 1. Copy the "static html file" and the "favicon" to the Electron build folder:
-   1. `cp ../src\radio_streams_player.html ./index.html`
+   1. `cp ../src\core_radio.html ./index.html`
    2. `cp ../icons/Elegantthemes-Beautiful-Flat-One-Color-Radio.ico ./favicon.ico`
 
 3. To build the Electron app, run `npx electron-packager . radio_streams_player --platform=win32 --arch=x64  --icon=./favicon.ico --out=release-builds --overwrite`

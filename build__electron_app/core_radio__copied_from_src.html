@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -65,9 +66,33 @@
       line-height: 1;
       /* Sets colour of all text: */
       color: var(--text-colour);
-      /* Edges (px): T, R, B, L :  */
-      padding: 5px 10px 5px 10px;
       background-color: var(--background-colour);
+      /* Set the spacing between the element's content and the border: T, R, B, L :  */
+      padding: 5px 10px 5px 10px;
+
+      border-style: solid;
+      border-width: 1px;
+      border-color: var(--button-border-colour-active);
+
+      /* GOAL: Make the border of the body element fill the whole webpage,
+               and make it resize with the browser window: */
+
+      /* 1. Set body's height & width to fill the "viewport".
+            NOTE: Useful for an Electron application to make sure that the
+              application's content takes up the full window.
+              If you don't use these properties, the size of your content will
+              be determined by its natural size and the CSS box model.
+      */
+      height: 100vh;
+      width: 100vw;
+      /* 2. Make sure "border" and "padding" are included in the
+            "body" element's total width and height: */
+      box-sizing: border-box;
+
+      /* Try to make the corner rounding of the "body" element match that
+         of the "corner radius" of native Windows applications:
+         // TODO: How to make it corner rounding work for all platforms: Web brosers, macOS, Linux..  */
+      border-radius: 5px;
     }
 
     main {

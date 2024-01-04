@@ -6,7 +6,7 @@ NOTE: Chromium is maintained by Ubuntu
 
 ## Run this command to scrape the
 
-`google-chrome --headless --dump-dom 'file:///..src/radio_streams_player.html' > ./radio_streams_player__scraped__without_javascript.html`
+`google-chrome --headless --dump-dom 'file:///..src/core_radio.html' > ./radio_streams_player__scraped__without_javascript.html`
 
 NOTE: This will give you the current state of the HTML as rendered by JavaScript, including any changes made after the page was loaded.
 
@@ -30,7 +30,7 @@ sudo apt-get install chromium-browser
 
 ## HOW TO: Create a Javascript-less version of the web page, containing only the HTML and CSS
 
-Note that the `radio_streams_player.html` file uses Javascript to create the HTML for the radio station buttons. The Javascript adds HTML to the DOM (innerHTML) during page load.
+Note that the `core_radio.html` file uses Javascript to create the HTML for the radio station buttons. The Javascript adds HTML to the DOM (innerHTML) during page load.
 
 The resulting HTML it is only accessible after the page has loaded, by reading the innerHTML of the `radio-stations` div.
 

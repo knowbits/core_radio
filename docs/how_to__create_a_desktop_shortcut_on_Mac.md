@@ -16,7 +16,7 @@ Here's how you can create a minimal web app using "Unite":
 
 1. Download and install [Unite](https://www.bzgapps.com/unite).
 
-2. Open Unite and enter the URL of your static HTML page (e.g.,   `file:///path/to/radio_streams_player.html`).
+2. Open Unite and enter the URL of your static HTML page (e.g.,   `file:///path/to/core_radio.html`).
 
 3. Enter a name for your app (e.g., Radio Streams Player) and choose an icon.
 
@@ -33,7 +33,7 @@ To display a static HTML web page as a minimal web app without the usual browser
 Here's how you can do it:
 
 1. Install the "Minimalist Web Extension" from the Firefox Add-ons store.
-2. Open the static HTML web page `radio_streams_player.html` in Firefox.
+2. Open the static HTML web page `core_radio.html` in Firefox.
 3. Click on the "Minimalist Web Extension" icon in the toolbar.
 4. Customize the settings according to your preferences, such as hiding the toolbar, navigation buttons, etc.
 5. Save the settings and the web page will now be displayed as a minimal web app without the usual browser interface.
