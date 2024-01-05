@@ -4,10 +4,14 @@
 
 * [FEATURE: Electron app : Hide the "native" application menu](docs/FEATURE_Electron_app__Hide_native_application_menu.md)
 
-* FEATURE: Electron app : "Menu" - As a row of buttons:
-  * Buttons: Close app, Restore app (?), Open Chrome DevTools , Reload page
-    * .. About ("?" icon), Settings(cog wheel icon)
-  * Other: Minimize app, Maximize app,
+* FEATURE: Electron app : Create a Menu bar - as a row of buttons at the top of the app window
+  * Use FontAwesome icons (SVG?) for the buttons
+  * "Move" button/areaaad to move the Electron app window.
+    * (See [FEATURE: Electron app: How to move the app window](docs/FEATURE__Electron_app__How_to_move_the_app_window.md))
+
+  * Menu button candidates:
+    * Close app, Reload page, Open Chrome DevTools ,  About ("?" icon), Settings(cog wheel icon)
+    * Misc. other candidates: Minimize app, Maximize app, Restore app (?).
 
 * [FEATURE: Electron app: How to move the app window](docs/FEATURE__Electron_app__How_to_move_the_app_window.md)
   * NOTE Currently we cannot drag the title bar, since the window is frameless and transparent.
