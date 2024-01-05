@@ -2,6 +2,60 @@
 
 See: https://stackoverflow.com/questions/10041480/what-is-the-difference-between-html5-localstorage-sessionstorage-session-and-cookies
 
+
+## 3 possible solutions:
+
+  * Possible solution 1: Use `localStorage` to store the JSON with the radio streams.
+    * Link: <https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage>
+
+  * Possible solution 2: Use a local file (JSON) to store the JSON with the radio streams.
+    * Requires to use the "Javascript File API" to read/write the JSON file.
+    * Link: <https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications>
+
+  * Possible solution 3: Use local web standard database (IndexedDB) to store the JSON with the radio streams.
+    * Requires to use the "Javascript IndexedDB API" to read/write the JSON file.
+    * Link: <https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB>
+
+## Github Copilot suggests "Solution 2": Store JSON in a local file
+
+> My question: _"For a static HTML page where you want to keep an individual list of radio streams in a local file, the best solution would be:"_
+
+> ANSWER: "Possible solution 2: Use a local file (JSON) to store the JSON with the radio streams."
+  > Requires to use the "Javascript File API" to read/write the JSON file.
+
+* This solution allows you to read and write data to a local JSON file, which can be easily managed and updated.
+
+* However, please note that due to security restrictions in some browsers, reading from and writing to local files might not work as expected in all scenarios, especially when the HTML file is opened directly in a browser and not served from a web server.
+
+NOTE: __Electron app__: Simplifies access to local files
+
+* Packaging your static HTML page as an Electron app does make it easier to read and write to local files.
+  * Electron apps have more privileges and fewer restrictions compared to regular web pages.
+
+* In an Electron app, you can use Node.js APIs, which allow you to interact with the file system directly.
+  * This means you can read from and write to local files without the security restrictions that browsers impose on regular web pages.
+
+* Here's an example of how you can read and write to a JSON file in an Electron app:
+
+  ```javascript
+  const fs = require('fs');
+
+  // Read data from file
+  fs.readFile('path_to_your_file.json', 'utf8', (err, data) => {
+    if (err) throw err;
+    const jsonData = JSON.parse(data);
+    console.log(jsonData);
+  });
+
+  // Write data to file
+  const jsonData = { key: 'value' };
+  fs.writeFile('path_to_your_file.json', JSON.stringify(jsonData), (err) => {
+    if (err) throw err;
+    console.log('Data written to file');
+  });
+  ```
+
+----
 RESEARCH: Access a local static file
 
 ----
