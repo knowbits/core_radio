@@ -4,7 +4,41 @@
 
 <head>
   <meta charset="UTF-8">
+  <!--
+    Setting the "viewport" is crucial for "responsive web design" on mobile devices.
+
+    It ensures that web page looks good on all devices (desktops, tablets, and phones).
+    See: https://www.w3schools.com/css/css_rwd_viewport.asp
+
+    In Electron desktop apps, it’s not necessary but doesn’t cause harm.
+    If a web page is intended strictly for desktop use, it can be omitted without affecting functionality.
+
+    NOTE: The "viewport" is the user's visible area of a web page.
+
+    Explanation of the "viewport" meta tag settings:
+
+      1) name="viewport": Tells the browser that the page is optimized for mobile.
+         => It will consider the device's width and scale when rendering the page.
+
+      2) content="width=device-width": Set "width of viewport" = "width of device".
+         => Page will scale and rearrange content to fit the device's screen width, thus making it "responsive".
+
+      3) initial-scale=1.0: Sets the initial zoom level when page is loaded.
+         A value of "1.0" means no zoom, i.e. 100% of normal size.
+  -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Load the "regular 400" Roboto font.
+       List of all Roboto fonts: https://fonts.google.com/specimen/Roboto
+       NOTE: "link" is preferred over "@import" for better load performance
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+  <!-- Load menu bar icons.
+       // TODO: Optimize by loading only the icons we actuallu need -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <title>NRK Radio - High Resolution Streams</title>
 
@@ -39,7 +73,10 @@
      */
     section,
     main,
-    header {
+    header,
+    nav,
+    ul,
+    li {
       display: block;
     }
 
@@ -51,15 +88,21 @@
      *    https://www.lifewire.com/choose-colors-for-your-website-3469874
      */
     :root {
-      /* Some HTML colours here: https://html-color.codes/color-chart */
-      --button-colour-stopped: #262626;
-      --button-colour-playing: #262626;
-      --button-border-colour-inactive: #ECF0F1;
-      --button-border-colour-active: Coral;
+      /* HTML colour chart: https://html-color.codes/color-chart */
       --background-colour: #262626;
       --text-colour: #ECF0F1;
+
+      --menu-colour: #0099cc;
+      --menu-colour-hover: #006699;
+      --tooltip-background-color: #444;
+
+      --button-colour-stopped: var(--background-colour);
+      --button-colour-playing: var(--background-colour);
+      --button-border-colour-inactive: var(--text-colour);
+      --button-border-colour-active: Coral;
     }
 
+    /* Typical structure inside HTML "body" element: header, nav, main, footer  */
 
     body {
       font-family: 'Roboto', sans-serif;
@@ -95,6 +138,72 @@
       border-radius: 5px;
     }
 
+    /* Style the menu bar */
+
+    nav {
+      display: flex;
+      justify-content: flex-start;
+      align-items: left;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: flex-start;
+      list-style-type: none;
+    }
+
+    .menu-item {
+      /* Specify size of FontAwesome icons */
+      font-size: 1.5em;
+      color: var(--menu-colour);
+      position: relative;
+    }
+
+    .menu-item:not(:last-child) {
+      margin-right: 20px;
+    }
+
+    .menu-item:hover {
+      color: var(--menu-colour-hover);
+    }
+
+    .tooltip {
+      visibility: hidden;
+      background-color: var(--tooltip-background-color);
+      color: var(--text-colour);
+      text-align: center;
+      padding: 5px 8px 5px 8px;
+      border-color: var(--text-colour);
+      border-style: solid;
+      border-width: 1px;
+      border-radius: 5px;
+      position: absolute;
+      z-index: 1;
+      top: 120%;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.5em;
+      font-weight: normal;
+    }
+
+    .left-tooltip .tooltip {
+      left: auto;
+      right: 20px;
+    }
+
+    .right-tooltip .tooltip {
+      left: 26px;
+    }
+
+    .menu-item:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Style the "main" content */
+
     main {
       display: flex;
       flex-direction: column;
@@ -110,31 +219,26 @@
 
 
     h1 {
-      /* A) Keyword: normal, bold, bolder, lighter
+      /* A) Values: normal, bold, bolder, lighter
          B) Numerical: 100 to 900 */
       font-weight: lighter;
-      font-size: 1.7em;
+      font-size: 1.5em;
       /* line-height: 1.5; */
       margin-right: 10px;
     }
 
-
-    h2 {
-      font-size: 0.7em;
-    }
-
     button {
-      font-size: 0.9em;
+      font-size: 1em;
       /* A) Values: lighter, normal, bold, bolder,
          B) Numerical: 100 to 900 */
       font-weight: normal;
-      padding: 7px 10px;
+      padding: 8px 10px;
       margin: 5px;
       border: 2px solid var(--button-border-colour-inactive);
-      border-radius: 10px;
+      border-radius: 8px;
       background-color: var(--button-colour-stopped);
-      color: white;
-      cursor: pointer;
+      color: var(--text-colour);
+      cursor: auto;
     }
 
     /* Add new CSS classes for button states */
@@ -152,6 +256,37 @@
 </head>
 
 <body>
+
+  <!-- Typical structure inside HTML "body" element: header, nav, main, footer -->
+
+  <!-- TODO: Consider adding a "header" element here. -->
+
+  <!-- Add the "menu bar" at the top of the page -->
+
+  <nav>
+    <ul>
+      <li class="menu-item right-tooltip" data-tooltip="Home">
+        <i class="fas fa-home"></i>
+        <span class="tooltip">Home</span>
+      </li>
+      <li class="menu-item right-tooltip" data-tooltip="Profile">
+        <i class="fas fa-user"></i>
+        <span class="tooltip">Profile</span>
+      </li>
+      <li class="menu-item left-tooltip" data-tooltip="Messages">
+        <i class="fas fa-envelope"></i>
+        <span class="tooltip">Messages</span>
+      </li>
+      <li class="menu-item left-tooltip" data-tooltip="Settings">
+        <i class="fas fa-cog"></i>
+        <span class="tooltip">Settings</span>
+      </li>
+      <li class="menu-item left-tooltip" data-tooltip="Logout">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="tooltip">Logout</span>
+      </li>
+    </ul>
+  </nav>
 
   <main id="radioSections"></main>
 
