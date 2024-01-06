@@ -141,18 +141,18 @@
     /* Style the menu bar */
 
     nav {
-      display: flex;
-      justify-content: flex-start;
-      align-items: left;
       margin-top: 10px;
       margin-bottom: 5px;
     }
 
     nav ul {
       display: flex;
+      /* Allow the items to wrap onto multiple lines: */
+      flex-wrap: wrap;
       justify-content: flex-start;
       list-style-type: none;
     }
+
 
     .menu-item {
       /* Specify size of FontAwesome icons */
