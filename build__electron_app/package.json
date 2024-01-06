@@ -1,6 +1,6 @@
 {
   "name": "core-radio",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Core Radio - A simple radio for listening to your favourite audio streams",
   "author": "Erlend Bleken <bleken@gmail.com>",
   "license": "MIT",
