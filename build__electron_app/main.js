@@ -5,8 +5,8 @@ const { app, BrowserWindow } = electron;
 function createWindow() {
 
   let mainWindow = new BrowserWindow({
-    width: 290,
-    height: 550,
+    width: 400,
+    height: 450,
 
     // Hide / Show the "native" menu bar by pressing the `Alt` key:
     autoHideMenuBar: true,

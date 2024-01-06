@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 
+<!--
+  TOOLS to validate HTML and CSS:
+    1. HTML: https://validator.w3.org/#validate_by_input
+    2. CSS: https://jigsaw.w3.org/css-validator/
+    3: HTML 5 (Experimental) https://validator.w3.org/nu/#textarea
+-->
 <html lang="en">
 
 <head>
@@ -64,7 +70,9 @@
      * "A CSS reset standardizes HTML elements across browsers, simplifying subsequent styling."
      *
      * This is a modified version of "Meyer's CSS Reset":
-     *   http://meyerweb.com/eric/tools/css/reset/
+     *   http://meyerweb.com/eric/tools/css/reset
+     *
+     * "Normalize.css" is another "CSS reset" to consider.
      */
     * {
       margin: 0;
@@ -80,13 +88,26 @@
      * The purpose of this part of the reset is to ensure that newer HTML5 elements,
      * which older browsers may not recognize as block-level elements, are treated as such.
      */
-    section,
+
     main,
+    section,
     header,
+    footer,
     nav,
     ul,
-    li {
+    li,
+    figcaption,
+    figure {
       display: block;
+    }
+
+    body {
+      line-height: 1;
+    }
+
+    ol,
+    ul {
+      list-style: none;
     }
 
     /* ==== END: CSS Reset ================================ */
@@ -103,7 +124,7 @@
 
       --menu-colour: #0099cc;
       --menu-colour-hover: #006699;
-      --tooltip-background-color: #444;
+      --tooltip-background-color: #666;
 
       --button-colour-stopped: var(--background-colour);
       --button-colour-playing: var(--background-colour);
@@ -121,9 +142,6 @@
        * By using “rem”, the font size of the tooltip will be relative to the base font size of the page.
        * This can make your design more consistent and responsive.
        */
-      font-size: 1rem;
-      line-height: 1;
-      font-weight: normal;
       /* Sets colour of all text: */
       color: var(--text-colour);
       background-color: var(--background-colour);
@@ -132,7 +150,7 @@
        * Set the spacing between the element's content and the border:
        * Edges_ T, R, B, L :
        */
-      padding: 5px 10px 5px 10px;
+      padding: 5px 10px 5px 15px;
 
       border-style: solid;
       border-width: 1px;
@@ -154,14 +172,15 @@
       width: 100vw;
 
       /*
-       * 2. Make sure "border" and "padding" are included in the
-       *    "body" element's total width and height:
+       * 2. Make sure both "border" and "padding" are included when
+       *    calculating the "body" element's total width and height:
        */
       box-sizing: border-box;
 
       /* Try to make the corner rounding of the "body" element match that
        * of the "corner radius" of native Windows applications:
-       * // TODO: How to make it corner rounding work for all platforms: Web brosers, macOS, Linux..
+       * // TODO: How to adapt "corner rounding" to look good on all platforms:
+         // TODO:    For web browsers. For "Electron apps": macOS, Linux..
        */
       border-radius: 5px;
     }
@@ -175,13 +194,14 @@
       flex-direction: row;
       /* Aligns "flex" items towards the start of the "flex" container (default): */
       justify-content: flex-start;
-
       /* Align "flex" items along the baseline: */
       align-items: baseline;
       /* Remove the default list item markers: */
       list-style-type: none;
-      margin-top: 10px;
-      margin-bottom: 5px;
+      /* Needed create space between the lines when the "menu items" wrap: */
+      line-height: 1.5;
+      margin-top: 5px;
+      margin-bottom: 1px;
     }
 
 
@@ -189,12 +209,12 @@
       display: flex;
       /* Allow the menu icons to wrap onto multiple lines: */
       flex-wrap: wrap;
-      /* Ensure the ul takes up the full width of the nav */
+      /* Ensure the "ul" takes up the full width of the "nav" */
       width: 100%;
     }
 
     .menu-item {
-      /* Specify size of FontAwesome icons */
+      /* Specify size of FontAwesome icons: */
       font-size: 1.5rem;
       color: var(--menu-colour);
       position: relative;
@@ -204,7 +224,7 @@
 
     /* Remove the margin from the last menu item only: */
     .menu-item:last-child {
-      margin-right: 5;
+      margin-right: 5px;
     }
 
     .menu-item:hover {
@@ -212,9 +232,9 @@
     }
 
     /*
-     * Defnie a "Spacer" div for the menu bar:
+     * Define a "spacer" div for the menu bar:
      *
-     * => Creates space between left-aligned and right-aligned menu items.
+     * => TO create space between the left-aligned and the right-aligned menu items.
      *
      * "flex-grow: 1;" :allows the spacer div
      * to grow and take up any remaining space in the ul, effectively
@@ -222,7 +242,7 @@
      * When the width of the web page is reduced, all the icons,
      * including the spacer div, will wrap onto a new line.
      */
-    .spacer {
+    nav ul li.spacer {
       flex-grow: 1;
     }
 
@@ -283,17 +303,17 @@
     }
 
     h1 {
-      font-weight: lighter;
+      font-weight: normal;
       font-size: 1.5rem;
-      /* line-height: 1.5; */
+      /* transform: scaleY(1.5); */
       margin-right: 10px;
     }
 
     button {
-      font-size: 1rem;
-      font-weight: normal;
-      padding: 7px 10px;
-      margin: 5px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      padding: 8px 10px 6px 10px;
+      margin: 5px 10px 5px 0px;
       border: 2px solid var(--button-border-colour-inactive);
       border-radius: 8px;
       background-color: var(--button-colour-stopped);
@@ -320,41 +340,97 @@
 
   <!-- Typical structure inside HTML "body" element: header, nav, main, footer -->
 
-  <!-- TODO: Consider adding a "header" element here. -->
+  <!--
+    TODO: Consider to wrap a "header" element around the current "nav" element of the "top menu bar".
 
-  <!-- Add the "menu bar" at the top of the page -->
+    If the bar at the top of your page contains not just navigation, but also other types
+    of content (like a site logo, search form, or site-wide banner), it would be more
+    appropriate to wrap the entire bar in a "header" element. The navigation links within
+    that "header" could still be wrapped in a "nav".
+
+    So, whether you should use a "header" instead of a "nav" depends on the content
+    and function of your top bar. If it's primarily for navigation, a "nav" is appropriate.
+    If it contains other types of content as well, consider using a "header".
+  -->
+
+  <!--
+    Add the "menu bar" at the top of the page:
+
+    NOTE: The "menu bar" is not a "navigation bar" (nav element).
+          It's a "menu bar" (header element).
+
+    FontAwesome: CSS styling conventions for selecting icon categories:
+      "fas" for Solid, "far" for Regular, "fal" for Light, "fad" for Duotone, and "fab" for Brands
+  -->
 
   <nav>
-    <!-- Leftt-aligned menu items: -->
+    <!-- The Left-aligned menu items: -->
     <ul>
-      <li class="menu-item right-tooltip">
+      <!-- li class="menu-item right-tooltip">
         <i class="fas fa-home"></i>
         <span class="tooltip">Home</span>
-      </li>
+      </li -->
+
       <li class="menu-item right-tooltip">
-        <i class="fas fa-user"></i>
-        <span class="tooltip">Profile</span>
+        <i class="fas fa-refresh"></i>
+        <span class="tooltip">Refresh web page (Ctrl-r)</span>
       </li>
+
+      <li class="menu-item right-tooltip" style="-webkit-app-region: drag; color: var(--tooltip-background-color);">
+        <i class="fas fa-bug"></i>
+        <span class="tooltip">View errors</span>
+      </li>
+
       <li class="menu-item left-tooltip">
-        <i class="fas fa-envelope"></i>
-        <span class="tooltip">Messages</span>
+        <i class="fas fa-code"></i>
+        <span class="tooltip">View source (HTML)</span>
       </li>
+
+      <li class="menu-item left-tooltip">
+        <i class="fas fa-tools"></i>
+        <span class="tooltip">Chromium debug tools (F12)</span>
+      </li>
+
       <li class="menu-item left-tooltip">
         <i class="fas fa-cog"></i>
         <span class="tooltip">Settings</span>
       </li>
+
       <li class="menu-item left-tooltip">
-        <i class="fas fa-sign-out-alt"></i>
-        <span class="tooltip">Logout</span>
+        <i class="fas fa-info-circle"></i>
+        <span class="tooltip">About</span>
       </li>
 
-      <!-- Add a "spacer" div to push the right-aligned menu items to the right edge of the nav bar: -->
-      <div class="spacer"></div>
+      <!-- Add a "spacer" "li" to push the right-aligned menu items to the right edge of the nav bar: -->
+      <li class="spacer">
+      </li>
 
-      <!-- Right-aligned menu items: -->
+      <!-- The right-aligned menu icons: -->
+
+      <!-- li class="menu-item right-tooltip">
+        <i class="fas fa-user"></i>
+        <span class="tooltip">Account</span>
+      </li -->
+
+      <!-- li class="menu-item left-tooltip">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="tooltip">Logout</span>
+      </li -->
+
+      <!-- Add the "Close" icon.
+           NOTE: Only works in an Electron app. -->
       <li class="menu-item left-tooltip">
+        <i class="fas fa-window-close"></i>
+        <span class="tooltip">Close app (Electron only)</span>
+      </li>
+
+      <!-- Add the "Move" icon: allows to "mouse drag" the app window.
+           NOTE: Only works in Electron apps!
+      -->
+      <li class="menu-item" style="-webkit-app-region: drag; color: var(--tooltip-background-color);">
         <i class="fas fa-arrows-alt"></i>
-        <span class="tooltip">Drag to move the app window</span>
+        <!-- NOTE: Tooltip does not work on a "draggable" region: -->
+        <!-- span class="tooltip">Drag to move the windows (Electron only)</span -->
       </li>
     </ul>
   </nav>
