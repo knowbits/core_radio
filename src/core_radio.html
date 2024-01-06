@@ -40,9 +40,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
   <!--
-    Load menu bar icons.
+    Load FontAwesome icons to be used in the "menu bar".
     // TODO: Optimize by loading only the icons we actually use.
+
+    "FontAwesome stylesheet":
+
+    The FontAwesome stylesheet is a CSS file that defines classes for each icon.
+    When you add these classes to an element in your HTML, the corresponding icon will be displayed.
+
+    Preloading the "FontAwesome stylesheet" can improve performance by starting to download the stylesheet sooner.
+    This can be especially beneficial if your website uses a lot of FontAwesome icons, as it allows the icons
+    to start loading earlier and be ready by the time they're needed.
   -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <title>Core Radio</title>
@@ -160,20 +170,27 @@
 
     nav {
       display: flex;
-      justify-content: space-between;
-      /* Align items vertically: */
-      align-items: center;
+      /* Allow "nav" items to wrap onto multiple lines: */
+      flex-wrap: wrap;
+      flex-direction: row;
+      /* Aligns "flex" items towards the start of the "flex" container (default): */
+      justify-content: flex-start;
+
+      /* Align "flex" items along the baseline: */
+      align-items: baseline;
+      /* Remove the default list item markers: */
+      list-style-type: none;
       margin-top: 10px;
       margin-bottom: 5px;
     }
+
 
     nav ul {
       display: flex;
       /* Allow the menu icons to wrap onto multiple lines: */
       flex-wrap: wrap;
-      justify-content: flex-start;
-      list-style-type: none;
-      gap: 20px;
+      /* Ensure the ul takes up the full width of the nav */
+      width: 100%;
     }
 
     .menu-item {
@@ -181,12 +198,33 @@
       font-size: 1.5rem;
       color: var(--menu-colour);
       position: relative;
+      /* Add a margin to the right of each menu item: */
+      margin-right: 20px;
+    }
+
+    /* Remove the margin from the last menu item only: */
+    .menu-item:last-child {
+      margin-right: 5;
     }
 
     .menu-item:hover {
       color: var(--menu-colour-hover);
     }
 
+    /*
+     * Defnie a "Spacer" div for the menu bar:
+     *
+     * => Creates space between left-aligned and right-aligned menu items.
+     *
+     * "flex-grow: 1;" :allows the spacer div
+     * to grow and take up any remaining space in the ul, effectively
+     * pushing the last li element to the right edge of the nav bar.
+     * When the width of the web page is reduced, all the icons,
+     * including the spacer div, will wrap onto a new line.
+     */
+    .spacer {
+      flex-grow: 1;
+    }
 
     /* Define a "tooltip" stype for "menu items" and other HTML elements */
 
@@ -309,9 +347,11 @@
         <i class="fas fa-sign-out-alt"></i>
         <span class="tooltip">Logout</span>
       </li>
-    </ul>
-    <!-- Right-aligned menu items: -->
-    <ul>
+
+      <!-- Add a "spacer" div to push the right-aligned menu items to the right edge of the nav bar: -->
+      <div class="spacer"></div>
+
+      <!-- Right-aligned menu items: -->
       <li class="menu-item left-tooltip">
         <i class="fas fa-arrows-alt"></i>
         <span class="tooltip">Drag to move the app window</span>

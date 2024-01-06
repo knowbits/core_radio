@@ -28,29 +28,38 @@
   -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Load the "regular 400" Roboto font.
-       List of all Roboto fonts: https://fonts.google.com/specimen/Roboto
-       NOTE: "link" is preferred over "@import" for better load performance
+  <!--
+    List of all Roboto fonts: https://fonts.google.com/specimen/Roboto
+    NOTE: "link" is preferred over "@import" for better load performance
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <!-- Load the "Regular 400" Roboto font: -->
+  <!-- link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" -->
+  <!-- Load the "Light 300" Roboto font: -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
-  <!-- Load menu bar icons.
-       // TODO: Optimize by loading only the icons we actuallu need -->
+  <!--
+    Load FontAwesome icons to be used in the "menu bar".
+    // TODO: Optimize by loading only the icons we actually use.
+
+    "FontAwesome stylesheet":
+
+    The FontAwesome stylesheet is a CSS file that defines classes for each icon.
+    When you add these classes to an element in your HTML, the corresponding icon will be displayed.
+
+    Preloading the "FontAwesome stylesheet" can improve performance by starting to download the stylesheet sooner.
+    This can be especially beneficial if your website uses a lot of FontAwesome icons, as it allows the icons
+    to start loading earlier and be ready by the time they're needed.
+  -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-  <title>NRK Radio - High Resolution Streams</title>
+  <title>Core Radio</title>
 
   <style>
-    /* Choose among Roboto fonts:
-     *    https://fonts.google.com/specimen/Roboto
-     *
-     * Use the "Light 300" Roboto font:
-     */
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
-
     /* ==== START: CSS Reset ================================ */
+
     /*
      * "A CSS reset standardizes HTML elements across browsers, simplifying subsequent styling."
      *
@@ -102,89 +111,145 @@
       --button-border-colour-active: Coral;
     }
 
-    /* Typical structure inside HTML "body" element: header, nav, main, footer  */
-
+    /*
+     * Typical structure inside HTML "body" element:
+     *     header, nav, main, footer
+     */
     body {
       font-family: 'Roboto', sans-serif;
+      /*
+       * By using “rem”, the font size of the tooltip will be relative to the base font size of the page.
+       * This can make your design more consistent and responsive.
+       */
+      font-size: 1rem;
       line-height: 1;
+      font-weight: normal;
       /* Sets colour of all text: */
       color: var(--text-colour);
       background-color: var(--background-colour);
-      /* Set the spacing between the element's content and the border: T, R, B, L :  */
+
+      /*
+       * Set the spacing between the element's content and the border:
+       * Edges_ T, R, B, L :
+       */
       padding: 5px 10px 5px 10px;
 
       border-style: solid;
       border-width: 1px;
       border-color: var(--button-border-colour-active);
 
-      /* GOAL: Make the border of the body element fill the whole webpage,
-               and make it resize with the browser window: */
+      /*
+       * GOAL: Make the border of the body element fill the whole webpage,
+       *       and make it resize with the browser window:
+       */
 
-      /* 1. Set body's height & width to fill the "viewport".
-            NOTE: Useful for an Electron application to make sure that the
-              application's content takes up the full window.
-              If you don't use these properties, the size of your content will
-              be determined by its natural size and the CSS box model.
-      */
+      /*
+       *  1. Set body's height & width to fill the "viewport".
+       *     NOTE: Useful for an Electron application to make sure that the
+       *       application's content takes up the full window.
+       *       If you don't use these properties, the size of your content will
+       *       be determined by its natural size and the CSS box model.
+       */
       height: 100vh;
       width: 100vw;
-      /* 2. Make sure "border" and "padding" are included in the
-            "body" element's total width and height: */
+
+      /*
+       * 2. Make sure "border" and "padding" are included in the
+       *    "body" element's total width and height:
+       */
       box-sizing: border-box;
 
       /* Try to make the corner rounding of the "body" element match that
-         of the "corner radius" of native Windows applications:
-         // TODO: How to make it corner rounding work for all platforms: Web brosers, macOS, Linux..  */
+       * of the "corner radius" of native Windows applications:
+       * // TODO: How to make it corner rounding work for all platforms: Web brosers, macOS, Linux..
+       */
       border-radius: 5px;
     }
 
     /* Style the menu bar */
 
     nav {
+      display: flex;
+      /* Allow "nav" items to wrap onto multiple lines: */
+      flex-wrap: wrap;
+      flex-direction: row;
+      /* Aligns "flex" items towards the start of the "flex" container (default): */
+      justify-content: flex-start;
+
+      /* Align "flex" items along the baseline: */
+      align-items: baseline;
+      /* Remove the default list item markers: */
+      list-style-type: none;
       margin-top: 10px;
       margin-bottom: 5px;
     }
 
+
     nav ul {
       display: flex;
-      /* Allow the items to wrap onto multiple lines: */
+      /* Allow the menu icons to wrap onto multiple lines: */
       flex-wrap: wrap;
-      justify-content: flex-start;
-      list-style-type: none;
+      /* Ensure the ul takes up the full width of the nav */
+      width: 100%;
     }
-
 
     .menu-item {
       /* Specify size of FontAwesome icons */
-      font-size: 1.5em;
+      font-size: 1.5rem;
       color: var(--menu-colour);
       position: relative;
+      /* Add a margin to the right of each menu item: */
+      margin-right: 20px;
     }
 
-    .menu-item:not(:last-child) {
-      margin-right: 20px;
+    /* Remove the margin from the last menu item only: */
+    .menu-item:last-child {
+      margin-right: 5;
     }
 
     .menu-item:hover {
       color: var(--menu-colour-hover);
     }
 
+    /*
+     * Defnie a "Spacer" div for the menu bar:
+     *
+     * => Creates space between left-aligned and right-aligned menu items.
+     *
+     * "flex-grow: 1;" :allows the spacer div
+     * to grow and take up any remaining space in the ul, effectively
+     * pushing the last li element to the right edge of the nav bar.
+     * When the width of the web page is reduced, all the icons,
+     * including the spacer div, will wrap onto a new line.
+     */
+    .spacer {
+      flex-grow: 1;
+    }
+
+    /* Define a "tooltip" stype for "menu items" and other HTML elements */
+
     .tooltip {
       visibility: hidden;
       background-color: var(--tooltip-background-color);
       color: var(--text-colour);
       text-align: center;
-      padding: 5px 8px 5px 8px;
+      /* Make sure text wraps when reaching tooltip box's edge. Or 'normal' */
+      white-space: pre-wrap;
+      /* Set the max width of the tooltip box: */
+      /* max-width: 200px;  */
+      /* adjust as needed */
+      padding: 5px 8px;
       border-color: var(--text-colour);
       border-style: solid;
       border-width: 1px;
       border-radius: 5px;
       position: absolute;
       z-index: 1;
-      top: 120%;
-      opacity: 0;
+      /* Position the tooltip below the menu item:_*/
+      top: 40px;
       transition: opacity 0.3s;
-      font-size: 0.5em;
+      /* Using "rem" is more responsive that "em": */
+      font-size: 0.8rem;
       font-weight: normal;
     }
 
@@ -217,22 +282,17 @@
       margin-bottom: 5px;
     }
 
-
     h1 {
-      /* A) Values: normal, bold, bolder, lighter
-         B) Numerical: 100 to 900 */
       font-weight: lighter;
-      font-size: 1.5em;
+      font-size: 1.5rem;
       /* line-height: 1.5; */
       margin-right: 10px;
     }
 
     button {
-      font-size: 1em;
-      /* A) Values: lighter, normal, bold, bolder,
-         B) Numerical: 100 to 900 */
+      font-size: 1rem;
       font-weight: normal;
-      padding: 8px 10px;
+      padding: 7px 10px;
       margin: 5px;
       border: 2px solid var(--button-border-colour-inactive);
       border-radius: 8px;
@@ -253,6 +313,7 @@
       background-color: var(--button-colour-playing);
     }
   </style>
+
 </head>
 
 <body>
@@ -264,26 +325,36 @@
   <!-- Add the "menu bar" at the top of the page -->
 
   <nav>
+    <!-- Leftt-aligned menu items: -->
     <ul>
-      <li class="menu-item right-tooltip" data-tooltip="Home">
+      <li class="menu-item right-tooltip">
         <i class="fas fa-home"></i>
         <span class="tooltip">Home</span>
       </li>
-      <li class="menu-item right-tooltip" data-tooltip="Profile">
+      <li class="menu-item right-tooltip">
         <i class="fas fa-user"></i>
         <span class="tooltip">Profile</span>
       </li>
-      <li class="menu-item left-tooltip" data-tooltip="Messages">
+      <li class="menu-item left-tooltip">
         <i class="fas fa-envelope"></i>
         <span class="tooltip">Messages</span>
       </li>
-      <li class="menu-item left-tooltip" data-tooltip="Settings">
+      <li class="menu-item left-tooltip">
         <i class="fas fa-cog"></i>
         <span class="tooltip">Settings</span>
       </li>
-      <li class="menu-item left-tooltip" data-tooltip="Logout">
+      <li class="menu-item left-tooltip">
         <i class="fas fa-sign-out-alt"></i>
         <span class="tooltip">Logout</span>
+      </li>
+
+      <!-- Add a "spacer" div to push the right-aligned menu items to the right edge of the nav bar: -->
+      <div class="spacer"></div>
+
+      <!-- Right-aligned menu items: -->
+      <li class="menu-item left-tooltip">
+        <i class="fas fa-arrows-alt"></i>
+        <span class="tooltip">Drag to move the app window</span>
       </li>
     </ul>
   </nav>
