@@ -73,8 +73,37 @@
      *   http://meyerweb.com/eric/tools/css/reset
      *
      * "Normalize.css" is another "CSS reset" to consider.
+     *
+     * NOTE: The "*"" selector applies styles to every element on the page,
+     *       which can be inefficient. It’s generally better to apply styles
+     *       to specific classes or elements.
      */
-    * {
+    html,
+    body,
+    div,
+    span,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    a,
+    img,
+    ul,
+    li,
+    header,
+    footer,
+    main,
+    nav,
+    section,
+    figure,
+    figcaption,
+    button,
+    input,
+    select,
+    textarea {
       margin: 0;
       padding: 0;
       border: 0;
@@ -124,7 +153,7 @@
 
       --menu-colour: #0099cc;
       --menu-colour-hover: #006699;
-      --tooltip-background-color: #666;
+      --menu-color-inactive: #666;
 
       --button-colour-stopped: var(--background-colour);
       --button-colour-playing: var(--background-colour);
@@ -213,7 +242,7 @@
       width: 100%;
     }
 
-    .menu-item {
+    nav ul li {
       /* Specify size of FontAwesome icons: */
       font-size: 1.5rem;
       color: var(--menu-colour);
@@ -223,11 +252,11 @@
     }
 
     /* Remove the margin from the last menu item only: */
-    .menu-item:last-child {
+    nav ul li:last-child {
       margin-right: 5px;
     }
 
-    .menu-item:hover {
+    nav ul li:hover {
       color: var(--menu-colour-hover);
     }
 
@@ -244,33 +273,34 @@
      */
     nav ul li.spacer {
       flex-grow: 1;
+      margin-left: 0px;
+      margin-right: 0px;
     }
 
     /* Define a "tooltip" stype for "menu items" and other HTML elements */
 
     .tooltip {
       visibility: hidden;
-      background-color: var(--tooltip-background-color);
-      color: var(--text-colour);
+      background-color: black;
+      color: white;
       text-align: center;
       /* Make sure text wraps when reaching tooltip box's edge. Or 'normal' */
       white-space: pre-wrap;
       /* Set the max width of the tooltip box: */
       /* max-width: 200px;  */
-      /* adjust as needed */
       padding: 5px 8px;
-      border-color: var(--text-colour);
+      border-color: white;
       border-style: solid;
       border-width: 1px;
       border-radius: 5px;
       position: absolute;
       z-index: 1;
-      /* Position the tooltip below the menu item:_*/
+      /* Position the tooltip below the menu item: */
       top: 40px;
       transition: opacity 0.3s;
       /* Using "rem" is more responsive that "em": */
       font-size: 0.8rem;
-      font-weight: normal;
+      font-weight: bold;
     }
 
     .left-tooltip .tooltip {
@@ -282,7 +312,7 @@
       left: 26px;
     }
 
-    .menu-item:hover .tooltip {
+    nav ul li:hover .tooltip {
       visibility: visible;
       opacity: 1;
     }
@@ -366,37 +396,37 @@
   <nav>
     <!-- The Left-aligned menu items: -->
     <ul>
-      <!-- li class="menu-item right-tooltip">
+      <!-- li class="right-tooltip">
         <i class="fas fa-home"></i>
         <span class="tooltip">Home</span>
       </li -->
 
-      <li class="menu-item right-tooltip">
+      <li class="right-tooltip">
         <i class="fas fa-refresh"></i>
         <span class="tooltip">Refresh web page (Ctrl-r)</span>
       </li>
 
-      <li class="menu-item right-tooltip" style="-webkit-app-region: drag; color: var(--tooltip-background-color);">
+      <li class="right-tooltip" style="color: var(--menu-color-inactive);">
         <i class="fas fa-bug"></i>
         <span class="tooltip">View errors</span>
       </li>
 
-      <li class="menu-item left-tooltip">
+      <li class="left-tooltip">
         <i class="fas fa-code"></i>
         <span class="tooltip">View source (HTML)</span>
       </li>
 
-      <li class="menu-item left-tooltip">
+      <li class="left-tooltip">
         <i class="fas fa-tools"></i>
         <span class="tooltip">Chromium debug tools (F12)</span>
       </li>
 
-      <li class="menu-item left-tooltip">
+      <li class="left-tooltip">
         <i class="fas fa-cog"></i>
         <span class="tooltip">Settings</span>
       </li>
 
-      <li class="menu-item left-tooltip">
+      <li class="left-tooltip">
         <i class="fas fa-info-circle"></i>
         <span class="tooltip">About</span>
       </li>
@@ -407,19 +437,19 @@
 
       <!-- The right-aligned menu icons: -->
 
-      <!-- li class="menu-item right-tooltip">
+      <!-- li class="right-tooltip">
         <i class="fas fa-user"></i>
         <span class="tooltip">Account</span>
       </li -->
 
-      <!-- li class="menu-item left-tooltip">
+      <!-- li class="left-tooltip">
         <i class="fas fa-sign-out-alt"></i>
         <span class="tooltip">Logout</span>
       </li -->
 
       <!-- Add the "Close" icon.
            NOTE: Only works in an Electron app. -->
-      <li class="menu-item left-tooltip">
+      <li class="left-tooltip">
         <i class="fas fa-window-close"></i>
         <span class="tooltip">Close app (Electron only)</span>
       </li>
@@ -427,7 +457,7 @@
       <!-- Add the "Move" icon: allows to "mouse drag" the app window.
            NOTE: Only works in Electron apps!
       -->
-      <li class="menu-item" style="-webkit-app-region: drag; color: var(--tooltip-background-color);">
+      <li class="menu-item" style="-webkit-app-region: drag; color: var(--menu-color-inactive);">
         <i class="fas fa-arrows-alt"></i>
         <!-- NOTE: Tooltip does not work on a "draggable" region: -->
         <!-- span class="tooltip">Drag to move the windows (Electron only)</span -->
