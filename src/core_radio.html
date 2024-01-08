@@ -47,7 +47,12 @@
 
   <!--
     Load FontAwesome icons to be used in the "menu bar".
-    // TODO: Optimize by loading only the icons we actually use.
+
+    // TODO: Optimize by loading only the icons we actually use. See options in "dev_DOCS/" folder.
+
+
+    CSS styling conventions for selecting FontAwesome icon categories:
+      "fas" for Solid, "far" for Regular, "fal" for Light, "fad" for Duotone, and "fab" for Brands
 
     "FontAwesome stylesheet":
 
@@ -107,7 +112,6 @@
       margin: 0;
       padding: 0;
       border: 0;
-      font-size: 100%;
       font: inherit;
       vertical-align: baseline;
     }
@@ -117,7 +121,6 @@
      * The purpose of this part of the reset is to ensure that newer HTML5 elements,
      * which older browsers may not recognize as block-level elements, are treated as such.
      */
-
     main,
     section,
     header,
@@ -131,7 +134,8 @@
     }
 
     body {
-      line-height: 1;
+      /* Set the "line height" to be equal to the "root font size" (1rem = 16px) */
+      line-height: 1rem;
     }
 
     ol,
@@ -167,6 +171,7 @@
      */
     body {
       font-family: 'Roboto', sans-serif;
+      font-size: 100%;
       /*
        * By using “rem”, the font size of the tooltip will be relative to the base font size of the page.
        * This can make your design more consistent and responsive.
@@ -223,12 +228,6 @@
       flex-direction: row;
       /* Aligns "flex" items towards the start of the "flex" container (default): */
       justify-content: flex-start;
-      /* Align "flex" items along the baseline: */
-      align-items: baseline;
-      /* Remove the default list item markers: */
-      list-style-type: none;
-      /* Needed create space between the lines when the "menu items" wrap: */
-      line-height: 1.5;
       margin-top: 5px;
       margin-bottom: 1px;
     }
@@ -238,18 +237,28 @@
       display: flex;
       /* Allow the menu icons to wrap onto multiple lines: */
       flex-wrap: wrap;
+      /* Align "flex" items along the baseline: */
+      align-items: baseline;
       /* Ensure the "ul" takes up the full width of the "nav" */
       width: 100%;
+      /* Needed create space between the lines when the "menu items" wrap: */
+      line-height: 1.5rem;
+      /* Remove the default list item markers: */
+      list-style-type: none;
     }
 
     nav ul li {
-      /* Specify size of FontAwesome icons: */
-      font-size: 1.5rem;
       color: var(--menu-colour);
       position: relative;
       /* Add a margin to the right of each menu item: */
       margin-right: 20px;
     }
+
+    nav ul li i {
+      /* Specify size of FontAwesome icons: */
+      font-size: 1.5rem;
+    }
+
 
     /* Remove the margin from the last menu item only: */
     nav ul li:last-child {
@@ -351,7 +360,7 @@
       cursor: auto;
     }
 
-    /* Add new CSS classes for button states */
+    /* CSS classes for the two "audio button" states */
 
     .button-stopped {
       border-color: var(--button-border-colour-inactive);
@@ -388,9 +397,6 @@
 
     NOTE: The "menu bar" is not a "navigation bar" (nav element).
           It's a "menu bar" (header element).
-
-    FontAwesome: CSS styling conventions for selecting icon categories:
-      "fas" for Solid, "far" for Regular, "fal" for Light, "fad" for Duotone, and "fab" for Brands
   -->
 
   <nav>
@@ -406,7 +412,7 @@
         <span class="tooltip">Refresh page (Ctrl+r)</span>
       </li>
 
-      <li class="right-tooltip" style="color: var(--menu-color-inactive);">
+      <li class="right-tooltip" id="audioErrorLogMenuItem" style="display: none; color: var(--menu-color-inactive);">
         <i class="fas fa-bug" id="menuAudioErrorLog"></i>
         <span class="tooltip">View audio errors</span>
       </li>
@@ -447,13 +453,6 @@
         <span class="tooltip">Logout</span>
       </li -->
 
-      <!-- Add the "Close" icon.
-           NOTE: Only works in an Electron app. -->
-      <li class="left-tooltip">
-        <i class="fas fa-window-close"></i>
-        <span class="tooltip">Close app (Electron only)</span>
-      </li>
-
       <!-- Add the "Move" icon: allows to "mouse drag" the app window.
            NOTE: Only works in Electron apps!
       -->
@@ -462,6 +461,17 @@
         <!-- NOTE: Tooltip does not work on a "draggable" region: -->
         <!-- span class="tooltip">Drag to move the windows (Electron only)</span -->
       </li>
+
+      <!--
+        Add the "Close" icon.
+        NOTE: Will only work in an Electron app, since a HTML page cannot close itself.
+      -->
+      <li class="left-tooltip">
+        <i class="far fa-window-close" style="font-size: 1.8rem; color: var(--text-colour);"
+          onmouseover="this.style.color='#CD5C5C'" onmouseout="this.style.color='var(--text-colour)'"></i>
+        <span class="tooltip">Close app</span>
+      </li>
+
     </ul>
   </nav>
 
@@ -545,12 +555,9 @@
     // ==================================================
     // Define "event handler" functions for menu buttons:
 
-
     function refreshPage() {
       location.reload();
     };
-
-    document.getElementById("menuRefreshPage").addEventListener("click", refreshPage);
 
     /*
      * Escape HTML tags before writing them to the new tab:
@@ -564,51 +571,56 @@
         .replace(/'/g, "&#039;");
     };
 
-    /**
-     * Show the HTML source for this web page in a new tab (Electron app: in separate vindow).
-     */
     function viewSource() {
       let sourceCode = document.documentElement.outerHTML;
       let escapedSource = escapeHtml(sourceCode);
-      let sourceWindow = window.open("", "WINDOW_NAME_SOURCE", "width=600,height=600");
-      // The "document.write()" method replaces the entire document, not just the body.
-      sourceWindow.document.write('<html><head><title>HTML source</title></head><body>');
-      sourceWindow.document.write('<pre>' + escapedSource + '</pre>');
-      sourceWindow.document.write('</body></html>');
+      let sourceWindow = window.open("", "_WINDOW_NAME_SOURCE", "width=600,height=600");
+
+      let htmlContent = '<html><head><title>HTML source</title></head><body>';
+      htmlContent += '<pre>' + escapedSource + '</pre>';
+      htmlContent += '</body></html>';
+
+      sourceWindow.document.open();
+      sourceWindow.document.write(htmlContent);
+      sourceWindow.document.close();
     };
 
-    document.getElementById("menuViewSource").addEventListener("click", viewSource);
+    let errorLog = [];
 
-    /**
+    /*
      * Display log of audio related errors in a separate window.
      */
+    // TODO: WORK REMAINS: 1) Hide the "View errors" button in the parent window if error log was cleared.
+    // TODO:      2) Also need to empty the "errorLog" array in the parent window.
     function displayErrors() {
-      let errorWindow = window.open("", "WINDOW_NAME_ERRROR", "width=600,height=600");
-      errorWindow.document.write('<html><head><title>Audio errors</title></head><body>');
-      errorWindow.document.write("<h1>Audio errors</h1>");
+      let errorWindow = window.open("", "_WINDOW_NAME_ERROR", "width=600,height=600");
+
+      let htmlContent = '<html><head><title>Audio errors</title></head><body>';
+      htmlContent += '<h1>Audio errors</h1>';
 
       // Add a button for clearing the log
-      errorWindow.document.write('<button id="clearLog">Clear errors</button>');
+      htmlContent += '<button id="clearLog">Clear errors</button > ';
       // Add a button for closing the window
-      // TODO: errorWindow.document.write('<button id="closeWindow">Close</button>');
+      // htmlContent += '<button id="closeWindow">Close</button>';
 
       errorLog.forEach((error, index) => {
-        errorWindow.document.write(`<p><strong>Error ${index + 1}:</strong> ${error.error} <br> <strong>Time:</strong> ${error.timestamp}</p>`);
+        htmlContent += `<p><strong>Error ${index + 1}:</strong> ${error.error} <br> <strong>Time:</strong> ${error.timestamp}</p>`;
       });
 
-      errorWindow.document.write('</body></html>');
+      htmlContent += '</body></html>';
 
+      errorWindow.document.open();
+      errorWindow.document.write(htmlContent);
+      errorWindow.document.close();
       // Add event listener for the "Clear errors" button
-      errorWindow.document.getElementById("clearLog").addEventListener("click", function () {
-        errorLog = [];
-        errorWindow.location.reload();
-      });
+      errorWindow.document.addEventListener('DOMContentLoaded', (event) => {
+        errorWindow.document.getElementById("clearLog").addEventListener("click", function () {
+          errorLog = [];
+          errorWindow.location.reload();
+        }); // End of "errorWindow.onload" function
+      }); // End of "DOMContentLoaded" event listener
+    };  // End of "displayErrors" function
 
-      // Add event listener for the "Close" button
-      // TODO: NOT WORKING: errorWindow.document.getElementById("closeWindow").addEventListener("click", function () {errorWindow.close();});
-    }
-
-    document.getElementById("menuAudioErrorLog").addEventListener("click", displayErrors);
 
     let currentAudio = null;
     let currentButton = null;
@@ -645,6 +657,17 @@
         }
         const errorText = 'ERROR: ' + errorMessage + ". Got an error while playing audio stream: " + newStream;
         console.error(errorText);
+
+        // Add the error to the global "errorLog" array
+        errorLog.push({
+          error: newAudio.error.code,
+          message: errorMessage,
+          timestamp: new Date()
+        });
+
+        // Make the error menu item visible
+        let errorMenuItem = document.getElementById('audioErrorLogMenuItem');
+        errorMenuItem.style.display = 'block';
 
         newButton.style.color = 'red';
         newButton.textContent = 'ERROR (see console)';
@@ -717,7 +740,6 @@
       }
     } // End of "handleButtonClick" function
 
-
     /* SECTION_TO_REMOVE_2__START */  // Used by our "web scraping" shell script
 
     const radioSections = document.getElementById("radioSections");
@@ -777,6 +799,15 @@
     radioSections.appendChild(fragment);
 
     /* SECTION_TO_REMOVE_2__END */
+
+    // =======================================
+    // Add "event listeners" for menu buttons:
+
+    window.onload = function () {
+      document.getElementById("menuRefreshPage").addEventListener("click", refreshPage);
+      document.getElementById("menuViewSource").addEventListener("click", viewSource);
+      document.getElementById("menuAudioErrorLog").addEventListener("click", displayErrors);
+    };
 
   </script>
 

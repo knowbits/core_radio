@@ -1,0 +1,38 @@
+# ====================================================
+# Config for "Axel's Static Server" VS Code extension:
+#
+# Repo: https://github.com/axel669/vsc-static-server
+# Marketplace: https://marketplace.visualstudio.com/items?itemName=axel669.static-server
+
+# ====================================================
+# USAGE:
+# Open Chrome to view static html page: http://localhost:45067/core_radio.html
+# NOTE: The static files are served using "./src/" as the root folder
+
+# ====================================================
+# CONFIGURAION:
+
+# the "port" to listen on
+port: 45067
+
+# optional
+# adds "headers" to the response from all sources (static or proxy)
+# headers:
+#  cache-control: no-cache
+
+# the list of sources to pull from.
+# will go in the order defined until it gets a response or dies trying
+sources:
+  # "dir" is a path to look for static files
+  - dir: src
+#
+#  - dir: other
+    # "headers" can be added to any individual source and will be merged with the
+    # the top level headers defined (if any). source headers have precedence
+#    headers:
+#      blep: blep!
+#
+#  - dir: /some/absolute/path
+#
+# proxy can be used to route requests to some other service or api
+#  - proxy: https://postman-echo.com
