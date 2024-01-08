@@ -1,6 +1,6 @@
 {
   "name": "core-radio",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Core Radio - A simple radio for listening to your favourite audio streams",
   "author": "Erlend Bleken <bleken@gmail.com>",
   "license": "MIT",
@@ -11,9 +11,6 @@
     "productName": "Core Radio",
     "compression": "maximum",
     "artifactName": "${name}_${version}_${env.TARGET_PLATFORM}_${arch}.${ext}",
-    "directories": {
-      "output": "dist"
-    },
     "win": {
       "icon": "favicon_256x256.ico",
       "target": [
@@ -32,11 +29,24 @@
     },
     "linux": {
       "icon": "linux_icon.png"
-    }
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/*"
+    ],
+    "extraResources": [
+      "locales/en-US.pak"
+    ],
+    "afterPack": "./scripts/remove-locales.js"
   },
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps",
+
     "dist-all-platforms": "TARGET_PLATFORM=ALL electron-builder --all",
     "dist-all-platforms-and-architectures": "TARGET_PLATFORM=ALL electron-builder --all --arch=all",
     "dist-linux-all": "TARGET_PLATFORM=linux electron-builder --platform=linux --all",

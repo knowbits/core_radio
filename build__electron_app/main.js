@@ -5,6 +5,11 @@ const { app, BrowserWindow } = electron;
 function createWindow() {
 
   let mainWindow = new BrowserWindow({
+    webPreferences: {
+      // "true": Enable to use Node.js modules in the HTML document.
+      // "false": Prevent the renderer processes (the web pages) from accessing Node.js APIs.
+      nodeIntegration: false
+    },
     width: 400,
     height: 450,
 
@@ -37,6 +42,26 @@ function createWindow() {
   //
   // mainWindow.webContents.openDevTools();
 }
+
+// ====================================================
+// GOAL: Reduce the size of the Electron app by excluding most locales (the ".pak" files).
+//
+// NOTE: By default, an Electron app automatically uses the system’s locale.
+//       => The app will be localized to the system’s language (date, currency, spell checker).
+//
+// NOTE: To get the system’s locale in the "main process", call "app.getLocale()".
+//
+// About "locale" in Chromium:
+// https://www.chromium.org/developers/design-documents/internationalization
+//
+// All target platforms of an Electron app, including Windows, macOS, and Linux,
+// use ".pak" files for locales. The Electron framework leverages Chromium’s
+// internationalization (i18n) infrastructure, which stores locale data in
+// these ".pak" files. This ensures uniform handling of locale data across all platforms.
+// The same approach is used to include or exclude certain ".pak" files for all platforms.
+
+// Instead of using the "system locale", we set a specific locale ("en-US") for the Electron app:
+app.commandLine.appendSwitch('lang', 'en-US');
 
 app.whenReady().then(createWindow);
 

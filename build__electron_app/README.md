@@ -26,9 +26,10 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 ### Install Electron
 
 1. Install Electron as a "development dependency" in your app:
-  * Install "Electron": `npm install --save-dev electron@latest`
-  * Will output `"added 75 packages in 32s"`
-  * The follwoing files will be created:
+
+* Install "Electron": `npm install --save-dev electron@latest`
+* Will output `"added 75 packages in 32s"`
+* The follwoing files will be created:
     1. `package-lock.json`
     2. `node_modules/` folder:
        1. All the local node.js dependencies will be installed here.
@@ -38,7 +39,7 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 2. PS! These files/folders should not be in git, so add them in your `../.gitignore` file.
 
 3. Verify installation with one of these methods:
-   1. ` ./node_modules/.bin/electron -v`
+   1. `./node_modules/.bin/electron -v`
    2. `npx electron -v`
       1. NOTE: `npx` is a tool that comes with `npm` and allows you to run locally installed packages.
    3. Add a script to your `package.json` file:
@@ -48,10 +49,10 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 ### Install the "Electron packager" package
 
 1. The `electron-packager` is required to build an Electron app as an executable binary for misc. target platforms.
-  * Install: `npm install --save-dev electron-packager`
-  * Will output `"added 99 packages, ..."`
-  * Adds `electron-packager` as a `"devDependencies":` entry in the `package.json` file.
 
+* Install: `npm install --save-dev electron-packager`
+* Will output `"added 99 packages, ..."`
+* Adds `electron-packager` as a `"devDependencies":` entry in the `package.json` file.
 
 2. NOTE: `electron-packager` is a tool that packages your Electron app into an executable for a target platform.
    1. An .exe file for Windows.
@@ -77,6 +78,21 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
     3. It is also required to build an "Electron app" as an executable binary for the target platforms.
     4. The `main.js` file itself is not required to run the Electron app, it is only required to build the Electron app.
 
+## About "`package.json`": Build configuration for 'electron-builder'
+
+* The `package.json` file is required to build an Electron app as an executable binary for the target platforms.
+* It is also required to run the "Electron app" locally for testing purposes.
+* The `package.json` file is located here: `<PROJECT_ROOT>/build__electron_app/package.json`.
+* The `package.json` file contains the build configuration for the `electron-builder` tool.
+
+* Explaining config: `"postinstall": "electron-builder install-app-deps",`
+  * This will install the required 'Node.js' dependencies (if any) for the target platform.
+  * This is required to build an Electron app as an executable binary for the target platforms.
+
+> The `postinstall` script in a `package.json` file is a hook that is automatically executed by npm (Node Package Manager) after the package (as defined in `package.json`) is installed. The `postinstall` script is executed after all the dependencies listed in the `package.json` file are installed.
+
+> The `install-app-deps` command will install any app dependencies, e.g. native `Node.js` addons, that need to be rebuilt to be compatible with the version of Electron being used.
+
 ## Create an executable binary for Windows 64-bit
 
 1. Copy the "static html file" and the "favicon" to the Electron build folder:
@@ -101,6 +117,7 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 ## Create a Windows installer using `electron-builder`
 
 > NOTE: `electron-builder` is a tool that packages your Electron app into an executable for a target platform.
+>
 > * An .exe file for Windows.
 > * A .dmg file for Linux.
 > * An .AppImage file for macOS.
@@ -110,9 +127,9 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 ### Prerequisites
 
 * The `electron-builder` tool needs `wine` to create Windows installers on non-Windows platforms, like Ubuntu.
-   * Firs, update the Ubuntu package index: `sudo apt update`
-   * Install `wine` on Ubuntu: `sudo apt-get install --install-recommends wine-stable`
-   * Verify installation: `wine --version`
+  * Firs, update the Ubuntu package index: `sudo apt update`
+  * Install `wine` on Ubuntu: `sudo apt-get install --install-recommends wine-stable`
+  * Verify installation: `wine --version`
 
 * Install the `electron-builder` npm package:
   * Run `npm install --save-dev electron-builder`
@@ -122,18 +139,18 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 1. Make sure that `package.json` is configured like this: [package.json](./package.json):
 
 * Misc. `package.json` options explained (JSON does not allow comments):
-   * `"dist-windows-x64": "electron-builder --windows --x64"`
-     * If you’re running the `npm run dist`` command on a non-Windows platform (like macOS or Linux), `electron-builder` will by default only build the installer for the current platform.
-     * To build the installer for Windows on a non-Windows platform (like Ubuntu on WSL2), you need to specify the `--windows` and `--x64` flags like we have done.
-   * `appId`: The appId in Electron is a unique identifier used by the OS to consistently recognize your app across different versions.
-   * `"target": "nsis"`:
-     * The "nsis" target uses the _"Nullsoft Scriptable Install System (NSIS)"_ to create a customizable Windows installer for your Electron app.
-     * "NSIS" allows for options like one-click or assisted install, directory selection, silent installs, and automatic updates.
-     * NOTE: More "targets" can be specified such as: "zip", "7z", "msi", "nsis-web", "portable", "appx", "squirrel", "deb", "rpm", "freebsd", "pacman", "p5p", "apk", "dmg", "mas", "mas-dev", "pkg", "tar.gz", "tar.xz", "tar.lz", "tar.bz2", "dir", "custom".
-   * `"arch": [ "x64" ]`: To create an installer for Windows 64-bit only.
-   * `"icon": "favicon_256x256.ico"`: The icon to use for the installer.
-   * `"oneClick": false`: To create an assisted installer.
-   * `"allowToChangeInstallationDirectory": true`: Allow the user to change the installation directory.
+  * `"dist-windows-x64": "electron-builder --windows --x64"`
+    * If you’re running the `npm run dist`` command on a non-Windows platform (like macOS or Linux),`electron-builder` will by default only build the installer for the current platform.
+    * To build the installer for Windows on a non-Windows platform (like Ubuntu on WSL2), you need to specify the `--windows` and `--x64` flags like we have done.
+  * `appId`: The appId in Electron is a unique identifier used by the OS to consistently recognize your app across different versions.
+  * `"target": "nsis"`:
+    * The "nsis" target uses the _"Nullsoft Scriptable Install System (NSIS)"_ to create a customizable Windows installer for your Electron app.
+    * "NSIS" allows for options like one-click or assisted install, directory selection, silent installs, and automatic updates.
+    * NOTE: More "targets" can be specified such as: "zip", "7z", "msi", "nsis-web", "portable", "appx", "squirrel", "deb", "rpm", "freebsd", "pacman", "p5p", "apk", "dmg", "mas", "mas-dev", "pkg", "tar.gz", "tar.xz", "tar.lz", "tar.bz2", "dir", "custom".
+  * `"arch": [ "x64" ]`: To create an installer for Windows 64-bit only.
+  * `"icon": "favicon_256x256.ico"`: The icon to use for the installer.
+  * `"oneClick": false`: To create an assisted installer.
+  * `"allowToChangeInstallationDirectory": true`: Allow the user to change the installation directory.
 
 1. To create an "NSIS" installer for the Windows 64-bit platform, run: `npm run dist`
    1. Creates the installer (.exe) here: `./dist/streaming-radio-player Setup 0.1.0.exe`.
@@ -155,6 +172,7 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 > To install a "zip" or "dir" target on macOS, the user will need to unzip the file and then move the app to the Applications folder.
 
 * To build a macOS `zip` target on Ubuntu, run: `npm run dist -- --mac --x64` add this to `package.json`:
+
   ```json
   "build": {
     "mac": {
@@ -162,6 +180,7 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
     }
   }
   ```
+
 Then run one of these commands for creating executable binaries for MacOS on the Intel or Apple silicone platforms:
 
 * For "Mac silicon": `npx electron-builder --mac --arm64`
@@ -179,6 +198,7 @@ __Misc. options:__
 * You can also specify `--linux` to create binaries for the specific Linux platform you are building on. Run `npx electron-packager . --platform=linux`
 
 * To build a Linux `zip` target on Ubuntu, run: `npm run dist -- --linux --x64` add this to `package.json`:
+
   ```json
   "build": {
     "linux": {
@@ -201,21 +221,3 @@ __Misc. options:__
 
 * Build an executable file for all platforms: `npx electron-packager . --all`
 * Build an executable file for all platforms and all architectures: `npx electron-packager . --all --arch=all`
-
-## USEFUL: Electron app development resources
-
-* VIDEO: "[How to BUILD a DESKTOP app with HTML, CSS & JavaScript using Electron JS!](https://www.youtube.com/watch?v=TkAiVKfWtjI)" on YouTube.
-
-* "[Electron Documentation](https://www.electronjs.org/docs)".
-
-* "[Electron Quick Start](https://www.electronjs.org/docs/tutorial/quick-start)".
-
-* "[Electron API Demos](https://www.electronjs.org/#get-started)".
-
-* "[Electron Fiddle](https://www.electronjs.org/fiddle)".
-  * Electron Fiddle lets you create and play with small Electron experiments.
-  * Quick-start template. Choose Electron version. Play around.
-
-* "[Electron Forge](https://www.electronforge.io/)".
-  * Electron Forge is a batteries-included toolkit for building, publishing and installing Electron apps.
-  * Electron Forge unifies the existing (and well maintained) build tools for Electron development into a simple, easy to use package so that anyone can jump right in to Electron development.
