@@ -402,17 +402,17 @@
       </li -->
 
       <li class="right-tooltip">
-        <i class="fas fa-refresh"></i>
-        <span class="tooltip">Refresh web page (Ctrl-r)</span>
+        <i class="fas fa-refresh" id="menuRefreshPage"></i>
+        <span class="tooltip">Refresh page (Ctrl+r)</span>
       </li>
 
       <li class="right-tooltip" style="color: var(--menu-color-inactive);">
-        <i class="fas fa-bug"></i>
-        <span class="tooltip">View errors</span>
+        <i class="fas fa-bug" id="menuAudioErrorLog"></i>
+        <span class="tooltip">View audio errors</span>
       </li>
 
       <li class="left-tooltip">
-        <i class="fas fa-code"></i>
+        <i class="fas fa-code" id="menuViewSource"></i>
         <span class="tooltip">View source (HTML)</span>
       </li>
 
@@ -539,7 +539,76 @@
         ]
       }
     ];
+
     /* SECTION_TO_REMOVE_1__END */
+
+    // ==================================================
+    // Define "event handler" functions for menu buttons:
+
+
+    function refreshPage() {
+      location.reload();
+    };
+
+    document.getElementById("menuRefreshPage").addEventListener("click", refreshPage);
+
+    /*
+     * Escape HTML tags before writing them to the new tab:
+     */
+    function escapeHtml(unsafe) {
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    };
+
+    /**
+     * Show the HTML source for this web page in a new tab (Electron app: in separate vindow).
+     */
+    function viewSource() {
+      let sourceCode = document.documentElement.outerHTML;
+      let escapedSource = escapeHtml(sourceCode);
+      let sourceWindow = window.open("", "WINDOW_NAME_SOURCE", "width=600,height=600");
+      // The "document.write()" method replaces the entire document, not just the body.
+      sourceWindow.document.write('<html><head><title>HTML source</title></head><body>');
+      sourceWindow.document.write('<pre>' + escapedSource + '</pre>');
+      sourceWindow.document.write('</body></html>');
+    };
+
+    document.getElementById("menuViewSource").addEventListener("click", viewSource);
+
+    /**
+     * Display log of audio related errors in a separate window.
+     */
+    function displayErrors() {
+      let errorWindow = window.open("", "WINDOW_NAME_ERRROR", "width=600,height=600");
+      errorWindow.document.write('<html><head><title>Audio errors</title></head><body>');
+      errorWindow.document.write("<h1>Audio errors</h1>");
+
+      // Add a button for clearing the log
+      errorWindow.document.write('<button id="clearLog">Clear errors</button>');
+      // Add a button for closing the window
+      // TODO: errorWindow.document.write('<button id="closeWindow">Close</button>');
+
+      errorLog.forEach((error, index) => {
+        errorWindow.document.write(`<p><strong>Error ${index + 1}:</strong> ${error.error} <br> <strong>Time:</strong> ${error.timestamp}</p>`);
+      });
+
+      errorWindow.document.write('</body></html>');
+
+      // Add event listener for the "Clear errors" button
+      errorWindow.document.getElementById("clearLog").addEventListener("click", function () {
+        errorLog = [];
+        errorWindow.location.reload();
+      });
+
+      // Add event listener for the "Close" button
+      // TODO: NOT WORKING: errorWindow.document.getElementById("closeWindow").addEventListener("click", function () {errorWindow.close();});
+    }
+
+    document.getElementById("menuAudioErrorLog").addEventListener("click", displayErrors);
 
     let currentAudio = null;
     let currentButton = null;
@@ -646,7 +715,7 @@
           currentButton = null;
         }
       }
-    }
+    } // End of "handleButtonClick" function
 
 
     /* SECTION_TO_REMOVE_2__START */  // Used by our "web scraping" shell script
