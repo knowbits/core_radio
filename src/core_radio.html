@@ -432,11 +432,6 @@
         <span class="tooltip">Settings</span>
       </li>
 
-      <li class="left-tooltip">
-        <i class="fas fa-info-circle"></i>
-        <span class="tooltip">About</span>
-      </li>
-
       <!-- Add a "spacer" "li" to push the right-aligned menu items to the right edge of the nav bar: -->
       <li class="spacer">
       </li>
@@ -462,12 +457,17 @@
         <!-- span class="tooltip">Drag to move the windows (Electron only)</span -->
       </li>
 
+      <li class="left-tooltip">
+        <i class="fas fa-info-circle"></i>
+        <span class="tooltip">About</span>
+      </li>
+
       <!--
         Add the "Close" icon.
         NOTE: Will only work in an Electron app, since a HTML page cannot close itself.
       -->
       <li class="left-tooltip">
-        <i class="far fa-window-close" style="font-size: 1.8rem; color: var(--text-colour);"
+        <i class="far fa-window-close" style="font-size: 1.6rem; color: var(--text-colour);"
           onmouseover="this.style.color='#CD5C5C'" onmouseout="this.style.color='var(--text-colour)'"></i>
         <span class="tooltip">Close app</span>
       </li>
@@ -612,8 +612,9 @@
       errorWindow.document.open();
       errorWindow.document.write(htmlContent);
       errorWindow.document.close();
+
       // Add event listener for the "Clear errors" button
-      errorWindow.document.addEventListener('DOMContentLoaded', (event) => {
+      errorWindow.document.addEventListener('DOMContentLoaded', () => {
         errorWindow.document.getElementById("clearLog").addEventListener("click", function () {
           errorLog = [];
           errorWindow.location.reload();

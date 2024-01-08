@@ -1,785 +1,623 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<!--
-  TOOLS to validate HTML and CSS:
-    1. HTML: https://validator.w3.org/#validate_by_input
-    2. CSS: https://jigsaw.w3.org/css-validator/
-    3: HTML 5 (Experimental) https://validator.w3.org/nu/#textarea
--->
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <!--
-    Setting the "viewport" is crucial for "responsive web design" on mobile devices.
-
-    It ensures that web page looks good on all devices (desktops, tablets, and phones).
-    See: https://www.w3schools.com/css/css_rwd_viewport.asp
-
-    In Electron desktop apps, it’s not necessary but doesn’t cause harm.
-    If a web page is intended strictly for desktop use, it can be omitted without affecting functionality.
-
-    NOTE: The "viewport" is the user's visible area of a web page.
-
-    Explanation of the "viewport" meta tag settings:
-
-      1) name="viewport": Tells the browser that the page is optimized for mobile.
-         => It will consider the device's width and scale when rendering the page.
-
-      2) content="width=device-width": Set "width of viewport" = "width of device".
-         => Page will scale and rearrange content to fit the device's screen width, thus making it "responsive".
-
-      3) initial-scale=1.0: Sets the initial zoom level when page is loaded.
-         A value of "1.0" means no zoom, i.e. 100% of normal size.
-  -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!--
-    List of all Roboto fonts: https://fonts.google.com/specimen/Roboto
-    NOTE: "link" is preferred over "@import" for better load performance
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Load the "Regular 400" Roboto font: -->
-  <!-- link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" -->
-  <!-- Load the "Light 300" Roboto font: -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-
-  <!--
-    Load FontAwesome icons to be used in the "menu bar".
-    // TODO: Optimize by loading only the icons we actually use.
-
-    "FontAwesome stylesheet":
-
-    The FontAwesome stylesheet is a CSS file that defines classes for each icon.
-    When you add these classes to an element in your HTML, the corresponding icon will be displayed.
-
-    Preloading the "FontAwesome stylesheet" can improve performance by starting to download the stylesheet sooner.
-    This can be especially beneficial if your website uses a lot of FontAwesome icons, as it allows the icons
-    to start loading earlier and be ready by the time they're needed.
-  -->
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-  <title>Core Radio</title>
-
-  <style>
-    /* ==== START: CSS Reset ================================ */
-
-    /*
-     * "A CSS reset standardizes HTML elements across browsers, simplifying subsequent styling."
-     *
-     * This is a modified version of "Meyer's CSS Reset":
-     *   http://meyerweb.com/eric/tools/css/reset
-     *
-     * "Normalize.css" is another "CSS reset" to consider.
-     *
-     * NOTE: The "*"" selector applies styles to every element on the page,
-     *       which can be inefficient. It’s generally better to apply styles
-     *       to specific classes or elements.
-     */
-    html,
-    body,
-    div,
-    span,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    a,
-    img,
-    ul,
-    li,
-    header,
-    footer,
-    main,
-    nav,
-    section,
-    figure,
-    figcaption,
-    button,
-    input,
-    select,
-    textarea {
-      margin: 0;
-      padding: 0;
-      border: 0;
-      font-size: 100%;
-      font: inherit;
-      vertical-align: baseline;
-    }
-
-    /* HTML5 display-role reset for older browsers.
-     *
-     * The purpose of this part of the reset is to ensure that newer HTML5 elements,
-     * which older browsers may not recognize as block-level elements, are treated as such.
-     */
-
-    main,
-    section,
-    header,
-    footer,
-    nav,
-    ul,
-    li,
-    figcaption,
-    figure {
-      display: block;
-    }
-
-    body {
-      line-height: 1;
-    }
-
-    ol,
-    ul {
-      list-style: none;
-    }
-
-    /* ==== END: CSS Reset ================================ */
-
-    /*
-     * // TODO: Define a "Colour scheme" for the page
-     *    https://www.w3schools.com/css/css3_colors.asp
-     *    https://www.lifewire.com/choose-colors-for-your-website-3469874
-     */
-    :root {
-      /* HTML colour chart: https://html-color.codes/color-chart */
-      --background-colour: #262626;
-      --text-colour: #ECF0F1;
-
-      --menu-colour: #0099cc;
-      --menu-colour-hover: #006699;
-      --menu-color-inactive: #666;
-
-      --button-colour-stopped: var(--background-colour);
-      --button-colour-playing: var(--background-colour);
-      --button-border-colour-inactive: var(--text-colour);
-      --button-border-colour-active: Coral;
-    }
-
-    /*
-     * Typical structure inside HTML "body" element:
-     *     header, nav, main, footer
-     */
-    body {
-      font-family: 'Roboto', sans-serif;
-      /*
-       * By using “rem”, the font size of the tooltip will be relative to the base font size of the page.
-       * This can make your design more consistent and responsive.
-       */
-      /* Sets colour of all text: */
-      color: var(--text-colour);
-      background-color: var(--background-colour);
-
-      /*
-       * Set the spacing between the element's content and the border:
-       * Edges_ T, R, B, L :
-       */
-      padding: 5px 10px 5px 15px;
-
-      border-style: solid;
-      border-width: 1px;
-      border-color: var(--button-border-colour-active);
-
-      /*
-       * GOAL: Make the border of the body element fill the whole webpage,
-       *       and make it resize with the browser window:
-       */
-
-      /*
-       *  1. Set body's height & width to fill the "viewport".
-       *     NOTE: Useful for an Electron application to make sure that the
-       *       application's content takes up the full window.
-       *       If you don't use these properties, the size of your content will
-       *       be determined by its natural size and the CSS box model.
-       */
-      height: 100vh;
-      width: 100vw;
-
-      /*
-       * 2. Make sure both "border" and "padding" are included when
-       *    calculating the "body" element's total width and height:
-       */
-      box-sizing: border-box;
-
-      /* Try to make the corner rounding of the "body" element match that
-       * of the "corner radius" of native Windows applications:
-       * // TODO: How to adapt "corner rounding" to look good on all platforms:
-         // TODO:    For web browsers. For "Electron apps": macOS, Linux..
-       */
-      border-radius: 5px;
-    }
-
-    /* Style the menu bar */
-
-    nav {
-      display: flex;
-      /* Allow "nav" items to wrap onto multiple lines: */
-      flex-wrap: wrap;
-      flex-direction: row;
-      /* Aligns "flex" items towards the start of the "flex" container (default): */
-      justify-content: flex-start;
-      /* Align "flex" items along the baseline: */
-      align-items: baseline;
-      /* Remove the default list item markers: */
-      list-style-type: none;
-      /* Needed create space between the lines when the "menu items" wrap: */
-      line-height: 1.5;
-      margin-top: 5px;
-      margin-bottom: 1px;
-    }
-
-
-    nav ul {
-      display: flex;
-      /* Allow the menu icons to wrap onto multiple lines: */
-      flex-wrap: wrap;
-      /* Ensure the "ul" takes up the full width of the "nav" */
-      width: 100%;
-    }
-
-    nav ul li {
-      /* Specify size of FontAwesome icons: */
-      font-size: 1.5rem;
-      color: var(--menu-colour);
-      position: relative;
-      /* Add a margin to the right of each menu item: */
-      margin-right: 20px;
-    }
-
-    /* Remove the margin from the last menu item only: */
-    nav ul li:last-child {
-      margin-right: 5px;
-    }
-
-    nav ul li:hover {
-      color: var(--menu-colour-hover);
-    }
-
-    /*
-     * Define a "spacer" div for the menu bar:
-     *
-     * => TO create space between the left-aligned and the right-aligned menu items.
-     *
-     * "flex-grow: 1;" :allows the spacer div
-     * to grow and take up any remaining space in the ul, effectively
-     * pushing the last li element to the right edge of the nav bar.
-     * When the width of the web page is reduced, all the icons,
-     * including the spacer div, will wrap onto a new line.
-     */
-    nav ul li.spacer {
-      flex-grow: 1;
-      margin-left: 0px;
-      margin-right: 0px;
-    }
-
-    /* Define a "tooltip" stype for "menu items" and other HTML elements */
-
-    .tooltip {
-      visibility: hidden;
-      background-color: black;
-      color: white;
-      text-align: center;
-      /* Make sure text wraps when reaching tooltip box's edge. Or 'normal' */
-      white-space: pre-wrap;
-      /* Set the max width of the tooltip box: */
-      /* max-width: 200px;  */
-      padding: 5px 8px;
-      border-color: white;
-      border-style: solid;
-      border-width: 1px;
-      border-radius: 5px;
-      position: absolute;
-      z-index: 1;
-      /* Position the tooltip below the menu item: */
-      top: 40px;
-      transition: opacity 0.3s;
-      /* Using "rem" is more responsive that "em": */
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-
-    .left-tooltip .tooltip {
-      left: auto;
-      right: 20px;
-    }
-
-    .right-tooltip .tooltip {
-      left: 26px;
-    }
-
-    nav ul li:hover .tooltip {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    /* Style the "main" content */
-
-    main {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    section header {
-      display: flex;
-      align-items: baseline;
-      margin-top: 15px;
-      margin-bottom: 5px;
-    }
-
-    h1 {
-      font-weight: normal;
-      font-size: 1.5rem;
-      /* transform: scaleY(1.5); */
-      margin-right: 10px;
-    }
-
-    button {
-      font-size: 0.9rem;
-      font-weight: normal;
-      padding: 7px 10px 7px 10px;
-      margin: 5px 10px 5px 0px;
-      border: 2px solid var(--button-border-colour-inactive);
-      border-radius: 8px;
-      background-color: var(--button-colour-stopped);
-      color: var(--text-colour);
-      cursor: auto;
-    }
-
-    /* Add new CSS classes for button states */
-
-    .button-stopped {
-      border-color: var(--button-border-colour-inactive);
-      background-color: var(--button-colour-stopped);
-    }
-
-    .button-playing {
-      border-color: var(--button-border-colour-active);
-      background-color: var(--button-colour-playing);
-    }
-  </style>
-
-</head>
-
-<body>
-
-  <!-- Typical structure inside HTML "body" element: header, nav, main, footer -->
-
-  <!--
-    TODO: Consider to wrap a "header" element around the current "nav" element of the "top menu bar".
-
-    If the bar at the top of your page contains not just navigation, but also other types
-    of content (like a site logo, search form, or site-wide banner), it would be more
-    appropriate to wrap the entire bar in a "header" element. The navigation links within
-    that "header" could still be wrapped in a "nav".
-
-    So, whether you should use a "header" instead of a "nav" depends on the content
-    and function of your top bar. If it's primarily for navigation, a "nav" is appropriate.
-    If it contains other types of content as well, consider using a "header".
-  -->
-
-  <!--
-    Add the "menu bar" at the top of the page:
-
-    NOTE: The "menu bar" is not a "navigation bar" (nav element).
-          It's a "menu bar" (header element).
-
-    FontAwesome: CSS styling conventions for selecting icon categories:
-      "fas" for Solid, "far" for Regular, "fal" for Light, "fad" for Duotone, and "fab" for Brands
-  -->
-
-  <nav>
-    <!-- The Left-aligned menu items: -->
-    <ul>
-      <!-- li class="right-tooltip">
-        <i class="fas fa-home"></i>
-        <span class="tooltip">Home</span>
-      </li -->
-
-      <li class="right-tooltip">
-        <i class="fas fa-refresh" id="menuRefreshPage"></i>
-        <span class="tooltip">Refresh page (Ctrl+r)</span>
-      </li>
-
-      <li class="right-tooltip" style="color: var(--menu-color-inactive);">
-        <i class="fas fa-bug" id="menuAudioErrorLog"></i>
-        <span class="tooltip">View audio errors</span>
-      </li>
-
-      <li class="left-tooltip">
-        <i class="fas fa-code" id="menuViewSource"></i>
-        <span class="tooltip">View source (HTML)</span>
-      </li>
-
-      <li class="left-tooltip">
-        <i class="fas fa-tools"></i>
-        <span class="tooltip">Chromium debug tools (F12)</span>
-      </li>
-
-      <li class="left-tooltip">
-        <i class="fas fa-cog"></i>
-        <span class="tooltip">Settings</span>
-      </li>
-
-      <li class="left-tooltip">
-        <i class="fas fa-info-circle"></i>
-        <span class="tooltip">About</span>
-      </li>
-
-      <!-- Add a "spacer" "li" to push the right-aligned menu items to the right edge of the nav bar: -->
-      <li class="spacer">
-      </li>
-
-      <!-- The right-aligned menu icons: -->
-
-      <!-- li class="right-tooltip">
-        <i class="fas fa-user"></i>
-        <span class="tooltip">Account</span>
-      </li -->
-
-      <!-- li class="left-tooltip">
-        <i class="fas fa-sign-out-alt"></i>
-        <span class="tooltip">Logout</span>
-      </li -->
-
-      <!-- Add the "Close" icon.
-           NOTE: Only works in an Electron app. -->
-      <li class="left-tooltip">
-        <i class="fas fa-window-close"></i>
-        <span class="tooltip">Close app (Electron only)</span>
-      </li>
-
-      <!-- Add the "Move" icon: allows to "mouse drag" the app window.
-           NOTE: Only works in Electron apps!
-      -->
-      <li class="menu-item" style="-webkit-app-region: drag; color: var(--menu-color-inactive);">
-        <i class="fas fa-arrows-alt"></i>
-        <!-- NOTE: Tooltip does not work on a "draggable" region: -->
-        <!-- span class="tooltip">Drag to move the windows (Electron only)</span -->
-      </li>
-    </ul>
-  </nav>
-
-  <main id="radioSections"></main>
-
-  <script>
-
-    /* SECTION_TO_REMOVE_1__START */
-
-    /* The "delimiter above is used by our "web scraping" shell script */
-
-    /*
-     * Audio formats supported by html5 "audio" element:
-     *
-     *   MP3: MPEG Audio Layer III (MP3) is a widely supported audio format.
-     *
-     *   WAV: Waveform Audio File Format (WAV) is an audio format developed by Microsoft and IBM.
-     *
-     *   Ogg: Ogg is a free, open container format maintained by the Xiph.Org Foundation.
-     *        The creators of the Ogg format state that it is unrestricted by software patents
-     *        and is designed to provide efficient streaming and manipulation of high-quality digital multimedia.
-     *
-     *   AAC: Advanced Audio Coding (AAC) is an audio coding standard for lossy digital audio compression. It is supported by Chrome.
-     *
-     *   FLAC: Free Lossless Audio Codec. Supported by:
-     *
-     * NOTE: Supported by all modern browsers: MP3, WAV.
-     *
-     * MIME types for the audio formats:
-     *
-     *   MP3:  audio/mpeg
-     *   WAV:  audio/wav
-     *   Ogg:  audio/ogg
-     *   AAC:  audio/aac (or audio/mp4 ?)
-     *   FLAC: audio/flac
-     */
-    const streams = [
-      {
-        // NOTE: NRK uses "Icecast Streaming Media Server"
-        category: "NO",
-        categoryTitle: "NRK radio",
-        streams: [
-          { title: "P1", url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h", type: "audio/aac" },
-          { title: "P1+", url: "http://lyd.nrk.no/nrk_radio_p1pluss_aac_h", type: "audio/aac" },
-          { title: "P13", url: "http://lyd.nrk.no/nrk_radio_p13_aac_h", type: "audio/aac" },
-          { title: "P2", url: "https://lyd.nrk.no/nrk_radio_p2_aac_h", type: "audio/aac" },
-          { title: "P3", url: "http://lyd.nrk.no/nrk_radio_p3_aac_h", type: "audio/aac" },
-          { title: "Jazz", url: "https://lyd.nrk.no/nrk_radio_jazz_aac_h", type: "audio/aac" },
-          { title: "Klassisk", url: "http://lyd.nrk.no/nrk_radio_klassisk_aac_h", type: "audio/aac" },
-          { title: "Folkemusikk", url: "https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h", type: "audio/aac" },
-          { title: "Alltid nyheter", url: "http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h", type: "audio/aac" },
-          { title: "mp3", url: "https://lyd.nrk.no/nrk_radio_mp3_aac_h", type: "audio/aac" },
-          { title: "Sport", url: "https://lyd.nrk.no/nrk_radio_sport_aac_h", type: "audio/aac" }
-        ]
-      },
-      {
-        category: "SE",
-        categoryTitle: "SR radio",
-        streams: [
-          { title: "P1", url: "https://sverigesradio.se/topsy/direkt/132-hi-aac", type: "audio/aac" },
-          { title: "P2", url: "https://sverigesradio.se/topsy/direkt/2562-hi-aac", type: "audio/aac" },
-          { title: "P3", url: "https://sverigesradio.se/topsy/direkt/164-hi-aac", type: "audio/aac" },
-          { title: "P4 Värmland", url: "https://sverigesradio.se/topsy/direkt/204-hi-aac", type: "audio/aac" },
-          { title: "P4 Plus", url: "https://sverigesradio.se/topsy/direkt/4951-hi-aac", type: "audio/aac" }
-        ]
-      },
-      {
-        category: "DK",
-        categoryTitle: "DK radio",
-        streams: [
-          { title: "P1", url: "http://live-icy.dr.dk/A/A03H.mp3", type: "audio/mpeg" },
-          { title: "P2", url: "http://live-icy.dr.dk/A/A04H.mp3", type: "audio/mpeg" },
-          { title: "P3", url: "http://live-icy.dr.dk/A/A05H.mp3", type: "audio/mpeg" },
-          { title: "P4 Kbh", url: "http://live-icy.dr.dk/A/A08H.mp3", type: "audio/mpeg" }
-        ]
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <title>Core Radio</title>
+
+    <style>
+      html,
+      body,
+      div,
+      span,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      a,
+      img,
+      ul,
+      li,
+      header,
+      footer,
+      main,
+      nav,
+      section,
+      figure,
+      figcaption,
+      button,
+      input,
+      select,
+      textarea {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font: inherit;
+        vertical-align: baseline;
       }
-    ];
 
-    /* SECTION_TO_REMOVE_1__END */
+      main,
+      section,
+      header,
+      footer,
+      nav,
+      ul,
+      li,
+      figcaption,
+      figure {
+        display: block;
+      }
 
-    // ==================================================
-    // Define "event handler" functions for menu buttons:
+      body {
+        line-height: 1rem;
+      }
 
+      ol,
+      ul {
+        list-style: none;
+      }
 
-    function refreshPage() {
-      location.reload();
-    };
+      :root {
+        --background-colour: #262626;
+        --text-colour: #ecf0f1;
 
-    document.getElementById("menuRefreshPage").addEventListener("click", refreshPage);
+        --menu-colour: #0099cc;
+        --menu-colour-hover: #006699;
+        --menu-color-inactive: #666;
 
-    /*
-     * Escape HTML tags before writing them to the new tab:
-     */
-    function escapeHtml(unsafe) {
-      return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    };
+        --button-colour-stopped: var(--background-colour);
+        --button-colour-playing: var(--background-colour);
+        --button-border-colour-inactive: var(--text-colour);
+        --button-border-colour-active: Coral;
+      }
 
-    /**
-     * Show the HTML source for this web page in a new tab (Electron app: in separate vindow).
-     */
-    function viewSource() {
-      let sourceCode = document.documentElement.outerHTML;
-      let escapedSource = escapeHtml(sourceCode);
-      let sourceWindow = window.open("", "WINDOW_NAME_SOURCE", "width=600,height=600");
-      // The "document.write()" method replaces the entire document, not just the body.
-      sourceWindow.document.write('<html><head><title>HTML source</title></head><body>');
-      sourceWindow.document.write('<pre>' + escapedSource + '</pre>');
-      sourceWindow.document.write('</body></html>');
-    };
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 100%;
+        color: var(--text-colour);
+        background-color: var(--background-colour);
 
-    document.getElementById("menuViewSource").addEventListener("click", viewSource);
+        padding: 5px 10px 5px 15px;
 
-    /**
-     * Display log of audio related errors in a separate window.
-     */
-    function displayErrors() {
-      let errorWindow = window.open("", "WINDOW_NAME_ERRROR", "width=600,height=600");
-      errorWindow.document.write('<html><head><title>Audio errors</title></head><body>');
-      errorWindow.document.write("<h1>Audio errors</h1>");
+        border-style: solid;
+        border-width: 1px;
+        border-color: var(--button-border-colour-active);
 
-      // Add a button for clearing the log
-      errorWindow.document.write('<button id="clearLog">Clear errors</button>');
-      // Add a button for closing the window
-      // TODO: errorWindow.document.write('<button id="closeWindow">Close</button>');
+        height: 100vh;
+        width: 100vw;
 
-      errorLog.forEach((error, index) => {
-        errorWindow.document.write(`<p><strong>Error ${index + 1}:</strong> ${error.error} <br> <strong>Time:</strong> ${error.timestamp}</p>`);
-      });
+        box-sizing: border-box;
 
-      errorWindow.document.write('</body></html>');
+        border-radius: 5px;
+      }
 
-      // Add event listener for the "Clear errors" button
-      errorWindow.document.getElementById("clearLog").addEventListener("click", function () {
-        errorLog = [];
-        errorWindow.location.reload();
-      });
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-top: 5px;
+        margin-bottom: 1px;
+      }
 
-      // Add event listener for the "Close" button
-      // TODO: NOT WORKING: errorWindow.document.getElementById("closeWindow").addEventListener("click", function () {errorWindow.close();});
-    }
+      nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        width: 100%;
+        line-height: 1.5rem;
+        list-style-type: none;
+      }
 
-    document.getElementById("menuAudioErrorLog").addEventListener("click", displayErrors);
+      nav ul li {
+        color: var(--menu-colour);
+        position: relative;
+        margin-right: 20px;
+      }
 
-    let currentAudio = null;
-    let currentButton = null;
+      nav ul li i {
+        font-size: 1.5rem;
+      }
 
-    const handleButtonClick = (newButton, newAudio, newStream) => {
+      nav ul li:last-child {
+        margin-right: 5px;
+      }
 
-      // Remove any existing event listeners from previous clicks
-      newAudio.onerror = null;
-      newAudio.onloadstart = null;
-      newAudio.oncanplay = null;
+      nav ul li:hover {
+        color: var(--menu-colour-hover);
+      }
 
-      // Add misc listeners for events on the "audio" element:
+      nav ul li.spacer {
+        flex-grow: 1;
+        margin-left: 0px;
+        margin-right: 0px;
+      }
 
-      // Called if an error occurs while loading or playing the audio
-      newAudio.onerror = () => {
-        let errorMessage;
+      .tooltip {
+        visibility: hidden;
+        background-color: black;
+        color: white;
+        text-align: center;
+        white-space: pre-wrap;
+        padding: 5px 8px;
+        border-color: white;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 5px;
+        position: absolute;
+        z-index: 1;
+        top: 40px;
+        transition: opacity 0.3s;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
 
-        switch (newAudio.error.code) {
-          case 1: // MEDIA_ERR_ABORTED
-            errorMessage = 'You aborted the audio playback.';
-            break;
-          case 2: // MEDIA_ERR_NETWORK
-            errorMessage = 'A network error caused the audio download to fail.';
-            break;
-          case 3: // MEDIA_ERR_DECODE
-            errorMessage = 'The audio playback was aborted due to a corruption problem or because the media used features your browser did not support.';
-            break;
-          case 4: // MEDIA_ERR_SRC_NOT_SUPPORTED
-            errorMessage = 'The audio could not be loaded, either because the server or network failed or because the format is not supported.';
-            break;
-          default:
-            errorMessage = 'An unknown error occurred.';
-            break;
+      .left-tooltip .tooltip {
+        left: auto;
+        right: 20px;
+      }
+
+      .right-tooltip .tooltip {
+        left: 26px;
+      }
+
+      nav ul li:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      section header {
+        display: flex;
+        align-items: baseline;
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+
+      h1 {
+        font-weight: normal;
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+
+      button {
+        font-size: 0.9rem;
+        font-weight: normal;
+        padding: 7px 10px 7px 10px;
+        margin: 5px 10px 5px 0px;
+        border: 2px solid var(--button-border-colour-inactive);
+        border-radius: 8px;
+        background-color: var(--button-colour-stopped);
+        color: var(--text-colour);
+        cursor: auto;
+      }
+
+      .button-stopped {
+        border-color: var(--button-border-colour-inactive);
+        background-color: var(--button-colour-stopped);
+      }
+
+      .button-playing {
+        border-color: var(--button-border-colour-active);
+        background-color: var(--button-colour-playing);
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li class="right-tooltip">
+          <i class="fas fa-refresh" id="menuRefreshPage"></i>
+          <span class="tooltip">Refresh page (Ctrl+r)</span>
+        </li>
+
+        <li
+          class="right-tooltip"
+          id="audioErrorLogMenuItem"
+          style="display: none; color: var(--menu-color-inactive)"
+        >
+          <i class="fas fa-bug" id="menuAudioErrorLog"></i>
+          <span class="tooltip">View audio errors</span>
+        </li>
+
+        <li class="left-tooltip">
+          <i class="fas fa-code" id="menuViewSource"></i>
+          <span class="tooltip">View source (HTML)</span>
+        </li>
+
+        <li class="left-tooltip">
+          <i class="fas fa-tools"></i>
+          <span class="tooltip">Chromium debug tools (F12)</span>
+        </li>
+
+        <li class="left-tooltip">
+          <i class="fas fa-cog"></i>
+          <span class="tooltip">Settings</span>
+        </li>
+
+        <li class="spacer"></li>
+
+        <li
+          class="menu-item"
+          style="-webkit-app-region: drag; color: var(--menu-color-inactive)"
+        >
+          <i class="fas fa-arrows-alt"></i>
+        </li>
+
+        <li class="left-tooltip">
+          <i class="fas fa-info-circle"></i>
+          <span class="tooltip">About</span>
+        </li>
+
+        <li class="left-tooltip">
+          <i
+            class="far fa-window-close"
+            style="font-size: 1.6rem; color: var(--text-colour)"
+            onmouseover="this.style.color='#CD5C5C'"
+            onmouseout="this.style.color='var(--text-colour)'"
+          ></i>
+          <span class="tooltip">Close app</span>
+        </li>
+      </ul>
+    </nav>
+
+    <main id="radioSections"></main>
+
+    <script>
+      const streams = [
+        {
+          category: "NO",
+          categoryTitle: "NRK radio",
+          streams: [
+            {
+              title: "P1",
+              url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "P1+",
+              url: "http://lyd.nrk.no/nrk_radio_p1pluss_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "P13",
+              url: "http://lyd.nrk.no/nrk_radio_p13_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "P2",
+              url: "https://lyd.nrk.no/nrk_radio_p2_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "P3",
+              url: "http://lyd.nrk.no/nrk_radio_p3_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Jazz",
+              url: "https://lyd.nrk.no/nrk_radio_jazz_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Klassisk",
+              url: "http://lyd.nrk.no/nrk_radio_klassisk_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Folkemusikk",
+              url: "https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Alltid nyheter",
+              url: "http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "mp3",
+              url: "https://lyd.nrk.no/nrk_radio_mp3_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Sport",
+              url: "https://lyd.nrk.no/nrk_radio_sport_aac_h",
+              type: "audio/aac",
+            },
+          ],
+        },
+        {
+          category: "SE",
+          categoryTitle: "SR radio",
+          streams: [
+            {
+              title: "P1",
+              url: "https://sverigesradio.se/topsy/direkt/132-hi-aac",
+              type: "audio/aac",
+            },
+            {
+              title: "P2",
+              url: "https://sverigesradio.se/topsy/direkt/2562-hi-aac",
+              type: "audio/aac",
+            },
+            {
+              title: "P3",
+              url: "https://sverigesradio.se/topsy/direkt/164-hi-aac",
+              type: "audio/aac",
+            },
+            {
+              title: "P4 Värmland",
+              url: "https://sverigesradio.se/topsy/direkt/204-hi-aac",
+              type: "audio/aac",
+            },
+            {
+              title: "P4 Plus",
+              url: "https://sverigesradio.se/topsy/direkt/4951-hi-aac",
+              type: "audio/aac",
+            },
+          ],
+        },
+        {
+          category: "DK",
+          categoryTitle: "DK radio",
+          streams: [
+            {
+              title: "P1",
+              url: "http://live-icy.dr.dk/A/A03H.mp3",
+              type: "audio/mpeg",
+            },
+            {
+              title: "P2",
+              url: "http://live-icy.dr.dk/A/A04H.mp3",
+              type: "audio/mpeg",
+            },
+            {
+              title: "P3",
+              url: "http://live-icy.dr.dk/A/A05H.mp3",
+              type: "audio/mpeg",
+            },
+            {
+              title: "P4 Kbh",
+              url: "http://live-icy.dr.dk/A/A08H.mp3",
+              type: "audio/mpeg",
+            },
+          ],
+        },
+      ];
+
+      function refreshPage() {
+        location.reload();
+      }
+
+      function escapeHtml(unsafe) {
+        return unsafe
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function viewSource() {
+        let sourceCode = document.documentElement.outerHTML;
+        let escapedSource = escapeHtml(sourceCode);
+        let sourceWindow = window.open(
+          "",
+          "_WINDOW_NAME_SOURCE",
+          "width=600,height=600",
+        );
+
+        let htmlContent = "<html><head><title>HTML source</title></head><body>";
+        htmlContent += "<pre>" + escapedSource + "</pre>";
+        htmlContent += "</body></html>";
+
+        sourceWindow.document.open();
+        sourceWindow.document.write(htmlContent);
+        sourceWindow.document.close();
+      }
+
+      let errorLog = [];
+
+      function displayErrors() {
+        let errorWindow = window.open(
+          "",
+          "_WINDOW_NAME_ERROR",
+          "width=600,height=600",
+        );
+
+        let htmlContent =
+          "<html><head><title>Audio errors</title></head><body>";
+        htmlContent += "<h1>Audio errors</h1>";
+
+        htmlContent += '<button id="clearLog">Clear errors</button > ';
+
+        errorLog.forEach((error, index) => {
+          htmlContent += `<p><strong>Error ${index + 1}:</strong> ${
+            error.error
+          } <br> <strong>Time:</strong> ${error.timestamp}</p>`;
+        });
+
+        htmlContent += "</body></html>";
+
+        errorWindow.document.open();
+        errorWindow.document.write(htmlContent);
+        errorWindow.document.close();
+
+        errorWindow.document.addEventListener("DOMContentLoaded", () => {
+          errorWindow.document
+            .getElementById("clearLog")
+            .addEventListener("click", function () {
+              errorLog = [];
+              errorWindow.location.reload();
+            });
+        });
+      }
+
+      let currentAudio = null;
+      let currentButton = null;
+
+      const handleButtonClick = (newButton, newAudio, newStream) => {
+        newAudio.onerror = null;
+        newAudio.onloadstart = null;
+        newAudio.oncanplay = null;
+
+        newAudio.onerror = () => {
+          let errorMessage;
+
+          switch (newAudio.error.code) {
+            case 1:
+              errorMessage = "You aborted the audio playback.";
+              break;
+            case 2:
+              errorMessage =
+                "A network error caused the audio download to fail.";
+              break;
+            case 3:
+              errorMessage =
+                "The audio playback was aborted due to a corruption problem or because the media used features your browser did not support.";
+              break;
+            case 4:
+              errorMessage =
+                "The audio could not be loaded, either because the server or network failed or because the format is not supported.";
+              break;
+            default:
+              errorMessage = "An unknown error occurred.";
+              break;
+          }
+          const errorText =
+            "ERROR: " +
+            errorMessage +
+            ". Got an error while playing audio stream: " +
+            newStream;
+          console.error(errorText);
+
+          errorLog.push({
+            error: newAudio.error.code,
+            message: errorMessage,
+            timestamp: new Date(),
+          });
+
+          let errorMenuItem = document.getElementById("audioErrorLogMenuItem");
+          errorMenuItem.style.display = "block";
+
+          newButton.style.color = "red";
+          newButton.textContent = "ERROR (see console)";
+        };
+
+        if (currentAudio && currentAudio !== newAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          const currentSource = currentAudio.querySelector("source");
+          currentSource.src = "";
+          currentButton.classList.remove("button-playing");
+          currentButton.classList.add("button-stopped");
         }
-        const errorText = 'ERROR: ' + errorMessage + ". Got an error while playing audio stream: " + newStream;
-        console.error(errorText);
 
-        newButton.style.color = 'red';
-        newButton.textContent = 'ERROR (see console)';
-      };
+        if (newAudio.paused) {
+          const source = newAudio.querySelector("source");
+          source.src = source.dataset.src;
+          newAudio.load();
+          newAudio.play();
+          newButton.classList.remove("button-stopped");
+          newButton.classList.add("button-playing");
+          currentAudio = newAudio;
+          currentButton = newButton;
+        } else {
+          newAudio.pause();
+          newAudio.currentTime = 0;
+          newButton.classList.remove("button-playing");
+          newButton.classList.add("button-stopped");
 
-      /*
-      // Called when the audio starts loading
-      newAudio.onloadstart = () => {
-        // AVOID: Since it creates a "blink" when pressed:
-        newButton.style.color = 'orange';
-        // button.textContent = 'Loading...';
-      };
+          const source = newAudio.querySelector("source");
+          source.src = "";
 
-      // Called when the audio can be played
-      newAudio.oncanplay = () => {
-        newButton.style.color = ''; // Reset the text color
-        newButton.textContent = newStream.title;
-      };
-      */
-
-      // ========================================
-
-      // Check if audio is already playing, but another button was pressed
-
-      if (currentAudio && currentAudio !== newAudio) {
-        // Stop and reset the currently playing stream
-        currentAudio.pause();
-        currentAudio.currentTime = 0; // Reset its time, effectively stopping the audio
-        const currentSource = currentAudio.querySelector('source');
-        currentSource.src = ''; // // BENEFIT: Prevents downloading the "audio file" for this stream
-        currentButton.classList.remove("button-playing");
-        currentButton.classList.add("button-stopped");
-      }
-
-      if (newAudio.paused) {
-        /*
-         * If the "radio stream" of the pressed button is paused:
-         *   1. Get the "source" element of the "audio" element
-         *   2. Set it's "src" attribute using the streaming URL from it's "data-src" attribute
-         *   3. Finally load and play the audio using the stream we just set.
-         *   4. Update the button's CSS classes
-         */
-        const source = newAudio.querySelector('source');
-        source.src = source.dataset.src;
-        /*
-        * The HTML5 "audio" element automatically buffers audio.
-         * To ensure that the playing stream is always _live_,
-         * we need to force a reload of the "audio" element when the play button is pressed.
-         */
-        newAudio.load(); // Force a reload of the "audio" element
-        newAudio.play();
-        newButton.classList.remove("button-stopped");
-        newButton.classList.add("button-playing");
-        currentAudio = newAudio;
-        currentButton = newButton;
-      } else {
-        // If the "radio stream" of pressed button is already playing => Pause it.
-        newAudio.pause();
-        newAudio.currentTime = 0; // Reset its time, effectively stopping the audio
-        newButton.classList.remove("button-playing");
-        newButton.classList.add("button-stopped");
-        // Remove the "src" attribute from the "source" of the "audio" element.
-        const source = newAudio.querySelector('source');
-        source.src = ''; // Prevents downloading the "audio file" for this stream
-
-        if (currentButton === newButton) {
-          currentAudio = null;
-          currentButton = null;
+          if (currentButton === newButton) {
+            currentAudio = null;
+            currentButton = null;
+          }
         }
-      }
-    } // End of "handleButtonClick" function
+      };
 
+      const radioSections = document.getElementById("radioSections");
+      const fragment = document.createDocumentFragment();
 
-    /* SECTION_TO_REMOVE_2__START */  // Used by our "web scraping" shell script
+      streams.forEach((category) => {
+        const categoryContainer = document.createElement("section");
 
-    const radioSections = document.getElementById("radioSections");
-    /* Use "DocumentFragment" for efficient batch DOM manipulation (memory based) */
-    const fragment = document.createDocumentFragment();
+        const categoryHeader = document.createElement("header");
+        const categoryTitle = document.createElement("h1");
+        categoryTitle.textContent = category.categoryTitle;
+        categoryHeader.appendChild(categoryTitle);
+        categoryContainer.appendChild(categoryHeader);
 
-    streams.forEach(category => {
-      const categoryContainer = document.createElement("section");
+        const playerContainer = document.createElement("div");
+        playerContainer.id =
+          "playerContainer" + category.category.toUpperCase();
+        categoryContainer.appendChild(playerContainer);
 
-      const categoryHeader = document.createElement("header");
-      const categoryTitle = document.createElement("h1");
-      categoryTitle.textContent = category.categoryTitle;
-      categoryHeader.appendChild(categoryTitle);
-      categoryContainer.appendChild(categoryHeader);
+        category.streams.forEach((stream) => {
+          const source = document.createElement("source");
 
-      // Now add the audio players and the buttons for each stream:
-      const playerContainer = document.createElement("div");
-      playerContainer.id = "playerContainer" + category.category.toUpperCase();
-      categoryContainer.appendChild(playerContainer);
+          source.dataset.src = stream.url;
+          source.type = stream.type;
 
-      // radioSections.appendChild(categoryContainer);
+          const audio = document.createElement("audio");
+          audio.appendChild(source);
 
-      category.streams.forEach(stream => {
-        // Create the "source" element of the "audio" element.
-        //
-        // NOTE: We don't set the "src" attribute here, since we want to prevent
-        //       the audio file from being downloaded when the page loads.
-        //       Instead, we store the URL in a "data-src" attribute.
-        // NOTE: Using the source element provides more flexibility than only using "audio"
-        //       as it allows you to specify multiple source files. The browser will choose
-        //       the most suitable one based on its capabilities and the file type
-        const source = document.createElement("source");
-        // source.src = stream.url; // DOWNSIDE: Will download the audio file when the page loads
-        // source.src = '';         // BENEFIT: Prevents downloading the audio file when the page loads
-        source.dataset.src = stream.url; // Store the streaming URL in a "data-src" attribute
-        source.type = stream.type;
+          const button = document.createElement("button");
+          button.textContent = stream.title;
+          button.title = stream.url;
+          button.addEventListener("click", () =>
+            handleButtonClick(button, audio, stream),
+          );
+          playerContainer.appendChild(audio);
+          playerContainer.appendChild(button);
+        });
 
-        const audio = document.createElement("audio");
-        audio.appendChild(source);
-
-        // Create the audio element without setting the src attribute
-        // Instead, the URL of the audio file is stored in a data - src attribute.
-        // This ensures that the audio file is not downloaded when the page loads,
-        // which can improve page load times if you have a lot of audio streams.
-
-        const button = document.createElement("button");
-        button.textContent = stream.title;
-        button.title = stream.url;  // tooltip text
-        button.addEventListener("click", () => handleButtonClick(button, audio, stream));
-        playerContainer.appendChild(audio);
-        playerContainer.appendChild(button);
+        fragment.appendChild(categoryContainer);
       });
 
-      fragment.appendChild(categoryContainer);
-    });
+      radioSections.appendChild(fragment);
 
-    radioSections.appendChild(fragment);
-
-    /* SECTION_TO_REMOVE_2__END */
-
-  </script>
-
-</body>
-
+      window.onload = function () {
+        document
+          .getElementById("menuRefreshPage")
+          .addEventListener("click", refreshPage);
+        document
+          .getElementById("menuViewSource")
+          .addEventListener("click", viewSource);
+        document
+          .getElementById("menuAudioErrorLog")
+          .addEventListener("click", displayErrors);
+      };
+    </script>
+  </body>
 </html>

@@ -169,7 +169,6 @@ sed -i "s|INSERT_NEW_SCRIPT_HERE|$NEW_SCRIPT_SINGLE_LINE|g" "$DIST_DIR/radio_str
 #       "$ sudo npm install --global prettier"
 #       This will install Prettier globally, so you can use it from any directory on your system.
 #
-# NOT_IN_USE_ANYMORE: Seems "prettier" causes issues in the resulting HTML file (reminas to be resolved)
 prettier "$DIST_DIR/radio_streams_player__scraped.html" >"$DIST_DIR/radio_streams_player__scraped__pretty_printed.html"
 
 # ========================================================

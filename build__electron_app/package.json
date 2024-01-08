@@ -4,7 +4,6 @@
   "description": "Core Radio - A simple radio for listening to your favourite audio streams",
   "author": "Erlend Bleken <bleken@gmail.com>",
   "license": "MIT",
-
   "main": "main.js",
   "build": {
     "appId": "org.bleken.coreRadio",
@@ -46,7 +45,6 @@
     "start": "electron .",
     "pack": "electron-builder --dir",
     "postinstall": "electron-builder install-app-deps",
-
     "dist-all-platforms": "TARGET_PLATFORM=ALL electron-builder --all",
     "dist-all-platforms-and-architectures": "TARGET_PLATFORM=ALL electron-builder --all --arch=all",
     "dist-linux-all": "TARGET_PLATFORM=linux electron-builder --platform=linux --all",
@@ -63,6 +61,13 @@
   "devDependencies": {
     "electron": "^28.1.0",
     "electron-builder": "^24.9.1",
-    "electron-packager": "^17.1.2"
+    "electron-packager": "^17.1.2",
+    "eslint": "^8.56.0"
+  },
+  "dependencies": {
+    "csslint": "^1.0.5",
+    "html5-validator": "^1.2.1",
+    "path": "^0.12.7",
+    "w3c-html-validator": "^1.6.4"
   }
 }
