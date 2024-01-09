@@ -31,7 +31,7 @@ function createWindow() {
   mainWindow.setTitle('Core Radio');
 
   // NOTE: "__dirname" is a Node.js global variable that gets the directory name of the current module
-  mainWindow.loadFile(path.join(__dirname, 'core_radio__copied_from_src.html'));
+  mainWindow.loadFile(path.join(__dirname, 'core_radio__static_html_processed.html'));
 
   mainWindow.on('closed', () => {
     mainWindow = null;

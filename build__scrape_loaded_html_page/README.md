@@ -6,7 +6,7 @@ NOTE: Chromium is maintained by Ubuntu
 
 ## Run this command to scrape the
 
-`google-chrome --headless --dump-dom 'file:///..src/core_radio.html' > ./radio_streams_player__scraped__without_javascript.html`
+`google-chrome --headless --dump-dom 'file:///..src/core_radio.html' > ./core_radio__scraped__without_javascript.html`
 
 NOTE: This will give you the current state of the HTML as rendered by JavaScript, including any changes made after the page was loaded.
 
@@ -47,7 +47,7 @@ Here are the steps to copy the "Outer HTML" of the page to the clipboard, using 
 3. In the "Developer Tools" window, select the "Elements" tab.
 4. Right-click on the "html" tag in the "Elements" tab and select "Copy" > "Copy outerHTML".
    - _NOTE: This should work for the following browsers: Chrome, Firefox, Edge, Brave._
-5. Paste the copied HTML into a new file and save it as "radio_streams_player__without_javascript.html".
+5. Paste the copied HTML into a new file and save it as "core_radio__without_javascript.html".
 
 ### Method 3 (manual): Browser extensions to get the outer HTML of a loaded web page
 
@@ -60,7 +60,7 @@ There maght also be browser extensions that can be used to copy the "Outer HTML"
 Several tools are available to copy the "Outer HTML" of a page.
 
 - Use Chrome in "headless mode":
-  - `chrome --headless --disable-gpu --dump-dom 'file:///path/to/your/file.html' > radio_streams_player__without_javascript.html`
+  - `chrome --headless --disable-gpu --dump-dom 'file:///path/to/your/file.html' > core_radio__without_javascript.html`
 
 CLI tools that can be used to "scrape" the "Outer HTML" from a loaded page:
 

@@ -1,6 +1,6 @@
 {
   "name": "core-radio",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Core Radio - A simple radio for listening to your favourite audio streams",
   "author": "Erlend Bleken <bleken@gmail.com>",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "compression": "maximum",
     "artifactName": "${name}_${version}_${env.TARGET_PLATFORM}_${arch}.${ext}",
     "win": {
-      "icon": "favicon_256x256.ico",
+      "icon": "icons/favicon_256x256.ico",
       "target": [
         {
           "target": "nsis"
@@ -23,11 +23,11 @@
       "allowToChangeInstallationDirectory": true
     },
     "mac": {
-      "icon": "mac_icon.icns",
+      "icon": "icons/mac_icon.icns",
       "target": "zip"
     },
     "linux": {
-      "icon": "linux_icon.png"
+      "icon": "icons/linux_icon.png"
     },
     "directories": {
       "output": "dist"

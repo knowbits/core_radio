@@ -7,7 +7,7 @@ SCRIPT_DIR=$(
 )
 
 NODE_BIN_FOLDER="$SCRIPT_DIR/node_modules/.bin"
-HTML_FILE__PROCESSED="$SCRIPT_DIR/core_radio__copied_from_src.html"
+HTML_FILE__PROCESSED="$SCRIPT_DIR/core_radio__static_html_processed.html"
 
 # Folder of static HTML page as "absolute path"
 STATIC_HTML_FOLDER="$(realpath "$SCRIPT_DIR/../src")"

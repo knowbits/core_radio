@@ -95,20 +95,23 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 
 ## Create an executable binary for Windows 64-bit
 
-1. Copy the "static html file" and the "favicon" to the Electron build folder:
-   1. `cp ../src\core_radio.html ./index.html`
-   2. `cp ../icons/Elegantthemes-Beautiful-Flat-One-Color-Radio.ico ./favicon.ico`
+1. Copy the "static html file" to the Electron build folder
+   * `cp ../src\core_radio.html ./index.html`
 
-3. To build the Electron app, run `npx electron-packager . radio_streams_player --platform=win32 --arch=x64  --icon=./favicon.ico --out=release-builds --overwrite`
+2. Convert the .ico file to a "256x256" .ico file using ImageMagick: Save to the Electron build folder
+
+   * `convert ../icons/Elegantthemes-Beautiful-Flat-One-Color-Radio.ico -resize 256x256 ./icons/favicon_256x256.ico`
+
+3. To build the Electron app, run `npx electron-packager . core_radio --platform=win32 --arch=x64  --icon=./icons/favicon_256x256.ico --out=release-builds --overwrite`
    1. Creates the Electron app executable file:
-   2. `./release-builds/radio_streams_player.exe` folder,
+   2. `./release-builds/core_radio.exe` folder,
 
 4. NOTE: The `--electron-version=13.1.7` parameter is optional. If not specified, the latest version of Electron will be used.
 
-5. Copy folder with `radio_streams_player.exe` and all it's dependencies (DLLs etc) to your Windows Desktop:
-   1. For example: `cp -r ./release-builds/radio_streams_player-win32-x64/ /mnt/c/Users/<Insert Your Windows user name here>/Desktop/`
+5. Copy folder with `core_radio.exe` and all it's dependencies (DLLs etc) to your Windows Desktop:
+   1. For example: `cp -r ./release-builds/core_radio-win32-x64/ /mnt/c/Users/<Insert Your Windows user name here>/Desktop/`
 
-6. Now you can run the Electron app by double-clicking the `radio_streams_player.exe` file in the `radio_streams_player-win32-x64/` folder on your Windows Desktop.
+6. Now you can run the Electron app by double-clicking the `core_radio.exe` file in the `core_radio-win32-x64/` folder on your Windows Desktop.
 
 ## Run the "Electron app" from the command line (no executable binary required)
 

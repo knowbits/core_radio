@@ -77,10 +77,10 @@ chromium-browser \
   --disable-software-rasterizer \
   --enable-logging --v=1 \
   --dump-dom 'http://127.0.0.1:8000/core_radio.html' \
-  >"$DIST_DIR"/radio_streams_player__scraped.html
+  >"$DIST_DIR"/core_radio__scraped.html
 
 # Wait for the file to be created (is this NEEDED?)
-while [ ! -f "$DIST_DIR/radio_streams_player__scraped.html" ]; do
+while [ ! -f "$DIST_DIR/core_radio__scraped.html" ]; do
   sleep 1
 done
 
@@ -97,12 +97,12 @@ fi
 # Remove the "streams" array and preceding comment block:
 #
 sed -i '/\/\* SECTION_TO_REMOVE_1__START \*\//,/\/\* SECTION_TO_REMOVE_1__END \*\//c\/* for loop removed by the "web scraping" shell script */' \
-  "$DIST_DIR/radio_streams_player__scraped.html"
+  "$DIST_DIR/core_radio__scraped.html"
 
 # Remove the "    streams.forEach(..." loop, and replace it with the string "INSERT_NEW_SCRIPT_HERE"
 #
 sed -i '/\/\* SECTION_TO_REMOVE_2__START \*\//,/\/\* SECTION_TO_REMOVE_2__END \*\//c\INSERT_NEW_SCRIPT_HERE' \
-  "$DIST_DIR/radio_streams_player__scraped.html"
+  "$DIST_DIR/core_radio__scraped.html"
 
 # ========================================================
 # Now replace the string "INSERT_NEW_SCRIPT_HERE" with a minmal Javascript (adds an "event handler" to all buttons)
@@ -143,7 +143,7 @@ NEW_SCRIPT_SINGLE_LINE=$(echo "$NEW_SCRIPT" | awk '{ printf "%s\\n", $0 }' ORS='
 
 # Use sed to replace the placeholder with the new script
 #
-sed -i "s|INSERT_NEW_SCRIPT_HERE|$NEW_SCRIPT_SINGLE_LINE|g" "$DIST_DIR/radio_streams_player__scraped.html"
+sed -i "s|INSERT_NEW_SCRIPT_HERE|$NEW_SCRIPT_SINGLE_LINE|g" "$DIST_DIR/core_radio__scraped.html"
 
 # ========================================================
 # USEFUL: Validate your HTML documents: http://validator.w3.org/nu/
@@ -156,7 +156,7 @@ sed -i "s|INSERT_NEW_SCRIPT_HERE|$NEW_SCRIPT_SINGLE_LINE|g" "$DIST_DIR/radio_str
 #
 # NOTE: TO install "tidy" on Ubuntu: "$ sudo apt-get install tidy"
 #
-# tidy -i -w 120 -m "$DIST_DIR/radio_streams_player__scraped.html"
+# tidy -i -w 120 -m "$DIST_DIR/core_radio__scraped.html"
 
 # ========================================================
 # Pretty print the resulting HTML file using "prettier" (JavaScript).
@@ -169,19 +169,19 @@ sed -i "s|INSERT_NEW_SCRIPT_HERE|$NEW_SCRIPT_SINGLE_LINE|g" "$DIST_DIR/radio_str
 #       "$ sudo npm install --global prettier"
 #       This will install Prettier globally, so you can use it from any directory on your system.
 #
-prettier "$DIST_DIR/radio_streams_player__scraped.html" >"$DIST_DIR/radio_streams_player__scraped__pretty_printed.html"
+prettier "$DIST_DIR/core_radio__scraped.html" >"$DIST_DIR/core_radio__scraped__pretty_printed.html"
 
 # ========================================================
 # Echo the result: Location of the final scraped HTML file
 echo
 echo ============================================
 echo "Scraped the loaded web page (with innerHTML from JavaScript))."
-echo "Result was saved in: '$DIST_DIR/radio_streams_player__scraped.html'"
+echo "Result was saved in: '$DIST_DIR/core_radio__scraped.html'"
 
 # Instructions to view the file
 echo
 echo "To view the resulting html file, run: "
-echo "   $ open $DIST_DIR/radio_streams_player__scraped.html"
+echo "   $ open $DIST_DIR/core_radio__scraped.html"
 echo ============================================
 echo
 
