@@ -448,35 +448,36 @@
         <span class="tooltip">Logout</span>
       </li -->
 
-      <!-- Add the "Move" icon: allows to "mouse drag" the app window.
-           NOTE: Only works in Electron apps!
-      -->
+      <!-- Add a "Move" area: Allows to move the Electron app window by dragging. -->
+      <!-- NOTE: Tooltip does not work on a "draggable" region: -->
+      <!--       => REMOVED tooltip: span class="tooltip">Drag to move the windows (Electron only)</span -->
+      <!-- UNCOMMENT_FOR_ELECTRON_APP_START
       <li class="menu-item" style="-webkit-app-region: drag; color: var(--menu-color-inactive);">
         <i class="fas fa-arrows-alt"></i>
-        <!-- NOTE: Tooltip does not work on a "draggable" region: -->
-        <!-- span class="tooltip">Drag to move the windows (Electron only)</span -->
       </li>
+      UNCOMMENT_FOR_ELECTRON_APP_END -->
 
       <li class="left-tooltip">
         <i class="fas fa-info-circle"></i>
         <span class="tooltip">About</span>
       </li>
 
-      <!--
-        Add the "Close" icon.
-        NOTE: Will only work in an Electron app, since a HTML page cannot close itself.
-      -->
-      <!-- li class="left-tooltip">
-        <i class="far fa-times" style="font-size: 1.6rem; color: var(--text-colour);"
-          onmouseover="this.style.color='#CD5C5C'" onmouseout="this.style.color='var(--text-colour)'"></i>
-        <span class="tooltip">Close app</span>
-      </li -->
+      <!-- "Close" option. (Only works in Electron app, since a HTML page cannot close itself) -->
 
-      <li class="left-tooltip">
-        <span style="font-size: 2.1rem; color: var(--text-colour);" onmouseover="this.style.color='#CD5C5C'"
-          onmouseout="this.style.color='var(--text-colour)'">x</span>
+      <!-- "Close": As FontAwesome icon:
+        <li class="left-tooltip">
+          <i class="far fa-window-close" style="font-size: 1.6rem; color: var(--text-colour);"
+            onmouseover="this.style.color='#CD5C5C'" onmouseout="this.style.color='var(--text-colour)'"></i>
+          <span class="tooltip">Close app</span>
+        </li>
+      -->
+      <!-- UNCOMMENT_FOR_ELECTRON_APP_START
+      <li class="left-tooltip" id="menuCloseElectronApp">
+        <span style="font-size: 2.1rem; color: var(--text-colour);font-weight: lighter;"
+          onmouseover="this.style.color='#CD5C5C'" onmouseout="this.style.color='var(--text-colour)'">x</span>
         <span class="tooltip">Close app</span>
       </li>
+      UNCOMMENT_FOR_ELECTRON_APP_END -->
     </ul>
   </nav>
 
@@ -813,6 +814,17 @@
       document.getElementById("menuRefreshPage").addEventListener("click", refreshPage);
       document.getElementById("menuViewSource").addEventListener("click", viewSource);
       document.getElementById("menuAudioErrorLog").addEventListener("click", displayErrors);
+
+      /* UNCOMMENT_FOR_ELECTRON_APP_START
+      // Add an event handler for the "Close" menu item: Only enabled in the Electron app.
+      //
+      // NOTE: The "renderer process" (this web page) will call
+      //       the "window.closeApp" function defined in "preload.js"
+      //
+      document.getElementById("menuCloseElectronApp").addEventListener("click", () => {
+        window.closeApp();
+      });
+      UNCOMMENT_FOR_ELECTRON_APP_END */
     };
 
   </script>

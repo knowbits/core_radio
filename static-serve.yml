@@ -6,7 +6,13 @@
 
 # ====================================================
 # USAGE:
-# Open Chrome to view static html page: http://localhost:45067/core_radio.html
+#
+# Open Chrome to view static html page:
+#    http://localhost:45067/core_radio.html
+#    http://localhost:45067/core_radio.html?debug=1
+#
+#    http://localhost:45067/tmp_11__uncommented_electron_specific_html_code.html
+#
 # NOTE: The static files are served using "./src/" as the root folder
 
 # ====================================================
@@ -25,6 +31,7 @@ port: 45067
 sources:
   # "dir" is a path to look for static files
   - dir: src
+  - dir: build__electron_app/tmp_html_processing
 #
 #  - dir: other
     # "headers" can be added to any individual source and will be merged with the

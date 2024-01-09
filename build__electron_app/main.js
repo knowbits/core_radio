@@ -1,11 +1,59 @@
-const electron = require('electron');
+/*
+* This file is the "main process" of the Electron app.
+ *
+ * It is responsible for:
+ *   Creating and managing the "renderer processes" (the web pages).
+ *   Creating the "native" GUI elements of the Electron app.
+ *   Communicating with the "renderer processes" via IPC.
+ *   Communicating with the operating system via the Electron API.
+ *   Communicating with the Node.js API.
+ *
+ * Concept inherited from Chromium: "main processes" and "renderer processes".
+ *
+ * The "main process" creates the "native" GUI elements of the Electron app:
+ *
+ *   Menus and menu bar, window controls (minimize, maximize, close, resize, move)
+ *   Window: frame, shape, transparency, shadow animations.
+ *   Shortcuts, tray icon (Windows, Linux), "Native" dock icon (OS X).
+ *   Notifications, system dialogs, progress bar, file associations.
+ *   File system access, clipboard access, screen capture, global shortcuts.
+ *
+ * System monitoring: power status, power saving settings, idle state, and general system metrics.
+ * Process monitoring: metrics, memory information, CPU information, I/O count, heap statistics,
+ *   handle count, uptime, resource usage, CPU usage, and memory usage.
+ */
+
+/*
+ * ====================================================
+ * Electron's "main process" has some issues with "ES modules" (ESM)
+ * => It is recommended to use "CommonJS" modules.
+ */
 const path = require('path');
-const { app, BrowserWindow } = electron;
+const { app, ipcMain, BrowserWindow } = require('electron');
+
+/*
+ * The "ipcMain" module is an instance of the EventEmitter class.
+ * When used in the "main process", it handles asynchronous
+ * and synchronous messages sent from a "renderer process" (web page).
+ */
+
+/*
+ * Listen for a ‘close’ event by using Electron's "ipcMain" module
+ */
+ipcMain.on('close', () => {
+  app.quit();
+});
 
 function createWindow() {
 
   let mainWindow = new BrowserWindow({
     webPreferences: {
+      // The "preload" property is used to run scripts before the "main window's" scripts.
+      // The "preload.js" script runs with full "Node.js" access rights,
+      // even if the "nodeIntegration" property is set to false.
+      preload: path.join(__dirname, 'preload.js'),
+
+      // NOTE: "nodeIntegration" is disabled by default in "Electron 12".
       // "true": Enable to use Node.js modules in the HTML document.
       // "false": Prevent the renderer processes (the web pages) from accessing Node.js APIs.
       nodeIntegration: false
