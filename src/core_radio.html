@@ -466,12 +466,17 @@
         Add the "Close" icon.
         NOTE: Will only work in an Electron app, since a HTML page cannot close itself.
       -->
-      <li class="left-tooltip">
-        <i class="far fa-window-close" style="font-size: 1.6rem; color: var(--text-colour);"
+      <!-- li class="left-tooltip">
+        <i class="far fa-times" style="font-size: 1.6rem; color: var(--text-colour);"
           onmouseover="this.style.color='#CD5C5C'" onmouseout="this.style.color='var(--text-colour)'"></i>
         <span class="tooltip">Close app</span>
-      </li>
+      </li -->
 
+      <li class="left-tooltip">
+        <span style="font-size: 2.1rem; color: var(--text-colour);" onmouseover="this.style.color='#CD5C5C'"
+          onmouseout="this.style.color='var(--text-colour)'">x</span>
+        <span class="tooltip">Close app</span>
+      </li>
     </ul>
   </nav>
 
