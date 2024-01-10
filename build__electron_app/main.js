@@ -31,11 +31,15 @@
 const path = require("path");
 const { app, ipcMain, BrowserWindow } = require("electron");
 
-let mainWindow;
+let webPageWindow;
 
-function createWindow() {
+/*
+ * The "BrowserWindow" class is used to create and control browser windows ("renderer processes").
+ * Each browser window displays a web page (HTML page).
+ */
+function createWebPageWindow() {
 
-  mainWindow = new BrowserWindow({
+  webPageWindow = new BrowserWindow({
     webPreferences: {
       // The "preload" property is used to run scripts before the "main window"s" scripts.
       // The "preload.js" script runs with full "Node.js" access rights,
@@ -45,8 +49,37 @@ function createWindow() {
       // NOTE: "nodeIntegration" is disabled by default in "Electron 12".
       // "true": Enable to use Node.js modules in the HTML document.
       // "false": Prevent the renderer processes (the web pages) from accessing Node.js APIs.
-      nodeIntegration: false
+      nodeIntegration: false,
+
+      // This option isolates the JavaScript contexts, preventing the
+      // preload script from accessing the Electron APIs in the renderer process directly.
+      // Instead, you have to use the contextBridge module to expose specific APIs
+      // to the renderer process in a safe manner.
+      //
+      // This is a security feature that helps prevent potential attacks from malicious scripts.
+      contextIsolation: true,
+
+      // The "webSecurity" option allows you to control whether to enable the same-origin policy.
+      // Ensures that the return values of "executeJavaScript" are serialized safely.
+      // When it's set to true, Electron will ensure that the serialization of the
+      // executeJavaScript method is compatible with the serialization used in the
+      // contextBridge module.
+      // This is a recommended setting when using "contextIsolation: true".
+      worldSafeExecuteJavaScript: true,
+
+      // This option enables a Chromium feature that limits the power and scope
+      // of the renderer process. When this option is enabled, the renderer process runs
+      // in a separate OS-level process and has a more limited access to Electron APIs.
+      // This is another security feature that helps mitigate potential security risks.
+      sandbox: true,
+
+      // The "remote" module provides a simple way to do inter-process communication (IPC)
+      // between the renderer and the main process in Electron. However, it's been deprecated
+      // due to security concerns. When enableRemoteModule is set to false, the "remote" module
+      // is disabled. This is a recommended security setting.
+      enableRemoteModule: false,
     },
+
     width: 400,
     height: 450,
 
@@ -65,26 +98,20 @@ function createWindow() {
     transparent: true
   });
 
-  mainWindow.setTitle("Core Radio");
+  webPageWindow.setTitle("Core Radio");
 
   // Use Error Handling when loading the "web page" file
-  // NOTE: "__dirname" is a Node.js global variable that gets the directory name of the current module
-  mainWindow.loadFile(path.join(__dirname, "core_radio__processed_for_electron_app.html"))
+  // NOTE: "__dirname" is a Node.js global variable that gets
+  //       the directory name of the current module
+  webPageWindow.loadFile(path.join(__dirname, "core_radio__processed_for_electron_app.html"))
     .catch(err => {
       console.error(`Failed to load file: ${err}`);
     });
 
-  mainWindow.on("closed", () => {
-    mainWindow = null;
-  });
 
-  /*
-   * The "ipcMain" module is an instance of the EventEmitter class.
-   * When used in the "main process", it handles asynchronous
-   * and synchronous messages sent from a "renderer process" (web page).
-   */
-  ipcMain.on("close-app", (_event, _arg) => {
-    mainWindow.close();
+  // Emitted when the window is closed.
+  webPageWindow.on("closed", () => {
+    webPageWindow = null;
   });
 
   // DEBUG: Uncomment to open the "Chrome developer tools" when your app starts.
@@ -98,25 +125,34 @@ function createWindow() {
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
+  // Another instance of the app is already running, quit this instance.
   app.quit();
 } else {
+  // No other instance is running, continue with this instance.
+
+  // The "second-instance" event is emitted when a "second instance" of the app is executed.
   app.on("second-instance", (_event, _commandLine, _workingDirectory) => {
-    // Someone tried to run a second instance, we should focus our window.
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore();
-      mainWindow.focus();
+    // Someone tried to run a second instance => focus the window of the first instance:
+    if (webPageWindow) {
+      if (webPageWindow.isMinimized()) webPageWindow.restore();
+      webPageWindow.focus();
     }
   });
 
-  // Set some common "app" settings for an Electron app
-  setAppSettingsAndHandlers();
+  // Disable GPU hardware acceleration (caused problems on Ubuntu (WLS2)
+  // NOTE: This must be called before the "app" module's "ready" event is emitted.
+  app.disableHardwareAcceleration();
 
-  // Create "mainWindow", load the rest of the app, etc...
+  // Create "mainWindow" (the "renderer process" that displays the HTML document)
+  // when Electron has finished initializing and is ready to create browser windows.
   app.whenReady().then(() => {
-    createWindow();
+    // Create the "web page window" (the "renderer process" that displays the HTML document)
+    createWebPageWindow();
+    setAppSettingsAndHandlers();
+    addListenersForFunctionsExposedToRendererProcesses();
   });
 
-} // END: "Single Instance Lock"
+}; // END: "Single Instance Lock"
 
 /*
   * ====================================================
@@ -126,9 +162,6 @@ if (!gotTheLock) {
 function setAppSettingsAndHandlers() {
   // app.setAppUserModelId("com.core.radio");
   // app.setAsDefaultProtocolClient("core-radio");
-
-  // Disable GPU hardware acceleration (caused problems on Ubuntu (WLS2)
-  app.disableHardwareAcceleration();
 
   // ====================================================
   // GOAL: Reduce the size of the Electron app by excluding most locales (the ".pak" files).
@@ -156,12 +189,13 @@ function setAppSettingsAndHandlers() {
   */
   app.on("activate", function () {
     // if (BrowserWindow.getAllWindows().length === 0) { createWindow() }
-    if (mainWindow === null) { createWindow() }
+    if (webPageWindow === null) { createWebPageWindow(); }
   });
 
-  /* NOTE: The "window-all-closed" event is emitted when all windows have been closed.
-   *  In OS X, it is common for applications and their menu bar to stay active
-   *  until the user quits explicitly with "Cmd + Q".
+  /*
+   * Quit when all windows are closed, except on macOS. There, it"s common for
+   * applications and their menu bar to stay active until the user quits
+   * explicitly with Cmd + Q.
    *
    * Config required in ".eslintrc" for "eslint" to recognise the "process" global variable:
    *   "env": { "node": true }
@@ -172,4 +206,29 @@ function setAppSettingsAndHandlers() {
     }
   });
 
-} // END: "setAppSettings()"
+}; // END: "setAppSettings()"
+
+/*
+  * ====================================================
+  * Add listeners for functions exposed to "renderer processes"
+  * ====================================================
+  */
+function addListenersForFunctionsExposedToRendererProcesses() {
+  /*
+ * The "ipcMain" module is an instance of the EventEmitter class.
+ * When used in the "main process", it handles asynchronous
+ * and synchronous messages sent from a "renderer process" (web page).
+ */
+  ipcMain.on("close-app", (event, arg) => {
+    let win = event.sender.getOwnerBrowserWindow();
+    win.close();
+    // mainWindow.close();
+  });
+
+  ipcMain.on("open-dev-tools", (event, arg) => {
+    let win = event.sender.getOwnerBrowserWindow();
+    win.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
+  });
+
+} // END: "addListenersForFunctionsExposedToRendererProcesses()"

@@ -15,16 +15,39 @@
 
 ## TO DO: FEATURE REQUESTS
 
-* FEATURE: Electron app : A "Close" button in the top right corner of the window
-  * [FEATURE: Electron app : A "Close" button in the top right corner of the window](./FEATURE__Electron_app__A_Close_button_in_the_top_right_corner_of_the_window.md)
-
-* [FEATURE: HTML: Keep indivdual list of radio streams in a local file](./FEATURE__HTML__Access_references_in_a_local_file.md)
+* [FEATURE: HTML: Save prefernces in a local file](./FEATURE__HTML__Save_preferences_in_a_local_file.md)
+  * E.g. Maintain an indivdual list of your preferred radio streams.
 
 ## TO DO: IMPROVEMENTS, OPTIMIZATIONS
+
+* SEO: Make the web app searchable by using "meta" tags etc: [OPTIMIZE: SEO: Add "meta" tags](./OPTIMIZE__SEO__Add_meta_tags.md)
 
 * [OPTIMIZE: CSS: FontAwesome icons: Only load the ones we actually use](./OPTIMIZE__CSS__FontAwesome_Only_load_the_icons_that_are_actually_used.md)
 
 * Improve CSS: [How I'm Writing CSS in 2024](https://leerob.io/blog/css#user-experience)
+  * Minfy and compress the CSS file:
+    * Remove all comments, spaces, line breaks, etc.
+    * Remove all unused CSS styles.
+    * Use compression/minfying tools like: PurgeCSS, CSSNano, and Brotli
+  * Proper Caching: Stylesheets should not re-download unless changed.
+    * This can be achieved by generating "hashed file names" to enable safe, immutable caching
+  * Fast Font Loading:
+    * Fonts should load as fast as possible and minimize layout shift.
+    * A properly configured `@font-face` rule can improve font loading performance.
+      * NOTE: "Google Fonts" already does this for you:
+        * A "CSS" is downloaded with a `@font-face` rule that points to the font files on Google's servers.
+    * Use `font-display: swap;` or use `font-display: optional;`:
+      * Tell the browser it's okay to use a "fallback font" until the custom font is loaded.
+    * Use `preload` to load fonts earlier in the page lifecycle.
+    * Host fonts locally: Reduces the number of network requests (HTTP, DNS).
+    * Use `WOFF2` format (if possible): the most compressed font format.
+  * Consider "StyleX" (CSS-in-JS library)
+    * <https://leerob.io/blog/css#stylex>
+    * <https://stylexjs.com/docs/learn/thinking-in-stylex/>
+  * "CSS Modules"
+    * <https://leerob.io/blog/css#css-modules>
+    * "Lightning CSS" supports "CSS Modules"
+      * <https://lightningcss.dev>
 
 ----
 

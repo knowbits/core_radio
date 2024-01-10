@@ -9,7 +9,33 @@
 <html lang="en">
 
 <head>
+  <title>Core Radio</title>
+
   <meta charset="UTF-8">
+
+  <!--
+      Set the Content Security Policy (CSP) directly in your HTML file using a <meta> tag.
+      This way, the CSP will be applied when the HTML file is loaded by the Electron app.
+
+      The CSP is a security feature that helps prevent cross-site scripting (XSS) attacks.
+
+      See: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+
+      Other "directives":
+
+        https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+
+        default-src 'self' : allows loading resources from the same origin.
+        script-src 'self' : allows inline and eval() JavaScript, but not JavaScript from other sources.
+          NOTE: You must explicitly allow other sources of JavaScript if you want to load them.
+        style-src 'self' : allows inline styles and style sheets loaded from the same origin.
+        img-src 'self' : allows loading images and favicons from the same origin.
+        font-src 'self' : allows loading fonts from the same origin.
+  -->
+  <!--
+    TOO RESTRICTIVE => NEEDS FIX: No "innerHTML" is shown in Electron app:
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';">
+  -->
   <!--
     Setting the "viewport" is crucial for "responsive web design" on mobile devices.
 
@@ -40,16 +66,36 @@
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Load the "Regular 400" Roboto font: -->
-  <!-- link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" -->
-  <!-- Load the "Light 300" Roboto font: -->
+  <!--
+    Load the "Light 300" Roboto font:
+
+    1. Preload the CSS file (it contains "@font-face" declarations).
+       NOTE: Preloading the CSS file will not preload the font files themselves.
+
+    "display=swap" : Tells the browser to use a fallback font to display the text
+      until the custom font has loaded. This can prevent a "flash of invisible text" (FOIT)
+      where the text is invisible until the custom font loads.
+
+    onload="this.onload=null;this.rel='stylesheet'": This is a bit of JavaScript
+      that runs when the resource finishes loading. It does two things: first, it
+      sets the onload attribute to null to prevent the code from running again.
+      Second, it changes the rel attribute from "preload" to "stylesheet". This tells
+      the browser that the resource is no longer just being preloaded, but is now a
+      stylesheet that should be applied to the page. This is a common pattern used to
+      preload CSS files and apply them as soon as they finish loading, without
+      blocking the rest of the page from rendering.
+  -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" as="style">
+  <!-- 2. Link to the CSS file as you normally would -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
   <!--
     Load FontAwesome icons to be used in the "menu bar".
 
     // TODO: Optimize by loading only the icons we actually use. See options in "dev_DOCS/" folder.
-
 
     CSS styling conventions for selecting FontAwesome icon categories:
       "fas" for Solid, "far" for Regular, "fal" for Light, "fad" for Duotone, and "fab" for Brands
@@ -66,7 +112,6 @@
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-  <title>Core Radio</title>
 
   <style>
     /* ==== START: CSS Reset ================================ */
@@ -170,7 +215,8 @@
      *     header, nav, main, footer
      */
     body {
-      font-family: "Roboto", sans-serif;
+      /* Use a "fallback font" until the custom font is loaded: */
+      font-family: "Roboto", fallback, sans-serif;
       font-size: 100%;
       /*
        * By using “rem”, the font size of the tooltip will be relative to the base font size of the page.
@@ -418,18 +464,13 @@
       </li>
 
       <li class="left-tooltip">
-        <i class="fas fa-code" id="menuViewSource"></i>
-        <span class="tooltip">View source (HTML)</span>
-      </li>
-
-      <li class="left-tooltip">
-        <i class="fas fa-tools"></i>
-        <span class="tooltip">Chromium debug tools (F12)</span>
-      </li>
-
-      <li class="left-tooltip">
         <i class="fas fa-cog"></i>
         <span class="tooltip">Settings</span>
+      </li>
+
+      <li class="left-tooltip">
+        <i class="fas fa-info-circle"></i>
+        <span class="tooltip">About</span>
       </li>
 
       <!-- Add a "spacer" "li" to push the right-aligned menu items to the right edge of the nav bar: -->
@@ -458,9 +499,17 @@
       UNCOMMENT_FOR_ELECTRON_APP_END -->
 
       <li class="left-tooltip">
-        <i class="fas fa-info-circle"></i>
-        <span class="tooltip">About</span>
+        <i class="fas fa-code" id="menuViewSource"></i>
+        <span class="tooltip">View source (HTML)</span>
       </li>
+
+      <!-- Add a button to open the Chrome Dev Tools (F12): Electron only -->
+      <!-- UNCOMMENT_FOR_ELECTRON_APP_START
+      <li class="left-tooltip">
+        <i class="fas fa-tools" id="menuChromeDevTools"></i>
+        <span class="tooltip">Chromium debug tools (F12)</span>
+      </li>
+      UNCOMMENT_FOR_ELECTRON_APP_END -->
 
       <!-- "Close" option. (Only works in Electron app, since a HTML page cannot close itself) -->
 
@@ -815,7 +864,18 @@
       document.getElementById("menuViewSource").addEventListener("click", viewSource);
       document.getElementById("menuAudioErrorLog").addEventListener("click", displayErrors);
 
+
       /* UNCOMMENT_FOR_ELECTRON_APP_START
+
+      // Add an event handler for the "Open Chrome Dev Tools" menu item:
+      //
+      // NOTE: The "renderer process" (this web page) will call the
+      //       "window.openDevTools" function defined in "preload.js"
+      //
+      document.getElementById("menuChromeDevTools").addEventListener("click", () => {
+        window.api.openDevTools();
+      });
+
       // Add an event handler for the "Close" menu item: Only enabled in the Electron app.
       //
       // NOTE: The "renderer process" (this web page) will call
@@ -824,6 +884,7 @@
       document.getElementById("menuCloseElectronApp").addEventListener("click", () => {
         window.api.closeApp();
       });
+
       UNCOMMENT_FOR_ELECTRON_APP_END */
     };
 
