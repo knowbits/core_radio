@@ -26,21 +26,59 @@ TMP_FOLDER="$SCRIPT_FOLDER/tmp_html_processing"
 mkdir -p "$TMP_FOLDER"
 rm -rf "${TMP_FOLDER:?}"/*
 
-HTML_RESULT__STRIPPED_AND_VALIDATED="$TMP_FOLDER/tmp_10__step_1_result__html_stripped_and_validated.html"
+# ========================================================
+# Enable misc. pieces of Electron specific code in the HTML file
+# ========================================================
+
+STEP_1_01_UNCOMMENTED_ELECTRON_SPECIFIC_HTML_CODE="$TMP_FOLDER/step_1_01__uncommented_electron_specific_html_code.html"
+
+# ========================================================
+# 1. Uncomment the HTML to be used only in the Electron app.
+#
+# Start/end markers denote the HTML to be uncommented for use in the "Electron app" .
+#
+# Start marker: "<!-- UNCOMMENT_FOR_ELECTRON_APP_START"
+# End marker:  "UNCOMMENT_FOR_ELECTRON_APP_END -->"
+#
+# NOTE: The whole line where these markers occur will deleted by this awk script:
+#
+
+awk '\
+  !(/<!-- UNCOMMENT_FOR_ELECTRON_APP_START/ || /UNCOMMENT_FOR_ELECTRON_APP_END -->/)
+  ' "$HTML_SOURCE_FILE" \
+  >"$STEP_1_01_UNCOMMENTED_ELECTRON_SPECIFIC_HTML_CODE"
+
+# ========================================================
+# 2. Uncomment the Javascript to be used only in the Electron app.
+
+STEP_1_02_UNCOMMENTED_ELECTRON_SPECIFIC_JAVASCRIPT_CODE="$TMP_FOLDER/step_1_02__uncommented_electron_specific_javascript_code.html"
+
+# Start/end markers denote the Javascript to be uncommented for use in the "Electron app" .
+#
+# Start marker: "/* UNCOMMENT_FOR_ELECTRON_APP_START"
+# End marker:  "UNCOMMENT_FOR_ELECTRON_APP_END /*"
+#
+
+# Remove the lines containing the "start" and "end" markers.
+#
+awk '\
+  !(/\/\* UNCOMMENT_FOR_ELECTRON_APP_START/ || /UNCOMMENT_FOR_ELECTRON_APP_END \*\//)
+  ' "$STEP_1_01_UNCOMMENTED_ELECTRON_SPECIFIC_HTML_CODE" \
+  >"$STEP_1_02_UNCOMMENTED_ELECTRON_SPECIFIC_JAVASCRIPT_CODE"
 
 # ========================================================
 # Remove all Javascript type comments from the HTML page
 #
 # 1. First remove "comment blocks" that start with "/*" and end with "*/":
 #
-TMP_HTML_NO_JS_COMMENT_BLOCKS="$TMP_FOLDER/tmp_1_html_no_js_comment_blocks.html"
+STEP_2_1_HTML_NO_JS_COMMENT_BLOCKS="$TMP_FOLDER/step_2_01_html_no_js_comment_blocks.html"
 
 awk '
   BEGIN { multi_line_comment = 0; }
   /\/\*/ { multi_line_comment = 1; }
   /\*\// { multi_line_comment = 0; next; }
   !multi_line_comment { print; }
-' "$HTML_SOURCE_FILE" >"$TMP_HTML_NO_JS_COMMENT_BLOCKS"
+' "$STEP_1_02_UNCOMMENTED_ELECTRON_SPECIFIC_JAVASCRIPT_CODE" >"$STEP_2_1_HTML_NO_JS_COMMENT_BLOCKS"
 
 # Explain the "awk" command:
 #
@@ -61,11 +99,11 @@ awk '
 
 # 2. Then remove Javascript "single comment lines" that start with "//" and end with a newline character:
 #
-TMP_HTML_NO_JS_COMMENT_LINES="$TMP_FOLDER/tmp_2_html_no_js_comment_lines.html"
+STEP_2_2_HTML_NO_JS_COMMENT_LINES="$TMP_FOLDER/step_2_02_html_no_js_comment_lines.html"
 
 awk '{ if (!/:\//) sub(/\/\/.*/, ""); print }' \
-  "$TMP_HTML_NO_JS_COMMENT_BLOCKS" \
-  >"$TMP_HTML_NO_JS_COMMENT_LINES"
+  "$STEP_2_1_HTML_NO_JS_COMMENT_BLOCKS" \
+  >"$STEP_2_2_HTML_NO_JS_COMMENT_LINES"
 #
 # { if (!/:\//) sub(/\/\/.*/, ""); print }
 #   Replaces // and everything after it with nothing on each line,
@@ -75,14 +113,14 @@ awk '{ if (!/:\//) sub(/\/\/.*/, ""); print }' \
 # ========================================================
 # 3. Now remove all "HTML comment blocks" that start with "<!--" and end with "-->":
 
-TMP_HTML_NO_HTML_COMMENT_BLOCKS="$TMP_FOLDER/tmp_3_html_no_html_comment_blocks.html"
+STEP_2_3_HTML_NO_HTML_COMMENT_BLOCKS="$TMP_FOLDER/step_2_03_html_no_html_comment_blocks.html"
 
 awk '
   BEGIN { comment = 0; }
   /<!--/ { comment = 1; }
   /-->/ { comment = 0; next; }
   !comment { print; }
-' "$TMP_HTML_NO_JS_COMMENT_LINES" >"$TMP_HTML_NO_HTML_COMMENT_BLOCKS"
+' "$STEP_2_2_HTML_NO_JS_COMMENT_LINES" >"$STEP_2_3_HTML_NO_HTML_COMMENT_BLOCKS"
 
 # ========================================================
 # Pretty print the resulting HTML file using "prettier" (JavaScript).
@@ -95,8 +133,8 @@ awk '
 #       "$ sudo npm install --global prettier"
 #       This will install Prettier globally, so you can use it from any directory on your system.
 #
-TMP_4_HTML_PRETTIFIED="$TMP_FOLDER/tmp_4_html_prettified.html"
-prettier "$TMP_HTML_NO_HTML_COMMENT_BLOCKS" >"$TMP_4_HTML_PRETTIFIED"
+STEP_2_4_HTML_PRETTIFIED="$TMP_FOLDER/step_2_04_html_prettified.html"
+"$NODE_BIN_FOLDER/prettier" "$STEP_2_3_HTML_NO_HTML_COMMENT_BLOCKS" >"$STEP_2_4_HTML_PRETTIFIED"
 
 # ========================================================
 # Validate the HTML with "W3C Markup Validation Service API" with "curl"
@@ -106,16 +144,16 @@ prettier "$TMP_HTML_NO_HTML_COMMENT_BLOCKS" >"$TMP_4_HTML_PRETTIFIED"
 # => For a full CSS validation, you would need to use a dedicated CSS validator
 #    like the "W3C CSS Validation Service".
 
-TMP_5_HTML_VALIDATION_RESULT="$TMP_FOLDER/tmp_5_html_validation_result_from_W3C_API.txt"
+STEP_2_5_HTML_VALIDATION_RESULT="$TMP_FOLDER/step_2_05_html_validation_result_from_W3C_API.txt"
 
 # URL of the W3C Markup Validation Service API
 W3C_HTML_VALIDATION_API_URL="https://validator.w3.org/nu/"
 
 # Make a POST request to the W3C API and save the response to a file
 #
-HTTP_STATUS=$(curl -s -o "$TMP_5_HTML_VALIDATION_RESULT" \
+HTTP_STATUS=$(curl -s -o "$STEP_2_5_HTML_VALIDATION_RESULT" \
   -w "%{http_code}" -H "Content-Type: text/html; charset=utf-8" \
-  --data-binary @"$TMP_4_HTML_PRETTIFIED" \
+  --data-binary @"$STEP_2_4_HTML_PRETTIFIED" \
   -X POST "$W3C_HTML_VALIDATION_API_URL?out=gnu")
 
 # NOTE: The "out" parameter is set to "gnu" to get the result as "plain text".
@@ -132,29 +170,29 @@ fi
 
 # Check the HTML 5 validation result returned from the W3C API
 #
-if grep -iq "Error:" "$TMP_5_HTML_VALIDATION_RESULT"; then
+if grep -iq "Error:" "$STEP_2_5_HTML_VALIDATION_RESULT"; then
   echo "============================================"
   echo "HTML validation failed!"
-  echo "For details: '$TMP_5_HTML_VALIDATION_RESULT'"
+  echo "For details: '$STEP_2_5_HTML_VALIDATION_RESULT'"
   exit 1
 fi
 
 # ========================================================
 # First extract the CSS from the HTML file and save it to a .css file locally
 
-TMP_6_CSS_EXTRACTED_FROM_HTML="$TMP_FOLDER/tmp_6_css_extracted_from_html.txt"
+STEP_2_6_CSS_EXTRACTED_FROM_HTML="$TMP_FOLDER/step_2_06_css_extracted_from_html.txt"
 
 # Extract the CSS from the HTML file by removing everything before the first "<style>" tag
 # and everything after the last "</style>" tag by using "awk"
 
 awk '/<style>/{flag=1;next}/<\/style>/{flag=0}flag' \
-  "$TMP_4_HTML_PRETTIFIED" \
-  >"$TMP_6_CSS_EXTRACTED_FROM_HTML"
+  "$STEP_2_4_HTML_PRETTIFIED" \
+  >"$STEP_2_6_CSS_EXTRACTED_FROM_HTML"
 
 # ========================================================
 # Validate the extracted CSS using "W3C CSS Validation Service" (online)
 
-TMP_7_CSS_VALIDATION_RESULT="$TMP_FOLDER/tmp_7_css_validation_result_from_W3C_API.txt"
+STEP_2_7_CSS_VALIDATION_RESULT="$TMP_FOLDER/step_2_07_css_w3c_validation_result.txt"
 
 # URL of the W3C CSS Validation Service API
 W3C_CSS_VALIDATION_API_URL="https://jigsaw.w3.org/css-validator/validator"
@@ -162,8 +200,8 @@ W3C_CSS_VALIDATION_API_URL="https://jigsaw.w3.org/css-validator/validator"
 # Make a POST request to the W3C API and save the response to a file
 # (Note: The "output" parameter is set to "text" to get the result as plain text)
 
-HTTP_STATUS_CSS=$(curl -s -o "$TMP_7_CSS_VALIDATION_RESULT" \
-  -w "%{http_code}" -F "file=@$TMP_6_CSS_EXTRACTED_FROM_HTML;type=text/css" \
+HTTP_STATUS_CSS=$(curl -s -o "$STEP_2_7_CSS_VALIDATION_RESULT" \
+  -w "%{http_code}" -F "file=@$STEP_2_6_CSS_EXTRACTED_FROM_HTML;type=text/css" \
   -F "output=soap12" \
   -X POST "$W3C_CSS_VALIDATION_API_URL")
 
@@ -179,24 +217,35 @@ fi
 
 # Check the CSS validation result returned from the W3C API
 #
-if grep -q "<m:error>" "$TMP_7_CSS_VALIDATION_RESULT"; then
+if grep -q "<m:error>" "$STEP_2_7_CSS_VALIDATION_RESULT"; then
   echo "============================================"
   echo "CSS validation failed!"
-  echo "For details: '$TMP_7_CSS_VALIDATION_RESULT'"
+  echo "For details: '$STEP_2_7_CSS_VALIDATION_RESULT'"
   exit 1
 fi
 
 # ========================================================
 # First extract the Javascript from the HTML file and save it to a .js file locally
 
-TMP_8_JAVASCRIPT_EXTRACTED_FROM_HTML="$TMP_FOLDER/tmp_8_javascript_extracted_from_html.js"
+STEP_2_8a_JAVASCRIPT_EXTRACTED_FROM_HTML="$TMP_FOLDER/step_2_08a_javascript_extracted_from_html.js"
 
 # Extract the Javascript from the HTML file by removing everything before the first "<script>" tag
 # and everything after the last "</script>" tag by using "awk"
 
 awk '/<script>/{flag=1;next}/<\/script>/{flag=0}flag' \
-  "$TMP_4_HTML_PRETTIFIED" \
-  >"$TMP_8_JAVASCRIPT_EXTRACTED_FROM_HTML"
+  "$STEP_2_4_HTML_PRETTIFIED" \
+  >"$STEP_2_8a_JAVASCRIPT_EXTRACTED_FROM_HTML"
+
+# I need to remove indentation the Javascript code in the HTML file before validating it with "eslint"
+# because "eslint" does not work on Javascript code that has wrong indentation.
+
+# Remove superflous indentation from each line in the Javascript code using awk by removing 6 spaces from the beginning of each line.
+
+STEP_2_8b_JAVASCRIPT__INDENTATION_FIXED="$TMP_FOLDER/step_2_08b_javascript_extracted_from_html__indentation_reduced_with_6_spaces.js"
+
+"$NODE_BIN_FOLDER/prettier" \
+  "$STEP_2_8a_JAVASCRIPT_EXTRACTED_FROM_HTML" \
+  >"$STEP_2_8b_JAVASCRIPT__INDENTATION_FIXED"
 
 # ========================================================
 # Validate the Javascript using "eslint" (Node.js).
@@ -206,24 +255,28 @@ awk '/<script>/{flag=1;next}/<\/script>/{flag=0}flag' \
 # NOTE: The W3C provides validation services for HTML and CSS, but not for JavaScript.
 #       So we use "eslint" to validate the Javascript code.
 
-TMP_9_JS_VALIDATION_RESULT="$TMP_FOLDER/tmp_9_js_validation_result.txt"
+STEP_2_9_JS_VALIDATION_RESULT="$TMP_FOLDER/step_2_09_javascript_w3c_validation_result.txt"
 
-if ! node "$NODE_BIN_FOLDER/eslint" "$TMP_8_JAVASCRIPT_EXTRACTED_FROM_HTML" >"$TMP_9_JS_VALIDATION_RESULT"; then
+if ! node "$NODE_BIN_FOLDER/eslint" "$STEP_2_8b_JAVASCRIPT__INDENTATION_FIXED" >"$STEP_2_9_JS_VALIDATION_RESULT"; then
   echo "============================================"
   echo "Javascript validation failed!"
-  echo "For details: '$TMP_9_JS_VALIDATION_RESULT'"
+  echo "For details: '$STEP_2_9_JS_VALIDATION_RESULT'"
   exit 1
 fi
 
 # ========================================================
-# Finally, write the processed HTML file to the Electron app's "build" folder.
+# make a copy of the "pretty printed" HTML file (from above) to be used as the final result.
+#
+STEP_2_10_HTML_FINAL_RESULT="$TMP_FOLDER/step_2_10_html_final_result__copy_of_step_2_4.html"
 
-cp "$TMP_4_HTML_PRETTIFIED" "$HTML_RESULT__STRIPPED_AND_VALIDATED"
+cp "$STEP_2_4_HTML_PRETTIFIED" "$STEP_2_10_HTML_FINAL_RESULT"
 
 # ========================================================
-# Remove the temporary folder
+# Finally, write the processed HTML file to the Electron app's "build" folder.
 
-# rm -rf "${TMP_FOLDER:?}"/*
+HTML_RESULT__PROCESSED_FOR_ELECTRON_APP="$SCRIPT_FOLDER/core_radio__processed_for_electron_app.html"
+
+cp "$STEP_2_10_HTML_FINAL_RESULT" "$HTML_RESULT__PROCESSED_FOR_ELECTRON_APP"
 
 # ========================================================
 # Echo the result: Path of the final processed HTML file
@@ -233,7 +286,7 @@ echo "Removed all comments from the 'static HTML page':"
 echo "  $HTML_SOURCE_FILE"
 
 echo
-echo "Resulting HTML file (no-comments, validated, pretty printed): "
-echo "  $HTML_RESULT__STRIPPED_AND_VALIDATED"
+echo "Resulting HTML file (comments-stripped, W3C validated, pretty printed): "
+echo "  $HTML_RESULT__PROCESSED_FOR_ELECTRON_APP"
 echo ============================================
 echo

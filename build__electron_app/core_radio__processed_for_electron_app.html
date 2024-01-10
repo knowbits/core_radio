@@ -1,0 +1,633 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <title>Core Radio</title>
+
+    <style>
+      html,
+      body,
+      div,
+      span,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      a,
+      img,
+      ul,
+      li,
+      header,
+      footer,
+      main,
+      nav,
+      section,
+      figure,
+      figcaption,
+      button,
+      input,
+      select,
+      textarea {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font: inherit;
+        vertical-align: baseline;
+      }
+
+      main,
+      section,
+      header,
+      footer,
+      nav,
+      ul,
+      li,
+      figcaption,
+      figure {
+        display: block;
+      }
+
+      body {
+        line-height: 1rem;
+      }
+
+      ol,
+      ul {
+        list-style: none;
+      }
+
+      :root {
+        --background-colour: #262626;
+        --text-colour: #ecf0f1;
+
+        --menu-colour: #0099cc;
+        --menu-colour-hover: #006699;
+        --menu-color-inactive: #666;
+
+        --button-colour-stopped: var(--background-colour);
+        --button-colour-playing: var(--background-colour);
+        --button-border-colour-inactive: var(--text-colour);
+        --button-border-colour-active: Coral;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 100%;
+        color: var(--text-colour);
+        background-color: var(--background-colour);
+
+        padding: 5px 10px 5px 15px;
+
+        border-style: solid;
+        border-width: 1px;
+        border-color: var(--button-border-colour-active);
+
+        height: 100vh;
+        width: 100vw;
+
+        box-sizing: border-box;
+
+        border-radius: 5px;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-top: 5px;
+        margin-bottom: 1px;
+      }
+
+      nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        width: 100%;
+        line-height: 1.5rem;
+        list-style-type: none;
+      }
+
+      nav ul li {
+        color: var(--menu-colour);
+        position: relative;
+        margin-right: 20px;
+      }
+
+      nav ul li i {
+        font-size: 1.5rem;
+      }
+
+      nav ul li:last-child {
+        margin-right: 5px;
+      }
+
+      nav ul li:hover {
+        color: var(--menu-colour-hover);
+      }
+
+      nav ul li.spacer {
+        flex-grow: 1;
+        margin-left: 0px;
+        margin-right: 0px;
+      }
+
+      .tooltip {
+        visibility: hidden;
+        background-color: black;
+        color: white;
+        text-align: center;
+        white-space: pre-wrap;
+        padding: 5px 8px;
+        border-color: white;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 5px;
+        position: absolute;
+        z-index: 1;
+        top: 40px;
+        transition: opacity 0.3s;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+
+      .left-tooltip .tooltip {
+        left: auto;
+        right: 20px;
+      }
+
+      .right-tooltip .tooltip {
+        left: 26px;
+      }
+
+      nav ul li:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      section header {
+        display: flex;
+        align-items: baseline;
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+
+      h1 {
+        font-weight: normal;
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+
+      button {
+        font-size: 0.9rem;
+        font-weight: normal;
+        padding: 7px 10px 7px 10px;
+        margin: 5px 10px 5px 0px;
+        border: 2px solid var(--button-border-colour-inactive);
+        border-radius: 8px;
+        background-color: var(--button-colour-stopped);
+        color: var(--text-colour);
+        cursor: auto;
+      }
+
+      .button-stopped {
+        border-color: var(--button-border-colour-inactive);
+        background-color: var(--button-colour-stopped);
+      }
+
+      .button-playing {
+        border-color: var(--button-border-colour-active);
+        background-color: var(--button-colour-playing);
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li class="right-tooltip">
+          <i class="fas fa-refresh" id="menuRefreshPage"></i>
+          <span class="tooltip">Refresh page (Ctrl+r)</span>
+        </li>
+
+        <li
+          class="right-tooltip"
+          id="audioErrorLogMenuItem"
+          style="display: none; color: var(--menu-color-inactive)"
+        >
+          <i class="fas fa-bug" id="menuAudioErrorLog"></i>
+          <span class="tooltip">View audio errors</span>
+        </li>
+
+        <li class="left-tooltip">
+          <i class="fas fa-code" id="menuViewSource"></i>
+          <span class="tooltip">View source (HTML)</span>
+        </li>
+
+        <li class="left-tooltip">
+          <i class="fas fa-tools"></i>
+          <span class="tooltip">Chromium debug tools (F12)</span>
+        </li>
+
+        <li class="left-tooltip">
+          <i class="fas fa-cog"></i>
+          <span class="tooltip">Settings</span>
+        </li>
+
+        <li class="spacer"></li>
+
+        <li
+          class="menu-item"
+          style="-webkit-app-region: drag; color: var(--menu-color-inactive)"
+        >
+          <i class="fas fa-arrows-alt"></i>
+        </li>
+
+        <li class="left-tooltip">
+          <i class="fas fa-info-circle"></i>
+          <span class="tooltip">About</span>
+        </li>
+
+        <li class="left-tooltip" id="menuCloseElectronApp">
+          <span
+            style="
+              font-size: 2.1rem;
+              color: var(--text-colour);
+              font-weight: lighter;
+            "
+            onmouseover="this.style.color='#CD5C5C'"
+            onmouseout="this.style.color='var(--text-colour)'"
+            >x</span
+          >
+          <span class="tooltip">Close app</span>
+        </li>
+      </ul>
+    </nav>
+
+    <main id="radioSections"></main>
+
+    <script>
+      const streams = [
+        {
+          category: "NO",
+          categoryTitle: "NRK radio",
+          streams: [
+            {
+              title: "P1",
+              url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "P1+",
+              url: "http://lyd.nrk.no/nrk_radio_p1pluss_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "P13",
+              url: "http://lyd.nrk.no/nrk_radio_p13_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "P2",
+              url: "https://lyd.nrk.no/nrk_radio_p2_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "P3",
+              url: "http://lyd.nrk.no/nrk_radio_p3_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Jazz",
+              url: "https://lyd.nrk.no/nrk_radio_jazz_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Klassisk",
+              url: "http://lyd.nrk.no/nrk_radio_klassisk_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Folkemusikk",
+              url: "https://lyd.nrk.no/nrk_radio_folkemusikk_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Alltid nyheter",
+              url: "http://lyd.nrk.no/nrk_radio_alltid_nyheter_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "mp3",
+              url: "https://lyd.nrk.no/nrk_radio_mp3_aac_h",
+              type: "audio/aac",
+            },
+            {
+              title: "Sport",
+              url: "https://lyd.nrk.no/nrk_radio_sport_aac_h",
+              type: "audio/aac",
+            },
+          ],
+        },
+        {
+          category: "SE",
+          categoryTitle: "SR radio",
+          streams: [
+            {
+              title: "P1",
+              url: "https://sverigesradio.se/topsy/direkt/132-hi-aac",
+              type: "audio/aac",
+            },
+            {
+              title: "P2",
+              url: "https://sverigesradio.se/topsy/direkt/2562-hi-aac",
+              type: "audio/aac",
+            },
+            {
+              title: "P3",
+              url: "https://sverigesradio.se/topsy/direkt/164-hi-aac",
+              type: "audio/aac",
+            },
+            {
+              title: "P4 Värmland",
+              url: "https://sverigesradio.se/topsy/direkt/204-hi-aac",
+              type: "audio/aac",
+            },
+            {
+              title: "P4 Plus",
+              url: "https://sverigesradio.se/topsy/direkt/4951-hi-aac",
+              type: "audio/aac",
+            },
+          ],
+        },
+        {
+          category: "DK",
+          categoryTitle: "DK radio",
+          streams: [
+            {
+              title: "P1",
+              url: "http://live-icy.dr.dk/A/A03H.mp3",
+              type: "audio/mpeg",
+            },
+            {
+              title: "P2",
+              url: "http://live-icy.dr.dk/A/A04H.mp3",
+              type: "audio/mpeg",
+            },
+            {
+              title: "P3",
+              url: "http://live-icy.dr.dk/A/A05H.mp3",
+              type: "audio/mpeg",
+            },
+            {
+              title: "P4 Kbh",
+              url: "http://live-icy.dr.dk/A/A08H.mp3",
+              type: "audio/mpeg",
+            },
+          ],
+        },
+      ];
+
+      function refreshPage() {
+        location.reload();
+      }
+
+      function escapeHtml(unsafe) {
+        return unsafe
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/"/g, "&#039;");
+      }
+
+      function viewSource() {
+        let sourceCode = document.documentElement.outerHTML;
+        let escapedSource = escapeHtml(sourceCode);
+        let sourceWindow = window.open(
+          "",
+          "_WINDOW_NAME_SOURCE",
+          "width=600,height=600",
+        );
+
+        let htmlContent = "<html><head><title>HTML source</title></head><body>";
+        htmlContent += "<pre>" + escapedSource + "</pre>";
+        htmlContent += "</body></html>";
+
+        sourceWindow.document.open();
+        sourceWindow.document.write(htmlContent);
+        sourceWindow.document.close();
+      }
+
+      let errorLog = [];
+
+      function displayErrors() {
+        let errorWindow = window.open(
+          "",
+          "_WINDOW_NAME_ERROR",
+          "width=600,height=600",
+        );
+
+        let htmlContent =
+          "<html><head><title>Audio errors</title></head><body>";
+        htmlContent += "<h1>Audio errors</h1>";
+
+        htmlContent += "<button id='clearLog'>Clear errors</button > ";
+
+        errorLog.forEach((error, index) => {
+          htmlContent += `<p><strong>Error ${index + 1}:</strong> ${
+            error.error
+          } <br> <strong>Time:</strong> ${error.timestamp}</p>`;
+        });
+
+        htmlContent += "</body></html>";
+
+        errorWindow.document.open();
+        errorWindow.document.write(htmlContent);
+        errorWindow.document.close();
+
+        errorWindow.document.addEventListener("DOMContentLoaded", () => {
+          errorWindow.document
+            .getElementById("clearLog")
+            .addEventListener("click", function () {
+              errorLog = [];
+              errorWindow.location.reload();
+            });
+        });
+      }
+
+      let currentAudio = null;
+      let currentButton = null;
+
+      const handleButtonClick = (newButton, newAudio, newStream) => {
+        newAudio.onerror = null;
+        newAudio.onloadstart = null;
+        newAudio.oncanplay = null;
+
+        newAudio.onerror = () => {
+          let errorMessage;
+
+          switch (newAudio.error.code) {
+            case 1:
+              errorMessage = "You aborted the audio playback.";
+              break;
+            case 2:
+              errorMessage =
+                "A network error caused the audio download to fail.";
+              break;
+            case 3:
+              errorMessage =
+                "The audio playback was aborted due to a corruption problem or because the media used features your browser did not support.";
+              break;
+            case 4:
+              errorMessage =
+                "The audio could not be loaded, either because the server or network failed or because the format is not supported.";
+              break;
+            default:
+              errorMessage = "An unknown error occurred.";
+              break;
+          }
+          const errorText =
+            "ERROR: " +
+            errorMessage +
+            ". Got an error while playing audio stream: " +
+            newStream;
+          console.error(errorText);
+
+          errorLog.push({
+            error: newAudio.error.code,
+            message: errorMessage,
+            timestamp: new Date(),
+          });
+
+          let errorMenuItem = document.getElementById("audioErrorLogMenuItem");
+          errorMenuItem.style.display = "block";
+
+          newButton.style.color = "red";
+          newButton.textContent = "ERROR (see console)";
+        };
+
+        if (currentAudio && currentAudio !== newAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          const currentSource = currentAudio.querySelector("source");
+          currentSource.src = "";
+          currentButton.classList.remove("button-playing");
+          currentButton.classList.add("button-stopped");
+        }
+
+        if (newAudio.paused) {
+          const source = newAudio.querySelector("source");
+          source.src = source.dataset.src;
+          newAudio.load();
+          newAudio.play();
+          newButton.classList.remove("button-stopped");
+          newButton.classList.add("button-playing");
+          currentAudio = newAudio;
+          currentButton = newButton;
+        } else {
+          newAudio.pause();
+          newAudio.currentTime = 0;
+          newButton.classList.remove("button-playing");
+          newButton.classList.add("button-stopped");
+
+          const source = newAudio.querySelector("source");
+          source.src = "";
+
+          if (currentButton === newButton) {
+            currentAudio = null;
+            currentButton = null;
+          }
+        }
+      };
+
+      const radioSections = document.getElementById("radioSections");
+      const fragment = document.createDocumentFragment();
+
+      streams.forEach((category) => {
+        const categoryContainer = document.createElement("section");
+
+        const categoryHeader = document.createElement("header");
+        const categoryTitle = document.createElement("h1");
+        categoryTitle.textContent = category.categoryTitle;
+        categoryHeader.appendChild(categoryTitle);
+        categoryContainer.appendChild(categoryHeader);
+
+        const playerContainer = document.createElement("div");
+        playerContainer.id =
+          "playerContainer" + category.category.toUpperCase();
+        categoryContainer.appendChild(playerContainer);
+
+        category.streams.forEach((stream) => {
+          const source = document.createElement("source");
+
+          source.dataset.src = stream.url;
+          source.type = stream.type;
+
+          const audio = document.createElement("audio");
+          audio.appendChild(source);
+
+          const button = document.createElement("button");
+          button.textContent = stream.title;
+          button.title = stream.url;
+          button.addEventListener("click", () =>
+            handleButtonClick(button, audio, stream),
+          );
+          playerContainer.appendChild(audio);
+          playerContainer.appendChild(button);
+        });
+
+        fragment.appendChild(categoryContainer);
+      });
+
+      radioSections.appendChild(fragment);
+
+      window.onload = function () {
+        document
+          .getElementById("menuRefreshPage")
+          .addEventListener("click", refreshPage);
+        document
+          .getElementById("menuViewSource")
+          .addEventListener("click", viewSource);
+        document
+          .getElementById("menuAudioErrorLog")
+          .addEventListener("click", displayErrors);
+
+        document
+          .getElementById("menuCloseElectronApp")
+          .addEventListener("click", () => {
+            window.api.closeApp();
+          });
+      };
+    </script>
+  </body>
+</html>

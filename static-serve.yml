@@ -11,7 +11,7 @@
 #    http://localhost:45067/core_radio.html
 #    http://localhost:45067/core_radio.html?debug=1
 #
-#    http://localhost:45067/tmp_11__uncommented_electron_specific_html_code.html
+#    http://localhost:45067/step_2_10__result__html_stripped_and_validated.html
 #
 # NOTE: The static files are served using "./src/" as the root folder
 

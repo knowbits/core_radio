@@ -19,15 +19,15 @@
     In Electron desktop apps, it’s not necessary but doesn’t cause harm.
     If a web page is intended strictly for desktop use, it can be omitted without affecting functionality.
 
-    NOTE: The "viewport" is the user's visible area of a web page.
+    NOTE: The "viewport" is the user"s visible area of a web page.
 
     Explanation of the "viewport" meta tag settings:
 
       1) name="viewport": Tells the browser that the page is optimized for mobile.
-         => It will consider the device's width and scale when rendering the page.
+         => It will consider the device"s width and scale when rendering the page.
 
       2) content="width=device-width": Set "width of viewport" = "width of device".
-         => Page will scale and rearrange content to fit the device's screen width, thus making it "responsive".
+         => Page will scale and rearrange content to fit the device"s screen width, thus making it "responsive".
 
       3) initial-scale=1.0: Sets the initial zoom level when page is loaded.
          A value of "1.0" means no zoom, i.e. 100% of normal size.
@@ -61,7 +61,7 @@
 
     Preloading the "FontAwesome stylesheet" can improve performance by starting to download the stylesheet sooner.
     This can be especially beneficial if your website uses a lot of FontAwesome icons, as it allows the icons
-    to start loading earlier and be ready by the time they're needed.
+    to start loading earlier and be ready by the time they"re needed.
   -->
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -74,7 +74,7 @@
     /*
      * "A CSS reset standardizes HTML elements across browsers, simplifying subsequent styling."
      *
-     * This is a modified version of "Meyer's CSS Reset":
+     * This is a modified version of "Meyer"s CSS Reset":
      *   http://meyerweb.com/eric/tools/css/reset
      *
      * "Normalize.css" is another "CSS reset" to consider.
@@ -170,7 +170,7 @@
      *     header, nav, main, footer
      */
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto", sans-serif;
       font-size: 100%;
       /*
        * By using “rem”, the font size of the tooltip will be relative to the base font size of the page.
@@ -181,7 +181,7 @@
       background-color: var(--background-colour);
 
       /*
-       * Set the spacing between the element's content and the border:
+       * Set the spacing between the element"s content and the border:
        * Edges_ T, R, B, L :
        */
       padding: 5px 10px 5px 15px;
@@ -196,10 +196,10 @@
        */
 
       /*
-       *  1. Set body's height & width to fill the "viewport".
+       *  1. Set body"s height & width to fill the "viewport".
        *     NOTE: Useful for an Electron application to make sure that the
-       *       application's content takes up the full window.
-       *       If you don't use these properties, the size of your content will
+       *       application"s content takes up the full window.
+       *       If you don"t use these properties, the size of your content will
        *       be determined by its natural size and the CSS box model.
        */
       height: 100vh;
@@ -207,7 +207,7 @@
 
       /*
        * 2. Make sure both "border" and "padding" are included when
-       *    calculating the "body" element's total width and height:
+       *    calculating the "body" element"s total width and height:
        */
       box-sizing: border-box;
 
@@ -293,7 +293,7 @@
       background-color: black;
       color: white;
       text-align: center;
-      /* Make sure text wraps when reaching tooltip box's edge. Or 'normal' */
+      /* Make sure text wraps when reaching tooltip box"s edge. Or "normal" */
       white-space: pre-wrap;
       /* Set the max width of the tooltip box: */
       /* max-width: 200px;  */
@@ -388,7 +388,7 @@
     that "header" could still be wrapped in a "nav".
 
     So, whether you should use a "header" instead of a "nav" depends on the content
-    and function of your top bar. If it's primarily for navigation, a "nav" is appropriate.
+    and function of your top bar. If it"s primarily for navigation, a "nav" is appropriate.
     If it contains other types of content as well, consider using a "header".
   -->
 
@@ -396,7 +396,7 @@
     Add the "menu bar" at the top of the page:
 
     NOTE: The "menu bar" is not a "navigation bar" (nav element).
-          It's a "menu bar" (header element).
+          It"s a "menu bar" (header element).
   -->
 
   <nav>
@@ -574,7 +574,7 @@
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(/"/g, "&#039;");
     };
 
     function viewSource() {
@@ -582,9 +582,9 @@
       let escapedSource = escapeHtml(sourceCode);
       let sourceWindow = window.open("", "_WINDOW_NAME_SOURCE", "width=600,height=600");
 
-      let htmlContent = '<html><head><title>HTML source</title></head><body>';
-      htmlContent += '<pre>' + escapedSource + '</pre>';
-      htmlContent += '</body></html>';
+      let htmlContent = "<html><head><title>HTML source</title></head><body>";
+      htmlContent += "<pre>" + escapedSource + "</pre>";
+      htmlContent += "</body></html>";
 
       sourceWindow.document.open();
       sourceWindow.document.write(htmlContent);
@@ -601,26 +601,26 @@
     function displayErrors() {
       let errorWindow = window.open("", "_WINDOW_NAME_ERROR", "width=600,height=600");
 
-      let htmlContent = '<html><head><title>Audio errors</title></head><body>';
-      htmlContent += '<h1>Audio errors</h1>';
+      let htmlContent = "<html><head><title>Audio errors</title></head><body>";
+      htmlContent += "<h1>Audio errors</h1>";
 
       // Add a button for clearing the log
-      htmlContent += '<button id="clearLog">Clear errors</button > ';
+      htmlContent += "<button id='clearLog'>Clear errors</button > ";
       // Add a button for closing the window
-      // htmlContent += '<button id="closeWindow">Close</button>';
+      // htmlContent += "<button id="closeWindow">Close</button>";
 
       errorLog.forEach((error, index) => {
         htmlContent += `<p><strong>Error ${index + 1}:</strong> ${error.error} <br> <strong>Time:</strong> ${error.timestamp}</p>`;
       });
 
-      htmlContent += '</body></html>';
+      htmlContent += "</body></html>";
 
       errorWindow.document.open();
       errorWindow.document.write(htmlContent);
       errorWindow.document.close();
 
       // Add event listener for the "Clear errors" button
-      errorWindow.document.addEventListener('DOMContentLoaded', () => {
+      errorWindow.document.addEventListener("DOMContentLoaded", () => {
         errorWindow.document.getElementById("clearLog").addEventListener("click", function () {
           errorLog = [];
           errorWindow.location.reload();
@@ -647,22 +647,22 @@
 
         switch (newAudio.error.code) {
           case 1: // MEDIA_ERR_ABORTED
-            errorMessage = 'You aborted the audio playback.';
+            errorMessage = "You aborted the audio playback.";
             break;
           case 2: // MEDIA_ERR_NETWORK
-            errorMessage = 'A network error caused the audio download to fail.';
+            errorMessage = "A network error caused the audio download to fail.";
             break;
           case 3: // MEDIA_ERR_DECODE
-            errorMessage = 'The audio playback was aborted due to a corruption problem or because the media used features your browser did not support.';
+            errorMessage = "The audio playback was aborted due to a corruption problem or because the media used features your browser did not support.";
             break;
           case 4: // MEDIA_ERR_SRC_NOT_SUPPORTED
-            errorMessage = 'The audio could not be loaded, either because the server or network failed or because the format is not supported.';
+            errorMessage = "The audio could not be loaded, either because the server or network failed or because the format is not supported.";
             break;
           default:
-            errorMessage = 'An unknown error occurred.';
+            errorMessage = "An unknown error occurred.";
             break;
         }
-        const errorText = 'ERROR: ' + errorMessage + ". Got an error while playing audio stream: " + newStream;
+        const errorText = "ERROR: " + errorMessage + ". Got an error while playing audio stream: " + newStream;
         console.error(errorText);
 
         // Add the error to the global "errorLog" array
@@ -673,24 +673,24 @@
         });
 
         // Make the error menu item visible
-        let errorMenuItem = document.getElementById('audioErrorLogMenuItem');
-        errorMenuItem.style.display = 'block';
+        let errorMenuItem = document.getElementById("audioErrorLogMenuItem");
+        errorMenuItem.style.display = "block";
 
-        newButton.style.color = 'red';
-        newButton.textContent = 'ERROR (see console)';
+        newButton.style.color = "red";
+        newButton.textContent = "ERROR (see console)";
       };
 
       /*
       // Called when the audio starts loading
       newAudio.onloadstart = () => {
         // AVOID: Since it creates a "blink" when pressed:
-        newButton.style.color = 'orange';
-        // button.textContent = 'Loading...';
+        newButton.style.color = "orange";
+        // button.textContent = "Loading...";
       };
 
       // Called when the audio can be played
       newAudio.oncanplay = () => {
-        newButton.style.color = ''; // Reset the text color
+        newButton.style.color = ""; // Reset the text color
         newButton.textContent = newStream.title;
       };
       */
@@ -703,8 +703,8 @@
         // Stop and reset the currently playing stream
         currentAudio.pause();
         currentAudio.currentTime = 0; // Reset its time, effectively stopping the audio
-        const currentSource = currentAudio.querySelector('source');
-        currentSource.src = ''; // // BENEFIT: Prevents downloading the "audio file" for this stream
+        const currentSource = currentAudio.querySelector("source");
+        currentSource.src = ""; // // BENEFIT: Prevents downloading the "audio file" for this stream
         currentButton.classList.remove("button-playing");
         currentButton.classList.add("button-stopped");
       }
@@ -713,11 +713,11 @@
         /*
          * If the "radio stream" of the pressed button is paused:
          *   1. Get the "source" element of the "audio" element
-         *   2. Set it's "src" attribute using the streaming URL from it's "data-src" attribute
+         *   2. Set it"s "src" attribute using the streaming URL from it"s "data-src" attribute
          *   3. Finally load and play the audio using the stream we just set.
-         *   4. Update the button's CSS classes
+         *   4. Update the button"s CSS classes
          */
-        const source = newAudio.querySelector('source');
+        const source = newAudio.querySelector("source");
         source.src = source.dataset.src;
         /*
         * The HTML5 "audio" element automatically buffers audio.
@@ -737,8 +737,8 @@
         newButton.classList.remove("button-playing");
         newButton.classList.add("button-stopped");
         // Remove the "src" attribute from the "source" of the "audio" element.
-        const source = newAudio.querySelector('source');
-        source.src = ''; // Prevents downloading the "audio file" for this stream
+        const source = newAudio.querySelector("source");
+        source.src = ""; // Prevents downloading the "audio file" for this stream
 
         if (currentButton === newButton) {
           currentAudio = null;
@@ -772,7 +772,7 @@
       category.streams.forEach(stream => {
         // Create the "source" element of the "audio" element.
         //
-        // NOTE: We don't set the "src" attribute here, since we want to prevent
+        // NOTE: We don"t set the "src" attribute here, since we want to prevent
         //       the audio file from being downloaded when the page loads.
         //       Instead, we store the URL in a "data-src" attribute.
         // NOTE: Using the source element provides more flexibility than only using "audio"
@@ -780,7 +780,7 @@
         //       the most suitable one based on its capabilities and the file type
         const source = document.createElement("source");
         // source.src = stream.url; // DOWNSIDE: Will download the audio file when the page loads
-        // source.src = '';         // BENEFIT: Prevents downloading the audio file when the page loads
+        // source.src = "";         // BENEFIT: Prevents downloading the audio file when the page loads
         source.dataset.src = stream.url; // Store the streaming URL in a "data-src" attribute
         source.type = stream.type;
 
@@ -822,7 +822,7 @@
       //       the "window.closeApp" function defined in "preload.js"
       //
       document.getElementById("menuCloseElectronApp").addEventListener("click", () => {
-        window.closeApp();
+        window.api.closeApp();
       });
       UNCOMMENT_FOR_ELECTRON_APP_END */
     };

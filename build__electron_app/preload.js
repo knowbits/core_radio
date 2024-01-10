@@ -5,7 +5,12 @@
  * This is a recommended practice for Electron apps to maintain security and isolation between processes.
  */
 
-window.closeApp = function () {
-  const { remote } = require('electron');
-  remote.getCurrentWindow().close();
-}
+
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld(
+  "api", {
+  closeApp: function () {
+    ipcRenderer.send('close-app');
+  }
+});
