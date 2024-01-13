@@ -179,7 +179,8 @@
     }
 
     body {
-      /* Set the "line height" to be equal to the "root font size" (1rem = 16px) */
+      /* 1rem is a relative length unit in HTML:
+         It is equal to the font size of the root element (usually <html>) */
       line-height: 1rem;
     }
 
@@ -268,43 +269,38 @@
     /* Style the menu bar */
 
     nav {
+      /* Make the nav bar span the entire width of the page */
+      margin-top: 8px;
+      margin-bottom: 0px;
+    }
+
+    nav ul {
       display: flex;
-      /* Allow "nav" items to wrap onto multiple lines: */
+      /* Aligns the "li" items along the bottom of the "ul" flex container: */
+      align-items: flex-end;
+      /* Allow the menu icons to wrap onto multiple lines: */
       flex-wrap: wrap;
       flex-direction: row;
       /* Aligns "flex" items towards the start of the "flex" container (default): */
       justify-content: flex-start;
-      margin-top: 5px;
-      margin-bottom: 1px;
-    }
-
-
-    nav ul {
-      display: flex;
-      /* Allow the menu icons to wrap onto multiple lines: */
-      flex-wrap: wrap;
-      /* Align "flex" items along the baseline: */
-      align-items: baseline;
-      /* Ensure the "ul" takes up the full width of the "nav" */
-      width: 100%;
-      /* Needed create space between the lines when the "menu items" wrap: */
-      line-height: 1.5rem;
+      /* DOESN'T SEEM TO WORK AS EXPECTED: align-items: baseline; */
       /* Remove the default list item markers: */
       list-style-type: none;
+      width: 100%;
     }
 
     nav ul li {
-      color: var(--menu-colour);
-      position: relative;
+      /* Make the "menu items" appear as a horizontal list: */
+      display: flex;
+      /* Aligns the "i" and "span" elements along the bottom of the "li" flex container: */
+      align-items: flex-end;
+
       /* Add a margin to the right of each menu item: */
       margin-right: 20px;
+      /* Add space below each "li" element, creating a gap when the menu wraps to a new line */
+      margin-bottom: 5px;
+      color: var(--menu-colour);
     }
-
-    nav ul li i {
-      /* Specify size of FontAwesome icons: */
-      font-size: 1.5rem;
-    }
-
 
     /* Remove the margin from the last menu item only: */
     nav ul li:last-child {
@@ -313,6 +309,24 @@
 
     nav ul li:hover {
       color: var(--menu-colour-hover);
+    }
+
+    nav ul li i {
+      /* Sets the size of the FontAwesome icons in the "menu bar": */
+      font-size: 1.8rem;
+    }
+
+    /* Style the Close button ("x") menu item: */
+    nav ul li span.closebutton {
+      font-size: 1.8rem;
+      /* It's a bit of a mystery why / how "line-height" needs to be set here : */
+      line-height: 1.1;
+      font-weight: lighter;
+      color: var(--text-colour);
+    }
+
+    nav ul li span.closebutton:hover {
+      color: #CD5C5C;
     }
 
     /*
@@ -328,9 +342,25 @@
      */
     nav ul li.spacer {
       flex-grow: 1;
-      margin-left: 0px;
-      margin-right: 0px;
+      margin-left: 1px;
+      margin-right: 1px;
     }
+
+    /* UNCOMMENT_FOR_ELECTRON_APP_START */
+
+    nav ul li.dragarea {
+      -webkit-app-region: drag;
+      width: 60px;
+      height: 1.4rem;
+      background-color: #333;
+      border-style: solid;
+      border-width: 3px;
+      border-color: #444;
+      border-radius: 10px;
+    }
+
+    /* UNCOMMENT_FOR_ELECTRON_APP_END */
+
 
     /* Define a "tooltip" stype for "menu items" and other HTML elements */
 
@@ -473,30 +503,40 @@
         <span class="tooltip">About</span>
       </li>
 
-      <!-- Add a "spacer" "li" to push the right-aligned menu items to the right edge of the nav bar: -->
+      <!-- Add a "spacer" "li" to push the right-aligned
+           menu items to the right edge of the nav bar: -->
       <li class="spacer">
       </li>
 
-      <!-- The right-aligned menu icons: -->
+      <!--
+        ELECTRON ONLY: Drag and drop "area" in the middle of the top menu bar:
 
-      <!-- li class="right-tooltip">
+        Allows to move the "Electron app" window by dragging.
+        NOTE: Tooltip does not work on a "draggable" region.
+        FUTURE: Maybe use "Alpine.js" to show "Move" icon upon "hover"
+      -->
+
+      <!-- UNCOMMENT_FOR_ELECTRON_APP_START
+
+      <li class="dragarea"></li>
+
+      <li class="spacer">
+      </li>
+
+      UNCOMMENT_FOR_ELECTRON_APP_END -->
+
+      <!-- Right-aligned menu icons: -->
+
+      <!-- FUTURE: li class="right-tooltip">
         <i class="fas fa-user"></i>
         <span class="tooltip">Account</span>
       </li -->
 
-      <!-- li class="left-tooltip">
+      <!-- FUTURE: li class="left-tooltip">
         <i class="fas fa-sign-out-alt"></i>
         <span class="tooltip">Logout</span>
       </li -->
 
-      <!-- Add a "Move" area: Allows to move the Electron app window by dragging. -->
-      <!-- NOTE: Tooltip does not work on a "draggable" region: -->
-      <!--       => REMOVED tooltip: span class="tooltip">Drag to move the windows (Electron only)</span -->
-      <!-- UNCOMMENT_FOR_ELECTRON_APP_START
-      <li class="menu-item" style="-webkit-app-region: drag; color: var(--menu-color-inactive);">
-        <i class="fas fa-arrows-alt"></i>
-      </li>
-      UNCOMMENT_FOR_ELECTRON_APP_END -->
 
       <li class="left-tooltip">
         <i class="fas fa-code" id="menuViewSource"></i>
@@ -505,27 +545,23 @@
 
       <!-- Add a button to open the Chrome Dev Tools (F12): Electron only -->
       <!-- UNCOMMENT_FOR_ELECTRON_APP_START
-      <li class="left-tooltip">
+
+        <li class="left-tooltip">
         <i class="fas fa-tools" id="menuChromeDevTools"></i>
         <span class="tooltip">Chromium debug tools (F12)</span>
       </li>
+
       UNCOMMENT_FOR_ELECTRON_APP_END -->
 
       <!-- "Close" option. (Only works in Electron app, since a HTML page cannot close itself) -->
 
-      <!-- "Close": As FontAwesome icon:
-        <li class="left-tooltip">
-          <i class="far fa-window-close" style="font-size: 1.6rem; color: var(--text-colour);"
-            onmouseover="this.style.color='#CD5C5C'" onmouseout="this.style.color='var(--text-colour)'"></i>
-          <span class="tooltip">Close app</span>
-        </li>
-      -->
       <!-- UNCOMMENT_FOR_ELECTRON_APP_START
+
       <li class="left-tooltip" id="menuCloseElectronApp">
-        <span style="font-size: 2.1rem; color: var(--text-colour);font-weight: lighter;"
-          onmouseover="this.style.color='#CD5C5C'" onmouseout="this.style.color='var(--text-colour)'">x</span>
+        <span class="closebutton">x</span>
         <span class="tooltip">Close app</span>
       </li>
+
       UNCOMMENT_FOR_ELECTRON_APP_END -->
     </ul>
   </nav>

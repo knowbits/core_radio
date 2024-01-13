@@ -57,7 +57,7 @@ The static HTML file will open as a "minmal" web app on your local machine.
 
 ## HOW TO: Build an "Electron app" from the HTML page
 
-* See [HOW TO: Build an "Electron app" from the HTML page](build__electron_app_from_html_page/README.md)
+* See [HOW TO: Build an "Electron app" from the HTML page](./build__electron_app/README.md)
 
 ## HOW TO: Serve the web page from a web server
 

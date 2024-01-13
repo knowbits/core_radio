@@ -127,31 +127,27 @@
       }
 
       nav {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: flex-start;
-        margin-top: 5px;
-        margin-bottom: 1px;
+        margin-top: 8px;
+        margin-bottom: 0px;
       }
 
       nav ul {
         display: flex;
+        align-items: flex-end;
         flex-wrap: wrap;
-        align-items: baseline;
-        width: 100%;
-        line-height: 1.5rem;
+        flex-direction: row;
+        justify-content: flex-start;
         list-style-type: none;
+        width: 100%;
       }
 
       nav ul li {
-        color: var(--menu-colour);
-        position: relative;
-        margin-right: 20px;
-      }
+        display: flex;
+        align-items: flex-end;
 
-      nav ul li i {
-        font-size: 1.5rem;
+        margin-right: 20px;
+        margin-bottom: 5px;
+        color: var(--menu-colour);
       }
 
       nav ul li:last-child {
@@ -162,10 +158,36 @@
         color: var(--menu-colour-hover);
       }
 
+      nav ul li i {
+        font-size: 1.8rem;
+      }
+
+      nav ul li span.closebutton {
+        font-size: 1.8rem;
+        line-height: 1.1;
+        font-weight: lighter;
+        color: var(--text-colour);
+      }
+
+      nav ul li span.closebutton:hover {
+        color: #cd5c5c;
+      }
+
       nav ul li.spacer {
         flex-grow: 1;
-        margin-left: 0px;
-        margin-right: 0px;
+        margin-left: 1px;
+        margin-right: 1px;
+      }
+
+      nav ul li.dragarea {
+        -webkit-app-region: drag;
+        width: 60px;
+        height: 1.4rem;
+        background-color: #333;
+        border-style: solid;
+        border-width: 3px;
+        border-color: #444;
+        border-radius: 10px;
       }
 
       .tooltip {
@@ -273,12 +295,9 @@
 
         <li class="spacer"></li>
 
-        <li
-          class="menu-item"
-          style="-webkit-app-region: drag; color: var(--menu-color-inactive)"
-        >
-          <i class="fas fa-arrows-alt"></i>
-        </li>
+        <li class="dragarea"></li>
+
+        <li class="spacer"></li>
 
         <li class="left-tooltip">
           <i class="fas fa-code" id="menuViewSource"></i>
@@ -291,16 +310,7 @@
         </li>
 
         <li class="left-tooltip" id="menuCloseElectronApp">
-          <span
-            style="
-              font-size: 2.1rem;
-              color: var(--text-colour);
-              font-weight: lighter;
-            "
-            onmouseover="this.style.color='#CD5C5C'"
-            onmouseout="this.style.color='var(--text-colour)'"
-            >x</span
-          >
+          <span class="closebutton">x</span>
           <span class="tooltip">Close app</span>
         </li>
       </ul>
