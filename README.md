@@ -4,6 +4,10 @@ A static .html file for playing audio streams from selected radio stations.
 
 Easily edit the list of stations by modifying the "streams" JSON in the "script" section of the HTML page.
 
+## Third party libraries
+
+* See [Alpine.js](./docs_DEV/Alpine.js.md)
+
 ## Developer resources
 
 * See [Developer resources](docs_DEV/README.md)
