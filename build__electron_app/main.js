@@ -181,7 +181,11 @@ function setAppSettingsAndHandlers() {
   // The same approach is used to include or exclude certain ".pak" files for all platforms.
   //
   // Instead of using the "system locale", we set a specific locale ("en-US") for the Electron app:
-  app.commandLine.appendSwitch("lang", "en-US");
+  //
+  // TODO: Was commented out, due to locale-related error when building on MacOS.
+  // TODO: Se comment in script: "./scripts/remove-locales.js"
+  //
+  // app.commandLine.appendSwitch("lang", "en-US");
 
   /*
   * NOTE: The "activate" event is emitted when the user clicks on the app"s dock icon (OS X)

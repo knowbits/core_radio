@@ -143,6 +143,7 @@
 
       nav ul li {
         display: flex;
+        position: relative;
         align-items: flex-end;
 
         margin-right: 20px;
@@ -192,29 +193,29 @@
 
       .tooltip {
         visibility: hidden;
-        background-color: black;
-        color: white;
+        background-color: #444;
+        color: #ccc;
         text-align: center;
         white-space: pre-wrap;
         padding: 5px 8px;
-        border-color: white;
+        border-color: #888;
         border-style: solid;
         border-width: 1px;
         border-radius: 5px;
         position: absolute;
         z-index: 1;
         top: 40px;
-        transition: opacity 0.3s;
         font-size: 0.8rem;
         font-weight: bold;
       }
 
-      .left-tooltip .tooltip {
+      .tooltip-to-the-left .tooltip {
         left: auto;
         right: 20px;
       }
 
-      .right-tooltip .tooltip {
+      .tooltip-to-the-right .tooltip {
+        right: auto;
         left: 26px;
       }
 
@@ -269,13 +270,13 @@
   <body>
     <nav>
       <ul>
-        <li class="right-tooltip">
+        <li class="tooltip-to-the-right">
           <i class="fas fa-refresh" id="menuRefreshPage"></i>
           <span class="tooltip">Refresh page (Ctrl+r)</span>
         </li>
 
         <li
-          class="right-tooltip"
+          class="tooltip-to-the-right"
           id="audioErrorLogMenuItem"
           style="display: none; color: var(--menu-color-inactive)"
         >
@@ -283,12 +284,12 @@
           <span class="tooltip">View audio errors</span>
         </li>
 
-        <li class="left-tooltip">
+        <li class="tooltip-to-the-right">
           <i class="fas fa-cog"></i>
           <span class="tooltip">Settings</span>
         </li>
 
-        <li class="left-tooltip">
+        <li class="tooltip-to-the-right">
           <i class="fas fa-info-circle"></i>
           <span class="tooltip">About</span>
         </li>
@@ -299,17 +300,17 @@
 
         <li class="spacer"></li>
 
-        <li class="left-tooltip">
+        <li class="tooltip-to-the-left">
           <i class="fas fa-code" id="menuViewSource"></i>
           <span class="tooltip">View source (HTML)</span>
         </li>
 
-        <li class="left-tooltip">
+        <li class="tooltip-to-the-left">
           <i class="fas fa-tools" id="menuChromeDevTools"></i>
           <span class="tooltip">Chromium debug tools (F12)</span>
         </li>
 
-        <li class="left-tooltip" id="menuCloseElectronApp">
+        <li class="tooltip-to-the-left" id="menuCloseElectronApp">
           <span class="closebutton">x</span>
           <span class="tooltip">Close app</span>
         </li>

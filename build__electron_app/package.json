@@ -1,6 +1,6 @@
 {
   "name": "core-radio",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Core Radio - A simple radio for listening to your favourite audio streams",
   "author": "Erlend Bleken <bleken@gmail.com>",
   "license": "MIT",
@@ -35,11 +35,7 @@
     "files": [
       "**/*",
       "!node_modules/*"
-    ],
-    "extraResources": [
-      "locales/en-US.pak"
-    ],
-    "afterPack": "./scripts/remove-locales.js"
+    ]
   },
   "scripts": {
     "start": "electron .",

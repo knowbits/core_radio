@@ -270,7 +270,7 @@
 
     nav {
       /* Make the nav bar span the entire width of the page */
-      margin-top: 8px;
+      margin-top: 6px;
       margin-bottom: 0px;
     }
 
@@ -292,6 +292,8 @@
     nav ul li {
       /* Make the "menu items" appear as a horizontal list: */
       display: flex;
+      /* Needed to make the "tooltip" appear close to the "menu item" being hovered: */
+      Position: relative;
       /* Aligns the "i" and "span" elements along the bottom of the "li" flex container: */
       align-items: flex-end;
 
@@ -362,19 +364,19 @@
     /* UNCOMMENT_FOR_ELECTRON_APP_END */
 
 
-    /* Define a "tooltip" stype for "menu items" and other HTML elements */
+    /* Define a "tooltip" class for "menu items" and other HTML elements */
 
     .tooltip {
       visibility: hidden;
-      background-color: black;
-      color: white;
+      background-color: #444;
+      color: #CCC;
       text-align: center;
       /* Make sure text wraps when reaching tooltip box"s edge. Or "normal" */
       white-space: pre-wrap;
       /* Set the max width of the tooltip box: */
       /* max-width: 200px;  */
       padding: 5px 8px;
-      border-color: white;
+      border-color: #888;
       border-style: solid;
       border-width: 1px;
       border-radius: 5px;
@@ -382,18 +384,19 @@
       z-index: 1;
       /* Position the tooltip below the menu item: */
       top: 40px;
-      transition: opacity 0.3s;
-      /* Using "rem" is more responsive that "em": */
+      /* transition: opacity 0.3s; */
+      /* Using "rem" is more responsive than "em": */
       font-size: 0.8rem;
       font-weight: bold;
     }
 
-    .left-tooltip .tooltip {
+    .tooltip-to-the-left .tooltip {
       left: auto;
       right: 20px;
     }
 
-    .right-tooltip .tooltip {
+    .tooltip-to-the-right .tooltip {
+      right: auto;
       left: 26px;
     }
 
@@ -413,8 +416,8 @@
     section header {
       display: flex;
       align-items: baseline;
-      margin-top: 15px;
-      margin-bottom: 5px;
+      margin-top: 16px;
+      margin-bottom: 6px;
     }
 
     h1 {
@@ -478,27 +481,28 @@
   <nav>
     <!-- The Left-aligned menu items: -->
     <ul>
-      <!-- li class="right-tooltip">
+      <!-- li class="tooltip-to-the-right">
         <i class="fas fa-home"></i>
         <span class="tooltip">Home</span>
       </li -->
 
-      <li class="right-tooltip">
+      <li class="tooltip-to-the-right">
         <i class="fas fa-refresh" id="menuRefreshPage"></i>
         <span class="tooltip">Refresh page (Ctrl+r)</span>
       </li>
 
-      <li class="right-tooltip" id="audioErrorLogMenuItem" style="display: none; color: var(--menu-color-inactive);">
+      <li class="tooltip-to-the-right" id="audioErrorLogMenuItem"
+        style="display: none; color: var(--menu-color-inactive);">
         <i class="fas fa-bug" id="menuAudioErrorLog"></i>
         <span class="tooltip">View audio errors</span>
       </li>
 
-      <li class="left-tooltip">
+      <li class="tooltip-to-the-right">
         <i class="fas fa-cog"></i>
         <span class="tooltip">Settings</span>
       </li>
 
-      <li class="left-tooltip">
+      <li class="tooltip-to-the-right">
         <i class="fas fa-info-circle"></i>
         <span class="tooltip">About</span>
       </li>
@@ -527,18 +531,18 @@
 
       <!-- Right-aligned menu icons: -->
 
-      <!-- FUTURE: li class="right-tooltip">
+      <!-- FUTURE: li class="tooltip-to-the-right">
         <i class="fas fa-user"></i>
         <span class="tooltip">Account</span>
       </li -->
 
-      <!-- FUTURE: li class="left-tooltip">
+      <!-- FUTURE: li class="tooltip-to-the-left">
         <i class="fas fa-sign-out-alt"></i>
         <span class="tooltip">Logout</span>
       </li -->
 
 
-      <li class="left-tooltip">
+      <li class="tooltip-to-the-left">
         <i class="fas fa-code" id="menuViewSource"></i>
         <span class="tooltip">View source (HTML)</span>
       </li>
@@ -546,7 +550,7 @@
       <!-- Add a button to open the Chrome Dev Tools (F12): Electron only -->
       <!-- UNCOMMENT_FOR_ELECTRON_APP_START
 
-        <li class="left-tooltip">
+        <li class="tooltip-to-the-left">
         <i class="fas fa-tools" id="menuChromeDevTools"></i>
         <span class="tooltip">Chromium debug tools (F12)</span>
       </li>
@@ -557,7 +561,7 @@
 
       <!-- UNCOMMENT_FOR_ELECTRON_APP_START
 
-      <li class="left-tooltip" id="menuCloseElectronApp">
+      <li class="tooltip-to-the-left" id="menuCloseElectronApp">
         <span class="closebutton">x</span>
         <span class="tooltip">Close app</span>
       </li>
