@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Alpine.js experiment: toooltip</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v3.x.x/dist/alpine.min.js" defer></script>
+
+
+  <style>
+    /* Resetting the default styles for the web page */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Set default font sizes etc for the web page */
+
+    html {
+      font-family: sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: lighter;
+    }
+
+    /* Set sensible relative margins and padding for the web page */
+
+    body {
+      margin: 2rem;
+      padding: 2rem;
+      background-color: #444;
+    }
+
+    .menu-bar {
+      display: flex;
+      align-items: center;
+      background-color: #333;
+      padding: 10px 10px
+    }
+
+    .menu-bar ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+
+    .menu-bar ul li {
+      color: #fff;
+      margin-right: 30px;
+    }
+
+    /* Set font-size, colour etc for the FontAwesome icons */
+
+    .fas {
+      font-size: 2.5rem;
+      color: #fff;
+    }
+
+
+    /*
+     * Styling the "Alpine.js" tooltip for the top "menu bar" :
+     *
+     * We've set the `position` to `absolute` so that the tooltip can be positioned
+     * relative to the nearest positioned ancestor.
+     *
+     * The `transform` property is used to position the tooltip under the icon.
+     *
+     * The `display` property is initially set to `none` to hide the tooltip.
+     * When the user hovers over the `.menu-item`, the tooltip is displayed.
+     */
+    .tooltip {
+      position: absolute;
+      background-color: #333;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      transform: translate(50%, 50%);
+      display: none;
+    }
+
+    .menu-item:hover .tooltip {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="menu-bar">
+    <ul>
+      <li class="menu-item" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+        <a href="#"><i class="fas fa-home"></i></a>
+        <div x-show="open" class="tooltip">Home</div>
+      </li>
+
+      <li class="menu-item" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+        <a href="#"><i class="fas fa-info"></i></a>
+        <div x-show="open" class="tooltip">Info</div>
+      </li>
+
+      <li class="menu-item" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+        <a href="#"><i class="fas fa-copyright"></i></a>
+        <div x-show="open" class="tooltip">Copyright</div>
+      </li>
+
+    </ul>
+  </nav>
+</body>
+
+</html>

@@ -185,9 +185,18 @@ Remember, the `script` tag for including `Alpine.js` should be placed in the `he
 
 ----
 
-## Alpine.js: Included components
+## COMPONENTS: "Alpine UI components"
 
-Alpine.js offers a variety of `web components` that you can use to enhance your web applications. Here are some of them:
+* [Alpine UI Components](https://alpinejs.dev/components)
+* Pricing: $129 for lifetime access
+
+Includes:
+
+* 9+ Robust UI components
+* 12+ Third-party library integrations
+* Early access to 9+ Headless Alpine components
+
+Alpine.js offers a variety of "UI components" :
 
 * **Dropdown**: A component for creating dropdown menus¹.
 * **Modal**: A component for creating modal windows¹.
@@ -199,7 +208,9 @@ Alpine.js offers a variety of `web components` that you can use to enhance your 
 * **Toggle**: A component for creating toggle switches¹.
 * **Tooltip**: A component for creating tooltips¹.
 
-In addition to these, `Alpine.js`` also provides integrations with <u>third-party libraries</u> for features like:
+Additionally, **Third-party Integrations** are offered:
+
+In addition   integrations with <u>third-party libraries</u> for features like:
 
 * Charts: _Chart.js, ApexCharts_.
 * Text editors: _Trix, Quill, SimpleMDE_.
@@ -207,18 +218,23 @@ In addition to these, `Alpine.js`` also provides integrations with <u>third-part
 * Calendars & datepickers: _Flatpickr, Date Range Picker, FullCalendar_.
 * Carousels: _Glide, Splide_.
 
-Moreover, there are also some community-built components available:
+## COMPONENTS: Community built components
+
+There are also some community-built components available:
 
 * `Pinecone Router` (a client-side router)
 * `Alpine.js Tash` (for rendering data in moustache syntax)
 * `Alpine Wizard` (for building multi-step wizards)
 * `Alpine $fetch` (a magic helper to integrate HTTP fetch requests directly within Alpine.js markup)³.
 
-1. [UI Components — Alpine.js](https://alpinejs.dev/components)
-2. [GitHub - alpine-collective/awesome: A curated list of awesome ....](https://github.com/alpine-collective/awesome)
-3. [Using Web Components in Alpine.js - Raymond Camden](https://www.raymondcamden.com/2023/06/02/using-web-components-in-alpine)
-4. [Alpine.js Playground - A set of ready to use Alpine.js examples with ....](https://alpinejs.codewithhugo.com/?type=components)
-5. [GitHub - bcorpj/AlpineJS-ComponentX: The Alpine Components Package ....](https://github.com/bcorpj/AlpineJS-ComponentX)
+## COMPONENTS: Using "web components (W3C standard) with `Alpine.js`
+
+1. [A curated list of awesome resources related to Alpine](<https://github.com/alpine-collective/awesome>)
+
+2. [Using Web Components in Alpine.js](https://www.raymondcamden.com/2023/06/02/using-web-components-in-alpine)
+
+3. [Alpine Components Package](https://github.com/bcorpj/AlpineJS-ComponentX)
+   * The "Alpine Components Package" simplifies component inclusion for `Alpine.js`, enabling seamless integration of dynamic and interactive elements into web projects.
 
 ----
 

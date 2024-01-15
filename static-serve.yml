@@ -32,6 +32,7 @@ sources:
   # "dir" is a path to look for static files
   - dir: src
   - dir: build__electron_app/tmp_html_processing
+  - dir: experiments
 #
 #  - dir: other
     # "headers" can be added to any individual source and will be merged with the

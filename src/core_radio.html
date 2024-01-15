@@ -93,24 +93,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
   <!--
-    Load FontAwesome icons to be used in the "menu bar".
+    Download the latest version of the Shoelace CSS ("Light" theme?) from CDN.
 
-    // TODO: Optimize by loading only the icons we actually use. See options in "dev_DOCS/" folder.
+    See misc. options: https://shoelace.style/getting-started/installation
 
-    CSS styling conventions for selecting FontAwesome icon categories:
-      "fas" for Solid, "far" for Regular, "fal" for Light, "fad" for Duotone, and "fab" for Brands
-
-    "FontAwesome stylesheet":
-
-    The FontAwesome stylesheet is a CSS file that defines classes for each icon.
-    When you add these classes to an element in your HTML, the corresponding icon will be displayed.
-
-    Preloading the "FontAwesome stylesheet" can improve performance by starting to download the stylesheet sooner.
-    This can be especially beneficial if your website uses a lot of FontAwesome icons, as it allows the icons
-    to start loading earlier and be ready by the time they"re needed.
+    TODO: Can be optimized:
+      1) By downloading only the web components that we actually use.
+      2) By downloading the web components from a local file instead of CDN.
   -->
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/light.css" />
 
   <style>
     /* ==== START: CSS Reset ================================ */
@@ -308,27 +299,38 @@
       margin-right: 5px;
     }
 
-    nav ul li:hover {
+
+    /* Style the Shoelace "Tooltip" web component
+
+      Defined "sl-tooltip" styles are here:
+      https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/light.css
+
+      https://shoelace.style/components/tooltip
+    */
+    nav ul li sl-tooltip {
+      --sl-tooltip-background-color: #444;
+      --sl-tooltip-color: var(--text-colour);
+      --sl-tooltip-line-height: 1.2rem;
+      --sl-tooltip-font-size: 0.9rem;
+      --sl-tooltip-font-weight: normal;
+      --sl-tooltip-border-radius: 6px;
+      --sl-tooltip-padding: 4px 8px;
+      --sl-tooltip-arrow-size: 4px;
+      --max-width: 100px;
+    }
+
+    /* Style the Shoelace "Icon" web component */
+    nav ul li sl-icon {
+      font-size: 1.8rem;
+      color: var(--menu-colour);
+    }
+
+    /* Change the icon color on hover */
+
+    nav ul li sl-icon:hover {
       color: var(--menu-colour-hover);
     }
 
-    nav ul li i {
-      /* Sets the size of the FontAwesome icons in the "menu bar": */
-      font-size: 1.6rem;
-    }
-
-    /* Style the Close button ("x") menu item: */
-    nav ul li span.closebutton {
-      font-size: 1.8rem;
-      /* It's a bit of a mystery why / how "line-height" needs to be set here : */
-      line-height: 1.1;
-      font-weight: lighter;
-      color: var(--text-colour);
-    }
-
-    nav ul li span.closebutton:hover {
-      color: #CD5C5C;
-    }
 
     /*
      * Define a "spacer" div for the menu bar:
@@ -347,7 +349,7 @@
       margin-right: 1px;
     }
 
-    /* UNCOMMENT_FOR_ELECTRON_APP_START */
+    /* UNCOMMENT_FOR_ELECTRON_APP_START
 
     nav ul li.dragarea {
       -webkit-app-region: drag;
@@ -360,49 +362,7 @@
       border-radius: 10px;
     }
 
-    /* UNCOMMENT_FOR_ELECTRON_APP_END */
-
-
-    /* Define a "tooltip" class for "menu items" and other HTML elements */
-
-    .tooltip {
-      visibility: hidden;
-      background-color: #444;
-      color: #CCC;
-      text-align: center;
-      /* Make sure text wraps when reaching tooltip box"s edge. Or "normal" */
-      white-space: pre-wrap;
-      /* Set the max width of the tooltip box: */
-      /* max-width: 200px;  */
-      padding: 5px 8px;
-      border-color: #888;
-      border-style: solid;
-      border-width: 1px;
-      border-radius: 5px;
-      position: absolute;
-      z-index: 1;
-      /* Position the tooltip below the menu item: */
-      top: 40px;
-      /* transition: opacity 0.3s; */
-      /* Using "rem" is more responsive than "em": */
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-
-    .tooltip-to-the-left .tooltip {
-      left: auto;
-      right: 20px;
-    }
-
-    .tooltip-to-the-right .tooltip {
-      right: auto;
-      left: 26px;
-    }
-
-    nav ul li:hover .tooltip {
-      visibility: visible;
-      opacity: 1;
-    }
+    UNCOMMENT_FOR_ELECTRON_APP_END */
 
     /* Style the "main" content */
 
@@ -478,32 +438,31 @@
   -->
 
   <nav>
-    <!-- The Left-aligned menu items: -->
     <ul>
-      <!-- li class="tooltip-to-the-right">
-        <i class="fas fa-home"></i>
-        <span class="tooltip">Home</span>
-      </li -->
+      <!-- The Left-aligned menu items: -->
 
-      <li class="tooltip-to-the-right">
-        <i class="fas fa-refresh" id="menuRefreshPage"></i>
-        <span class="tooltip">Refresh page (Ctrl+r)</span>
+      <li>
+        <sl-tooltip content="Refresh page (Ctrl+r)" placement="bottom-end" distance="20">
+          <sl-icon name="arrow-repeat" id="menuRefreshPage"></sl-icon>
+        </sl-tooltip>
       </li>
 
-      <li class="tooltip-to-the-right" id="audioErrorLogMenuItem"
-        style="display: none; color: var(--menu-color-inactive);">
-        <i class="fas fa-bug" id="menuAudioErrorLog"></i>
-        <span class="tooltip">View audio errors</span>
+      <li id="audioErrorLogMenuItem" style="display: none; color: var(--menu-color-inactive);">
+        <sl-tooltip content="View audio errors" placement="bottom-end" distance="20">
+          <sl-icon name="bug" id="menuAudioErrorLog"></sl-icon>
+        </sl-tooltip>
       </li>
 
-      <li class="tooltip-to-the-right">
-        <i class="fas fa-cog"></i>
-        <span class="tooltip">Settings</span>
+      <li>
+        <sl-tooltip content="Settings" placement="bottom-start" distance="20">
+          <sl-icon name="gear" id="menuSettings"></sl-icon>
+        </sl-tooltip>
       </li>
 
-      <li class="tooltip-to-the-right">
-        <i class="fas fa-info-circle"></i>
-        <span class="tooltip">About</span>
+      <li>
+        <sl-tooltip content="About" placement="bottom-start" distance="20">
+          <sl-icon name="info-circle" id="menuAbout"></sl-icon>
+        </sl-tooltip>
       </li>
 
       <!-- Add a "spacer" "li" to push the right-aligned
@@ -530,28 +489,19 @@
 
       <!-- Right-aligned menu icons: -->
 
-      <!-- FUTURE: li class="tooltip-to-the-right">
-        <i class="fas fa-user"></i>
-        <span class="tooltip">Account</span>
-      </li -->
-
-      <!-- FUTURE: li class="tooltip-to-the-left">
-        <i class="fas fa-sign-out-alt"></i>
-        <span class="tooltip">Logout</span>
-      </li -->
-
-
-      <li class="tooltip-to-the-left">
-        <i class="fas fa-code" id="menuViewSource"></i>
-        <span class="tooltip">View source (HTML)</span>
+      <li>
+        <sl-tooltip content="View source (HTML)" placement="bottom-end" distance="20">
+          <sl-icon name="code" id="menuViewSource"></sl-icon>
+        </sl-tooltip>
       </li>
 
       <!-- Add a button to open the Chrome Dev Tools (F12): Electron only -->
       <!-- UNCOMMENT_FOR_ELECTRON_APP_START
 
-        <li class="tooltip-to-the-left">
-        <i class="fas fa-tools" id="menuChromeDevTools"></i>
-        <span class="tooltip">Chromium debug tools (F12)</span>
+      <li>
+        <sl-tooltip content="Chromium debug tools (F12)" placement="bottom-start" distance="20">
+          <sl-icon name="wrench" id="menuChromeDevTools"></sl-icon>
+        </sl-tooltip>
       </li>
 
       UNCOMMENT_FOR_ELECTRON_APP_END -->
@@ -560,10 +510,12 @@
 
       <!-- UNCOMMENT_FOR_ELECTRON_APP_START
 
-      <li class="tooltip-to-the-left" id="menuCloseElectronApp">
-        <span class="closebutton">x</span>
-        <span class="tooltip">Close app</span>
+      <li>
+        <sl-tooltip content="Close" placement="bottom-start" distance="20">
+          <sl-icon name="x" id="menuCloseElectronApp"></sl-icon>
+        </sl-tooltip>
       </li>
+
 
       UNCOMMENT_FOR_ELECTRON_APP_END -->
     </ul>
@@ -574,6 +526,18 @@
   <!-- TODO: Include the Alpine.js library: -->
   <!-- From INTERNET: script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script -->
   <!-- From LOCAL FILE: script defer src="./lib/alpinejs.min.3.13.3.js"></script -->
+
+  <!--
+    Include the "Shoelace" web component library.
+
+    TODO: Can be optimized by loading only the web components that we actually use.
+
+    The experimental "autoloader" is the easiest and most efficient way to use Shoelace.
+    A lightweight script watches the DOM for unregistered Shoelace elements and
+    lazy loads them for you — even if they’re added dynamically.
+  -->
+  <script type="module"
+    src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/shoelace-autoloader.js"></script>
 
   <script>
     /*
@@ -942,6 +906,7 @@
     };
 
   </script>
+
 
 </body>
 

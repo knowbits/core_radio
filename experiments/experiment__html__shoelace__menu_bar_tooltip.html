@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Shoelace Tooltip Example</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--
+    Download latest version of the Shoelace CSS ("Light" theme?) from CDN:
+    See options: https://shoelace.style/getting-started/installation#cdn-installation-easiest
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/light.css" />
+
+
+  <style>
+    /* Resetting the default styles for the web page */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Set default font sizes etc for the web page */
+
+    html {
+      font-family: sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: lighter;
+    }
+
+    /* Set sensible relative margins and padding for the web page */
+
+    body {
+      margin: 2rem;
+      padding: 2rem;
+      background-color: #444;
+    }
+
+
+    /* Style the navigation bar and the Shoelace web components with CSS */
+    nav {
+      display: flex;
+      align-items: center;
+      background-color: #333;
+      padding: 10px 10px
+    }
+
+    nav ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+
+    /* Style the list items */
+    nav ul li {
+      color: #fff;
+      margin-right: 30px;
+    }
+
+    /* Style the Shoelace "Tooltip" web component */
+    nav ul li sl-tooltip {
+      --sl-tooltip-background-color: #666;
+      --sl-tooltip-color: green;
+      --sl-tooltip-font-size: 1.5rem;
+      --sl-tooltip-border-radius: 0.25rem;
+      --sl-tooltip-padding: 0.5rem 1rem;
+      --sl-tooltip-arrow-size: 0;
+    }
+
+    /* Change the tooltip color on hover */
+    /*
+    nav sl-tooltip:hover {
+      background-color: #04AA6D;
+    }
+    */
+
+    /* Style the Shoelace "Icon" web component */
+    nav ul li sl-icon {
+      font-size: 1.8rem;
+      color: #fff;
+      background-color: inherit;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Create a navigation bar with a list of menu items -->
+  <nav>
+    <ul>
+      <!-- Wrap each icon with a tooltip and provide the content attribute or slot -->
+      <li>
+        <sl-tooltip content="Home" placement="bottom" distance="20">
+          <sl-icon name="house"></sl-icon>
+        </sl-tooltip>
+      </li>
+      <li>
+        <sl-tooltip content="Search" placement="bottom" distance="20">
+          <sl-icon name="search"></sl-icon>
+        </sl-tooltip>
+      </li>
+      <li>
+        <sl-tooltip content="Contact" placement="bottom" distance="20">
+          <sl-icon name="envelope"></sl-icon>
+        </sl-tooltip>
+      </li>
+      <li>
+        <sl-tooltip content="Refresh" placement="bottom" distance="20">
+          <sl-icon name="arrow-counterclockwise"></sl-icon>
+        </sl-tooltip>
+      </li>
+    </ul>
+  </nav>
+
+  <script type="module"
+    src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/shoelace-autoloader.js"></script>
+
+  <!-- Load the Shoelace "icon" web component (includes "Tooltip"): -->
+
+  <!-- DID NOT WORK: script type="module"
+    src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/components/icon/icon.js"></script -->
+
+
+</body>
+
+</html>
