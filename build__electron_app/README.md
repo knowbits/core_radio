@@ -23,6 +23,35 @@ NOTE: All the instructions below assume that you are in the `<PROJECT_ROOT>/buil
 3. Install by running: `sudo apt install nodejs npm`
 4. Verify installation: `node -v` and `npm -v`
 
+However, this might not install the latest version of `nodejs`and `npm`, so we need to install `nvm` to achieve that:
+
+1. Install `nvm` - the "Node Version Manager":
+
+   * `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash`
+      * Restart the terminal to set `export NVM_DIR="$HOME/.nvm"` in the `~/.bashrc` file.
+      * Verify that `nvm` is installed by running `nvm --version`.
+
+2. Now, use `nvm` to install the latest version of `nodejs` and `npm`:
+
+   * `nvm install node` # Will install the latest version of both `nodejs` and `npm`.
+   * Verify installation: `node -v` and `npm -v`
+   * Switch to the latest version of `nodejs` and `npm` by running: `nvm use node`
+   * Switch to a specific version of `nodejs` and `npm` by running: `nvm use 14.17.6`
+
+3. Update `npm` to the latest version:
+
+   * `npm install npm@latest -g`
+   * Verify installation: `npm -v`
+
+### Install the `npm` dependencies defined in `package.json` locally
+
+
+1. Run: `npm install`
+
+   * The dependencies will be placed in the `./node_modules/` folder.
+   * List all the packages that weere installed by running: `npm list --depth=0`
+
+
 ### Install Electron
 
 1. Install Electron as a "development dependency" in your app:

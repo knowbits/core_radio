@@ -95,8 +95,10 @@
         --menu-colour-hover: #006699;
         --menu-color-inactive: #666;
 
-        --button-colour-stopped: var(--background-colour);
         --button-colour-playing: var(--background-colour);
+        --button-colour-stopped: var(--background-colour);
+        --button-colour-focused: #444;
+
         --button-border-colour-inactive: var(--text-colour);
         --button-border-colour-active: Coral;
       }
@@ -217,6 +219,11 @@
         background-color: var(--button-colour-stopped);
         color: var(--text-colour);
         cursor: auto;
+      }
+
+      button:focus {
+        outline: none;
+        background-color: var(--button-colour-focused);
       }
 
       .button-stopped {
@@ -485,9 +492,7 @@
         htmlContent += "<button id='clearLog'>Clear errors</button > ";
 
         errorLog.forEach((error, index) => {
-          htmlContent += `<p><strong>Error ${index + 1}:</strong> ${
-            error.error
-          } <br> <strong>Time:</strong> ${error.timestamp}</p>`;
+          htmlContent += `<p><strong>Error ${index + 1}:</strong> ${error.error} <br> <strong>Time:</strong> ${error.timestamp}</p>`;
         });
 
         htmlContent += "</body></html>";
@@ -654,6 +659,76 @@
             window.api.closeApp();
           });
       };
+
+      var buttons = document.querySelectorAll("button");
+
+      var categories = document.querySelectorAll("section");
+
+      var buttonsArray = Array.prototype.slice.call(buttons);
+      var categoriesArray = Array.prototype.slice.call(categories);
+
+      function changeFocus(e) {
+        var currentElement = document.activeElement;
+        var currentIndex, targetCategory, playerContainer, firstButton;
+
+        switch (e.keyCode) {
+          case 37:
+            if (buttonsArray.includes(currentElement)) {
+              currentIndex = buttonsArray.indexOf(currentElement);
+
+              buttonsArray[
+                (currentIndex - 1 + buttonsArray.length) % buttonsArray.length
+              ].focus();
+            }
+            break;
+          case 39:
+            if (buttonsArray.includes(currentElement)) {
+              currentIndex = buttonsArray.indexOf(currentElement);
+
+              buttonsArray[(currentIndex + 1) % buttonsArray.length].focus();
+            }
+            break;
+          case 38:
+            if (categoriesArray.includes(currentElement.closest("section"))) {
+              currentIndex = categoriesArray.indexOf(
+                currentElement.closest("section"),
+              );
+
+              targetCategory =
+                categoriesArray[
+                  (currentIndex - 1 + categoriesArray.length) %
+                    categoriesArray.length
+                ];
+              playerContainer = targetCategory.querySelector(
+                "div[id^='playerContainer']",
+              );
+              firstButton = playerContainer.querySelector("button");
+              if (firstButton) {
+                firstButton.focus();
+              }
+            }
+            break;
+          case 40:
+            if (categoriesArray.includes(currentElement.closest("section"))) {
+              currentIndex = categoriesArray.indexOf(
+                currentElement.closest("section"),
+              );
+
+              targetCategory =
+                categoriesArray[(currentIndex + 1) % categoriesArray.length];
+              playerContainer = targetCategory.querySelector(
+                "div[id^='playerContainer']",
+              );
+              firstButton = playerContainer.querySelector("button");
+              if (firstButton) {
+                firstButton.focus();
+              }
+            }
+            break;
+        }
+      }
+
+      window.addEventListener("keydown", changeFocus);
     </script>
   </body>
 </html>

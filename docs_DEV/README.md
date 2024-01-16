@@ -70,6 +70,9 @@
     * `remoteStorage` is a simple library that combines the localStorage API with a remote server to persist data across browsers and devices.
     * They offer a free hosted community server at `https://api.remote.storage`
 
+* FEATURE: Add "Auto-update" for the native Electron apps: 
+  * <https://www.electronjs.org/docs/latest/tutorial/updates>
+
 ## TO DO: IMPROVEMENTS, OPTIMIZATIONS
 
 * WEB COMPONENT: Create a "radio-player" web component: Encapsulate the "audio" and "button" elements in a web component.
