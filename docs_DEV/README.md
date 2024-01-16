@@ -10,8 +10,8 @@
 
 * More information: <https://hub.github.com>
 
-* ARTICLE by `Alpine.js` creator Caleb Porzio: 
-   * <https://calebporzio.com/give-your-git-command-superpowers>
+* ARTICLE by `Alpine.js` creator Caleb Porzio:
+  * <https://calebporzio.com/give-your-git-command-superpowers>
 
 ## Validate HTML, CSS
 
@@ -31,26 +31,40 @@
 * FEATURE: HTML: [Save preferences in a local file](./FEATURE__HTML__Save_preferences_in_a_local_file.md)
   * E.g. Maintain an indivdual list of your preferred radio streams.
   * OR: Consider using "remoteStorage" - An API to persiste user preferences etc on a server.
-    * https://github.com/FrigadeHQ/remote-storage
+    * <https://github.com/FrigadeHQ/remote-storage>
     * `remoteStorage` is a simple library that combines the localStorage API with a remote server to persist data across browsers and devices.
     * They offer a free hosted community server at `https://api.remote.storage`
- 
+
 ## TO DO: IMPROVEMENTS, OPTIMIZATIONS
 
-* Shoelace: Load selected web components from local folder (instead of CDN)
-  * "Bundling": https://shoelace.style/getting-started/installation#bundling
-  * Example: Bundling with `npm` and `webpack`: https://github.com/shoelace-style/webpack-example
-  * "Cherry picking" web components from local folder: 
+* WEB COMPONENT: Create a "radio-player" web component: Encapsulate the "audio" and "button" elements in a web component.
+  * Will improve HTML: Extends HTML with our custom elements, Easier to understand & Maintain, Encapsulation by using a component, Reusability, Reduced complexity etc.
+
+  * See: <https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements>
+  * Consider using the "Lit" library: since it optimises DOM rendering and is already used by "Shoelace" web component library.
+    * <https://lit.dev>
+    * <https://lit.dev/docs/components/overview/>
+    * <https://lit.dev/docs/components/properties/>
+    * <https://lit.dev/docs/components/events/>
+    * <https://lit.dev/docs/components/lifecycle/>
+    * <https://lit.dev/docs/components/directives/>
+    * <https://lit.dev/docs/components/templates/>
+    * <https://lit.dev/docs/components/styles/>
+    * <https://lit.dev/docs/components/shadow-dom/>
+    * <https://lit.dev/docs/components/async/>
+
+* IMPROVE: **"Menu bar"** layout: Consider using a "flexbox" layout for the menu bar.
+  * See: <https://css-tricks.com/snippets/css/a-guide-to-flexbox/>
+
+* OPTIIMZE: **Shoelace** download: Load selected web components from local folder (instead of CDN)
+  * "Bundling": <https://shoelace.style/getting-started/installation#bundling>
+  * Example: Bundling with `npm` and `webpack`: <https://github.com/shoelace-style/webpack-example>
+  * "Cherry picking" web components from local folder:
     * <https://shoelace.style/getting-started/installation#cherry-picking>
 
-* Icons: Consider using **"Bootstrap Icons"** - SVG icons. 
-   * <https://icons.getbootstrap.com>
-   * Free, high quality, open source icon library with over 2,000 icons. Include them anyway you like—SVGs, SVG sprite, or web fonts. 
-   * Use them with or without Bootstrap in any project.
-
-* CSS Reset: Consider using **"Reboot"** from Bootstrap
-   * <https://getbootstrap.com/docs/5.3/content/reboot>
-   * Built on "Normalize".
+* Change **"CSS Reset"** scheme: Consider using **"Reboot"** from Bootstrap
+  * <https://getbootstrap.com/docs/5.3/content/reboot>
+  * Built on "Normalize".
 
 * SEO: Make the web app searchable by using "meta" tags etc: [OPTIMIZE: SEO: Add "meta" tags](./OPTIMIZE__SEO__Add_meta_tags.md)
 
