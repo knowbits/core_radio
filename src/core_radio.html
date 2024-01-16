@@ -908,8 +908,10 @@
     //
     //  NOTE: ENTER key (already works): Will play the focused "radio station" button.
 
+
     // Get all buttons and categories into NodeLists
     var buttons = document.querySelectorAll('button');
+
     // Each adio stations "category" is defined inside a "section" element
     var categories = document.querySelectorAll('section');
 
@@ -919,30 +921,40 @@
 
     // Function to change focus of "button" elements when arrow keys are pressed
     function changeFocus(e) {
+
       // Get the currently focused element
       var currentElement = document.activeElement;
       var currentIndex, targetCategory, playerContainer, firstButton;
 
       // Check which key was pressed
       switch (e.keyCode) {
+
         case 37: // left arrow
           if (buttonsArray.includes(currentElement)) {
             currentIndex = buttonsArray.indexOf(currentElement);
-            // Focus on the previous button, or the last button if currently at the first button
+
+            // Focus on the previous button, or the last button
+            // if currently at the first button
             buttonsArray[(currentIndex - 1 + buttonsArray.length) % buttonsArray.length].focus();
           }
           break;
+
         case 39: // right arrow
           if (buttonsArray.includes(currentElement)) {
             currentIndex = buttonsArray.indexOf(currentElement);
-            // Focus on the next button, or the first button if currently at the last button
+
+            // Focus on the next button, or the first button
+            // if currently at the last button
             buttonsArray[(currentIndex + 1) % buttonsArray.length].focus();
           }
           break;
+
         case 38: // up arrow
           if (categoriesArray.includes(currentElement.closest('section'))) {
             currentIndex = categoriesArray.indexOf(currentElement.closest('section'));
-            // Focus on the first button of the previous category, or the last category if currently at the first category
+
+            // Focus on the first button of the previous category,
+            // or the last category if currently at the first category
             targetCategory = categoriesArray[(currentIndex - 1 + categoriesArray.length) % categoriesArray.length];
             playerContainer = targetCategory.querySelector("div[id^='playerContainer']");
             firstButton = playerContainer.querySelector('button');
@@ -951,10 +963,13 @@
             }
           }
           break;
+
         case 40: // down arrow
           if (categoriesArray.includes(currentElement.closest('section'))) {
             currentIndex = categoriesArray.indexOf(currentElement.closest('section'));
-            // Focus on the first button of the next category, or the first category if currently at the last category
+
+            // Focus on the first button of the next category,
+            // or the first category if currently at the last category
             targetCategory = categoriesArray[(currentIndex + 1) % categoriesArray.length];
             playerContainer = targetCategory.querySelector("div[id^='playerContainer']");
             firstButton = playerContainer.querySelector('button');

@@ -6,7 +6,10 @@
 # Exclude the "index.html" used to buiild the Electron app.
 # Note: the "index.html should be copied from "src/core_radio.html"
 #       before each "Electron build"
-build__electron_app/index.html
+# build__electron_app/*.html
+
+# Exclude VS CODE config folder
+.vscode/
 
 # Exclude any "tmp/" folders
 **/tmp*/

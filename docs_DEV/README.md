@@ -1,5 +1,14 @@
 # Developer resources
 
+## INSPIRATIONAL: Other Electron apps
+
+* LIST: [Electron apps](https://www.electronjs.org/apps)
+
+* Publication app: ["Zettlr"]([text](https://github.com/Zettlr/Zettlr))
+  * _"Your One-Stop Publication Workbench"_
+  * E.g.: Section on how to set up a "Development environment" for Electron, yarn, etc:
+    * <https://github.com/Zettlr/Zettlr?tab=readme-ov-file#contributing-code>
+
 ## The `hub` utility for working with Github repositories
 
 * Install: `$ sudo apt-get install hub`
@@ -70,7 +79,7 @@
     * `remoteStorage` is a simple library that combines the localStorage API with a remote server to persist data across browsers and devices.
     * They offer a free hosted community server at `https://api.remote.storage`
 
-* FEATURE: Add "Auto-update" for the native Electron apps: 
+* FEATURE: Add "Auto-update" for the native Electron apps:
   * <https://www.electronjs.org/docs/latest/tutorial/updates>
 
 ## TO DO: IMPROVEMENTS, OPTIMIZATIONS

@@ -1,5 +1,5 @@
 /*
-* This file is the "main process" of the Electron app.
+ * This file is the "main process" of the Electron app.
  *
  * It is responsible for:
  *   Creating and managing the "renderer processes" (the web pages).
@@ -139,7 +139,7 @@ if (!gotTheLock) {
     }
   });
 
-  // Disable GPU hardware acceleration (caused problems on Ubuntu (WLS2)
+  // Disable GPU hardware acceleration (caused problems on Ubuntu (WLS2))
   // NOTE: This must be called before the "app" module's "ready" event is emitted.
   app.disableHardwareAcceleration();
 
@@ -188,9 +188,9 @@ function setAppSettingsAndHandlers() {
   // app.commandLine.appendSwitch("lang", "en-US");
 
   /*
-  * NOTE: The "activate" event is emitted when the user clicks on the app"s dock icon (OS X)
-  *       and there are no other windows open. Typically, apps re-create a window in this case.
-  */
+   * NOTE: The "activate" event is emitted when the user clicks on the app"s dock icon (OS X)
+   *       and there are no other windows open. Typically, apps re-create a window in this case.
+   */
   app.on("activate", function () {
     // if (BrowserWindow.getAllWindows().length === 0) { createWindow() }
     if (webPageWindow === null) { createWebPageWindow(); }
@@ -223,13 +223,13 @@ function addListenersForFunctionsExposedToRendererProcesses() {
  * When used in the "main process", it handles asynchronous
  * and synchronous messages sent from a "renderer process" (web page).
  */
-  ipcMain.on("close-app", (event, arg) => {
+  ipcMain.on("close-app", (event, _arg) => {
     let win = event.sender.getOwnerBrowserWindow();
     win.close();
     // mainWindow.close();
   });
 
-  ipcMain.on("open-dev-tools", (event, arg) => {
+  ipcMain.on("open-dev-tools", (event, _arg) => {
     let win = event.sender.getOwnerBrowserWindow();
     win.webContents.openDevTools();
     // mainWindow.webContents.openDevTools();

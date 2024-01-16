@@ -681,6 +681,7 @@
               ].focus();
             }
             break;
+
           case 39:
             if (buttonsArray.includes(currentElement)) {
               currentIndex = buttonsArray.indexOf(currentElement);
@@ -688,6 +689,7 @@
               buttonsArray[(currentIndex + 1) % buttonsArray.length].focus();
             }
             break;
+
           case 38:
             if (categoriesArray.includes(currentElement.closest("section"))) {
               currentIndex = categoriesArray.indexOf(
@@ -708,6 +710,7 @@
               }
             }
             break;
+
           case 40:
             if (categoriesArray.includes(currentElement.closest("section"))) {
               currentIndex = categoriesArray.indexOf(

@@ -45,12 +45,10 @@ However, this might not install the latest version of `nodejs`and `npm`, so we n
 
 ### Install the `npm` dependencies defined in `package.json` locally
 
-
 1. Run: `npm install`
 
    * The dependencies will be placed in the `./node_modules/` folder.
    * List all the packages that weere installed by running: `npm list --depth=0`
-
 
 ### Install Electron
 
