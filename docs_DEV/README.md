@@ -28,6 +28,41 @@
 
 ## TO DO: FEATURE REQUESTS
 
+* MENU: Add "Help" button
+  * Show a popup/modal with Help related info for the app.
+  * Keyboard navigation
+    * ARROW KEYS to focus radio stations.
+    * SPACE/ENTER to play/stop radio station.
+  * Explain the menu items:
+    * Refresh, Save preferences, View source,
+    * Electron only: "Chromium Developer tools", Close button.
+  * How we use the HTML 5 "audio" element: There is no buffering of the audio streams so there only a play/stop button, thus no pause/resume button.
+  * Customise the list of radio stations: by editing the "streams" array in the `./src/core_radio.html` file (save on Desktop or other local folder).
+    * Link to the HTML in Github: <https://github.com/knowbits/core_radio/blob/main/src/core_radio.html>
+
+* About button:
+  * Show a popup/modal with information about the app.
+    * Version number.
+    * Support.
+    * License.
+    * Credits.
+    * Show a link to the GitHub repository.
+    * Show a link to the "About" page on the GitHub repository.
+
+    * Web devevelopment libraries:
+      * "Shoelace" web components: <https://shoelace.style>
+      * "Shoelace" icons: <https://shoelace.style/icons>
+      * Lit library: <https://lit.dev> for creating web components (custome HTML elements).
+    * Native desktop app development tools:
+      * Electron: <https://www.electronjs.org>
+        * Tool to create a desktop app from a web app (static HTML).
+        * Relies on the Javascript ecosystem, npm etc.
+      * Electron Builder tool: <https://www.electron.build>
+        * Tool to package and build a ready for distribution "Electron app" for macOS, Windows and Linux with “auto update” support.
+    * Misc dev and build tools:
+      * Code editor: VS Code <https://code.visualstudio.com> and `nano` <https://www.nano-editor.org>
+      * `bash` scripts: for processing and validating the static HTML file to prepare for Electron app build step.
+
 * FEATURE: HTML: [Save preferences in a local file](./FEATURE__HTML__Save_preferences_in_a_local_file.md)
   * E.g. Maintain an indivdual list of your preferred radio streams.
   * OR: Consider using "remoteStorage" - An API to persiste user preferences etc on a server.
@@ -53,7 +88,7 @@
     * <https://lit.dev/docs/components/shadow-dom/>
     * <https://lit.dev/docs/components/async/>
 
-* IMPROVE: **"Menu bar"** layout: Consider using a "flexbox" layout for the menu bar.
+* IMPROVE CSS: **"Menu bar"** layout: Consider using a "flexbox" layout for the menu bar.
   * See: <https://css-tricks.com/snippets/css/a-guide-to-flexbox/>
 
 * OPTIIMZE: **Shoelace** download: Load selected web components from local folder (instead of CDN)
