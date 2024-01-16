@@ -107,7 +107,8 @@
     /* ==== START: CSS Reset ================================ */
 
     /*
-     * "A CSS reset standardizes HTML elements across browsers, simplifying subsequent styling."
+     * "A CSS reset standardizes HTML elements across browsers,
+     *  simplifying subsequent styling."
      *
      * This is a modified version of "Meyer"s CSS Reset":
      *   http://meyerweb.com/eric/tools/css/reset
@@ -258,9 +259,10 @@
 
     /* Style the menu bar */
 
+
     nav {
       /* Make the nav bar span the entire width of the page */
-      margin-top: 6px;
+      margin-top: 8px;
       margin-bottom: 0px;
     }
 
@@ -330,7 +332,6 @@
     nav ul li sl-icon:hover {
       color: var(--menu-colour-hover);
     }
-
 
     /*
      * Define a "spacer" div for the menu bar:
@@ -418,16 +419,8 @@
   <!-- Typical structure inside HTML "body" element: header, nav, main, footer -->
 
   <!--
-    TODO: Consider to wrap a "header" element around the current "nav" element of the "top menu bar".
-
-    If the bar at the top of your page contains not just navigation, but also other types
-    of content (like a site logo, search form, or site-wide banner), it would be more
-    appropriate to wrap the entire bar in a "header" element. The navigation links within
-    that "header" could still be wrapped in a "nav".
-
-    So, whether you should use a "header" instead of a "nav" depends on the content
-    and function of your top bar. If it"s primarily for navigation, a "nav" is appropriate.
-    If it contains other types of content as well, consider using a "header".
+    If the menu bar is primarily for navigation, a "nav" is appropriate.
+    If it also contains content like logo etc, then consider wrapping "nav" with "header".
   -->
 
   <!--
@@ -436,90 +429,87 @@
     NOTE: The "menu bar" is not a "navigation bar" (nav element).
           It"s a "menu bar" (header element).
   -->
+  <header>
+    <nav>
+      <ul>
+        <!-- The Left-aligned menu items: -->
+        <li>
+          <sl-tooltip content="Refresh page (Ctrl+r)" placement="bottom-end" distance="20">
+            <sl-icon name="arrow-repeat" id="menuRefreshPage"></sl-icon>
+          </sl-tooltip>
+        </li>
 
-  <nav>
-    <ul>
-      <!-- The Left-aligned menu items: -->
+        <li id="audioErrorLogMenuItem" style="display: none; color: var(--menu-color-inactive);">
+          <sl-tooltip content="View audio errors" placement="bottom-end" distance="20">
+            <sl-icon name="bug" id="menuAudioErrorLog"></sl-icon>
+          </sl-tooltip>
+        </li>
 
-      <li>
-        <sl-tooltip content="Refresh page (Ctrl+r)" placement="bottom-end" distance="20">
-          <sl-icon name="arrow-repeat" id="menuRefreshPage"></sl-icon>
-        </sl-tooltip>
-      </li>
+        <li>
+          <sl-tooltip content="Settings" placement="bottom-start" distance="20">
+            <sl-icon name="gear" id="menuSettings"></sl-icon>
+          </sl-tooltip>
+        </li>
 
-      <li id="audioErrorLogMenuItem" style="display: none; color: var(--menu-color-inactive);">
-        <sl-tooltip content="View audio errors" placement="bottom-end" distance="20">
-          <sl-icon name="bug" id="menuAudioErrorLog"></sl-icon>
-        </sl-tooltip>
-      </li>
+        <li>
+          <sl-tooltip content="About" placement="bottom-start" distance="20">
+            <sl-icon name="info-circle" id="menuAbout"></sl-icon>
+          </sl-tooltip>
+        </li>
 
-      <li>
-        <sl-tooltip content="Settings" placement="bottom-start" distance="20">
-          <sl-icon name="gear" id="menuSettings"></sl-icon>
-        </sl-tooltip>
-      </li>
-
-      <li>
-        <sl-tooltip content="About" placement="bottom-start" distance="20">
-          <sl-icon name="info-circle" id="menuAbout"></sl-icon>
-        </sl-tooltip>
-      </li>
-
-      <!-- Add a "spacer" "li" to push the right-aligned
+        <!-- Add a "spacer" "li" to push the right-aligned
            menu items to the right edge of the nav bar: -->
-      <li class="spacer">
-      </li>
+        <li class="spacer">
+        </li>
 
-      <!--
-        ELECTRON ONLY: Drag and drop "area" in the middle of the top menu bar:
+        <!--
+          ELECTRON ONLY: Drag and drop "area" in the middle of the top menu bar:
 
-        Allows to move the "Electron app" window by dragging.
-        NOTE: Tooltip does not work on a "draggable" region.
-        FUTURE: Maybe use "Alpine.js" to show "Move" icon upon "hover"
-      -->
+          Allows to move the "Electron app" window by dragging.
+          NOTE: Tooltip does not work on a "draggable" region.
+          FUTURE: Maybe use "Alpine.js" to show "Move" icon upon "hover"
+        -->
 
-      <!-- UNCOMMENT_FOR_ELECTRON_APP_START
+        <!-- UNCOMMENT_FOR_ELECTRON_APP_START
 
-      <li class="dragarea"></li>
+        <li class="dragarea"></li>
 
-      <li class="spacer">
-      </li>
+        <li class="spacer">
+        </li>
 
-      UNCOMMENT_FOR_ELECTRON_APP_END -->
+        UNCOMMENT_FOR_ELECTRON_APP_END -->
 
-      <!-- Right-aligned menu icons: -->
+        <!-- Right-aligned menu icons: -->
+        <li>
+          <sl-tooltip content="View source (HTML)" placement="bottom-end" distance="20">
+            <sl-icon name="code" id="menuViewSource"></sl-icon>
+          </sl-tooltip>
+        </li>
 
-      <li>
-        <sl-tooltip content="View source (HTML)" placement="bottom-end" distance="20">
-          <sl-icon name="code" id="menuViewSource"></sl-icon>
-        </sl-tooltip>
-      </li>
+        <!-- Add a button to open the Chrome Dev Tools (F12): Electron only -->
+        <!-- UNCOMMENT_FOR_ELECTRON_APP_START
 
-      <!-- Add a button to open the Chrome Dev Tools (F12): Electron only -->
-      <!-- UNCOMMENT_FOR_ELECTRON_APP_START
+        <li>
+          <sl-tooltip content="Chromium debug tools (F12)" placement="bottom-start" distance="20">
+            <sl-icon name="wrench" id="menuChromeDevTools"></sl-icon>
+          </sl-tooltip>
+        </li>
 
-      <li>
-        <sl-tooltip content="Chromium debug tools (F12)" placement="bottom-start" distance="20">
-          <sl-icon name="wrench" id="menuChromeDevTools"></sl-icon>
-        </sl-tooltip>
-      </li>
+        UNCOMMENT_FOR_ELECTRON_APP_END -->
 
-      UNCOMMENT_FOR_ELECTRON_APP_END -->
+        <!-- "Close" option. (Only works in Electron app, since a HTML page cannot close itself) -->
 
-      <!-- "Close" option. (Only works in Electron app, since a HTML page cannot close itself) -->
+        <!-- UNCOMMENT_FOR_ELECTRON_APP_START
+        <li>
+          <sl-tooltip content="Close" placement="bottom-start" distance="20">
+            <sl-icon name="x" id="menuCloseElectronApp"></sl-icon>
+          </sl-tooltip>
+        </li>
+        UNCOMMENT_FOR_ELECTRON_APP_END -->
 
-      <!-- UNCOMMENT_FOR_ELECTRON_APP_START
-
-      <li>
-        <sl-tooltip content="Close" placement="bottom-start" distance="20">
-          <sl-icon name="x" id="menuCloseElectronApp"></sl-icon>
-        </sl-tooltip>
-      </li>
-
-
-      UNCOMMENT_FOR_ELECTRON_APP_END -->
-    </ul>
-  </nav>
+      </ul>
+    </nav>
+  </header>
 
   <main id="radioSections"></main>
 
@@ -788,7 +778,8 @@
         /*
         * The HTML5 "audio" element automatically buffers audio.
          * To ensure that the playing stream is always _live_,
-         * we need to force a reload of the "audio" element when the play button is pressed.
+         * we need to force a reload of the "audio" element
+         * when the play button is pressed.
          */
         newAudio.load(); // Force a reload of the "audio" element
         newAudio.play();
@@ -821,7 +812,6 @@
 
     streams.forEach(category => {
       const categoryContainer = document.createElement("section");
-
       const categoryHeader = document.createElement("header");
       const categoryTitle = document.createElement("h1");
       categoryTitle.textContent = category.categoryTitle;
@@ -832,8 +822,6 @@
       const playerContainer = document.createElement("div");
       playerContainer.id = "playerContainer" + category.category.toUpperCase();
       categoryContainer.appendChild(playerContainer);
-
-      // radioSections.appendChild(categoryContainer);
 
       category.streams.forEach(stream => {
         // Create the "source" element of the "audio" element.
@@ -906,7 +894,6 @@
     };
 
   </script>
-
 
 </body>
 
