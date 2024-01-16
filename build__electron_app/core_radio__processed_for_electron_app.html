@@ -122,7 +122,7 @@
       }
 
       nav {
-        margin-top: 6px;
+        margin-top: 8px;
         margin-bottom: 0px;
       }
 
@@ -232,76 +232,82 @@
   </head>
 
   <body>
-    <nav>
-      <ul>
-        <li>
-          <sl-tooltip
-            content="Refresh page (Ctrl+r)"
-            placement="bottom-end"
-            distance="20"
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <sl-tooltip
+              content="Refresh page (Ctrl+r)"
+              placement="bottom-end"
+              distance="20"
+            >
+              <sl-icon name="arrow-repeat" id="menuRefreshPage"></sl-icon>
+            </sl-tooltip>
+          </li>
+
+          <li
+            id="audioErrorLogMenuItem"
+            style="display: none; color: var(--menu-color-inactive)"
           >
-            <sl-icon name="arrow-repeat" id="menuRefreshPage"></sl-icon>
-          </sl-tooltip>
-        </li>
+            <sl-tooltip
+              content="View audio errors"
+              placement="bottom-end"
+              distance="20"
+            >
+              <sl-icon name="bug" id="menuAudioErrorLog"></sl-icon>
+            </sl-tooltip>
+          </li>
 
-        <li
-          id="audioErrorLogMenuItem"
-          style="display: none; color: var(--menu-color-inactive)"
-        >
-          <sl-tooltip
-            content="View audio errors"
-            placement="bottom-end"
-            distance="20"
-          >
-            <sl-icon name="bug" id="menuAudioErrorLog"></sl-icon>
-          </sl-tooltip>
-        </li>
+          <li>
+            <sl-tooltip
+              content="Settings"
+              placement="bottom-start"
+              distance="20"
+            >
+              <sl-icon name="gear" id="menuSettings"></sl-icon>
+            </sl-tooltip>
+          </li>
 
-        <li>
-          <sl-tooltip content="Settings" placement="bottom-start" distance="20">
-            <sl-icon name="gear" id="menuSettings"></sl-icon>
-          </sl-tooltip>
-        </li>
+          <li>
+            <sl-tooltip content="About" placement="bottom-start" distance="20">
+              <sl-icon name="info-circle" id="menuAbout"></sl-icon>
+            </sl-tooltip>
+          </li>
 
-        <li>
-          <sl-tooltip content="About" placement="bottom-start" distance="20">
-            <sl-icon name="info-circle" id="menuAbout"></sl-icon>
-          </sl-tooltip>
-        </li>
+          <li class="spacer"></li>
 
-        <li class="spacer"></li>
+          <li class="dragarea"></li>
 
-        <li class="dragarea"></li>
+          <li class="spacer"></li>
 
-        <li class="spacer"></li>
+          <li>
+            <sl-tooltip
+              content="View source (HTML)"
+              placement="bottom-end"
+              distance="20"
+            >
+              <sl-icon name="code" id="menuViewSource"></sl-icon>
+            </sl-tooltip>
+          </li>
 
-        <li>
-          <sl-tooltip
-            content="View source (HTML)"
-            placement="bottom-end"
-            distance="20"
-          >
-            <sl-icon name="code" id="menuViewSource"></sl-icon>
-          </sl-tooltip>
-        </li>
+          <li>
+            <sl-tooltip
+              content="Chromium debug tools (F12)"
+              placement="bottom-start"
+              distance="20"
+            >
+              <sl-icon name="wrench" id="menuChromeDevTools"></sl-icon>
+            </sl-tooltip>
+          </li>
 
-        <li>
-          <sl-tooltip
-            content="Chromium debug tools (F12)"
-            placement="bottom-start"
-            distance="20"
-          >
-            <sl-icon name="wrench" id="menuChromeDevTools"></sl-icon>
-          </sl-tooltip>
-        </li>
-
-        <li>
-          <sl-tooltip content="Close" placement="bottom-start" distance="20">
-            <sl-icon name="x" id="menuCloseElectronApp"></sl-icon>
-          </sl-tooltip>
-        </li>
-      </ul>
-    </nav>
+          <li>
+            <sl-tooltip content="Close" placement="bottom-start" distance="20">
+              <sl-icon name="x" id="menuCloseElectronApp"></sl-icon>
+            </sl-tooltip>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
     <main id="radioSections"></main>
 
@@ -590,7 +596,6 @@
 
       streams.forEach((category) => {
         const categoryContainer = document.createElement("section");
-
         const categoryHeader = document.createElement("header");
         const categoryTitle = document.createElement("h1");
         categoryTitle.textContent = category.categoryTitle;

@@ -196,8 +196,10 @@
       --menu-colour-hover: #006699;
       --menu-color-inactive: #666;
 
-      --button-colour-stopped: var(--background-colour);
       --button-colour-playing: var(--background-colour);
+      --button-colour-stopped: var(--background-colour);
+      --button-colour-focused: #444;
+
       --button-border-colour-inactive: var(--text-colour);
       --button-border-colour-active: Coral;
     }
@@ -397,6 +399,11 @@
       background-color: var(--button-colour-stopped);
       color: var(--text-colour);
       cursor: auto;
+    }
+
+    button:focus {
+      outline: none;
+      background-color: var(--button-colour-focused);
     }
 
     /* CSS classes for the two "audio button" states */
