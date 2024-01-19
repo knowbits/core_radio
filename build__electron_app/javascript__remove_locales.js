@@ -6,10 +6,11 @@
  *
  * It is run by the "postinstall" script in "package.json".
  *
- * TODO: Running this script causes error when building on MacOS.
- *       NOTE: Works when building for Windows 64-bit (on Ubuntu WSL2).
+ * DISABLED this script:
+ *    Running this script causes error when building on MacOS.
+ *    NOTE: Works when building for Windows 64-bit (on Ubuntu WSL2).
  *
- *  => Removed the following from package.json:
+ *  => Removed the following from "package.json":
  *
  *   "extraResources": [
  *     "locales/en-US.pak"

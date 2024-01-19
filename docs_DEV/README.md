@@ -62,6 +62,7 @@
       * "Shoelace" web components: <https://shoelace.style>
       * "Shoelace" icons: <https://shoelace.style/icons>
       * Lit library: <https://lit.dev> for creating web components (custome HTML elements).
+      
     * Native desktop app development tools:
       * Electron: <https://www.electronjs.org>
         * Tool to create a desktop app from a web app (static HTML).

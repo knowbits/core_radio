@@ -809,7 +809,7 @@
           currentButton = null;
         }
       }
-    } // End of "handleButtonClick" function
+    }; // End of "handleButtonClick" function
 
     /* SECTION_TO_REMOVE_2__START */  // Used by our "web scraping" shell script
 
@@ -910,10 +910,10 @@
 
 
     // Get all buttons and categories into NodeLists
-    var buttons = document.querySelectorAll('button');
+    var buttons = document.querySelectorAll("button");
 
     // Each adio stations "category" is defined inside a "section" element
-    var categories = document.querySelectorAll('section');
+    var categories = document.querySelectorAll("section");
 
     // Convert NodeLists to Arrays
     var buttonsArray = Array.prototype.slice.call(buttons);
@@ -950,14 +950,14 @@
           break;
 
         case 38: // up arrow
-          if (categoriesArray.includes(currentElement.closest('section'))) {
-            currentIndex = categoriesArray.indexOf(currentElement.closest('section'));
+          if (categoriesArray.includes(currentElement.closest("section"))) {
+            currentIndex = categoriesArray.indexOf(currentElement.closest("section"));
 
             // Focus on the first button of the previous category,
             // or the last category if currently at the first category
             targetCategory = categoriesArray[(currentIndex - 1 + categoriesArray.length) % categoriesArray.length];
             playerContainer = targetCategory.querySelector("div[id^='playerContainer']");
-            firstButton = playerContainer.querySelector('button');
+            firstButton = playerContainer.querySelector("button");
             if (firstButton) {
               firstButton.focus();
             }
@@ -965,14 +965,14 @@
           break;
 
         case 40: // down arrow
-          if (categoriesArray.includes(currentElement.closest('section'))) {
-            currentIndex = categoriesArray.indexOf(currentElement.closest('section'));
+          if (categoriesArray.includes(currentElement.closest("section"))) {
+            currentIndex = categoriesArray.indexOf(currentElement.closest("section"));
 
             // Focus on the first button of the next category,
             // or the first category if currently at the last category
             targetCategory = categoriesArray[(currentIndex + 1) % categoriesArray.length];
             playerContainer = targetCategory.querySelector("div[id^='playerContainer']");
-            firstButton = playerContainer.querySelector('button');
+            firstButton = playerContainer.querySelector("button");
             if (firstButton) {
               firstButton.focus();
             }
@@ -982,7 +982,7 @@
     }
 
     // Add an "event listener" to catch all "keydown" events
-    window.addEventListener('keydown', changeFocus);
+    window.addEventListener("keydown", changeFocus);
 
   </script>
 

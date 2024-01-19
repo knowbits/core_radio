@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get the absolute path of the current folder (this script's folder)
 SCRIPT_FOLDER=$(

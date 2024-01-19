@@ -4,9 +4,20 @@ A static .html file for playing audio streams from selected radio stations.
 
 Easily edit the list of stations by modifying the "streams" JSON in the "script" section of the HTML page.
 
+## Build and run the "Electron app" from source
+
+* Clone the repository: `$ git clone https://github.com/knowbits/core_radio.git`
+* Go to the project folder: `$ cd core_radio`
+* Install `just` (a simple "make" alternative): [How to install `just``](./docs_DEV/how_to_install_just.md)
+* Install Electron and other `npm` dependencies: `$ just install`
+* Run the app from shell: `$ just start`
+
 ## Third party libraries
 
-* See [Alpine.js](./docs_DEV/Alpine.js.md)
+* Javascript framework: [Alpine.js](./docs_DEV/Alpine.js.md)
+* Web components: [Shoelace](https://shoelace.style)
+  * Uses ["Lit"](https://lit.dev) to creating web components (custom HTML elements).
+* Icons: [Shoelace icons](https://shoelace.style/icons)
 
 ## Developer resources
 

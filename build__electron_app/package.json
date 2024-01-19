@@ -38,6 +38,7 @@
     ]
   },
   "scripts": {
+    "test": "jest",
     "start": "electron .",
     "pack": "electron-builder --dir",
     "postinstall": "electron-builder install-app-deps",
