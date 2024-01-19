@@ -41,10 +41,10 @@ function createWebPageWindow() {
 
   webPageWindow = new BrowserWindow({
     webPreferences: {
-      // The "preload" property is used to run scripts before the "main window"s" scripts.
-      // The "preload.js" script runs with full "Node.js" access rights,
+      // The "preload" property is used to run scripts before the "main window's" scripts.
+      // The "javascript_preload.js" script runs with full "Node.js" access rights,
       // even if the "nodeIntegration" property is set to false.
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "javascript_preload.js"),
 
       // NOTE: "nodeIntegration" is disabled by default in "Electron 12".
       // "true": Enable to use Node.js modules in the HTML document.

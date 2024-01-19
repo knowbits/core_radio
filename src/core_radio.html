@@ -882,7 +882,7 @@
       // Add an event handler for the "Open Chrome Dev Tools" menu item:
       //
       // NOTE: The "renderer process" (this web page) will call the
-      //       "window.openDevTools" function defined in "preload.js"
+      //       "window.openDevTools" function defined in "javascript_preload.js"
       //
       document.getElementById("menuChromeDevTools").addEventListener("click", () => {
         window.api.openDevTools();
@@ -891,7 +891,7 @@
       // Add an event handler for the "Close" menu item: Only enabled in the Electron app.
       //
       // NOTE: The "renderer process" (this web page) will call
-      //       the "window.closeApp" function defined in "preload.js"
+      //       the "window.closeApp" function defined in "javascript_preload.js"
       //
       document.getElementById("menuCloseElectronApp").addEventListener("click", () => {
         window.api.closeApp();
