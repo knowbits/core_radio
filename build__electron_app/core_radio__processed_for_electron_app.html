@@ -317,7 +317,7 @@
     const streams = [
       {
         
-        category: "NO",
+        categoryId: "NO",
         categoryTitle: "NRK radio",
         streams: [
           { title: "P1", url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h", type: "audio/aac" },
@@ -334,7 +334,7 @@
         ]
       },
       {
-        category: "SE",
+        categoryId: "SE",
         categoryTitle: "SR radio",
         streams: [
           { title: "P1", url: "https://sverigesradio.se/topsy/direkt/132-hi-aac", type: "audio/aac" },
@@ -345,7 +345,7 @@
         ]
       },
       {
-        category: "DK",
+        categoryId: "DK",
         categoryTitle: "DK radio",
         streams: [
           { title: "P1", url: "http://live-icy.dr.dk/A/A03H.mp3", type: "audio/mpeg" },
@@ -528,7 +528,7 @@
 
       
       const playerContainer = document.createElement("div");
-      playerContainer.id = "playerContainer" + category.category.toUpperCase();
+      playerContainer.id = "playerContainer" + category.categoryId.toUpperCase();
       categoryContainer.appendChild(playerContainer);
 
       category.streams.forEach(stream => {

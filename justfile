@@ -29,7 +29,7 @@ install:
 
 # Validate, minify, and prettify HTML
 validate:
-    bash ./{{ELECTRON_BUILD_DIR}}/script_prepare_static_html_for_electron_app.sh
+    bash {{ELECTRON_BUILD_DIR}}/script_prepare_static_html_for_electron_app.sh
 
 # Start the Electron app locally
 start: validate

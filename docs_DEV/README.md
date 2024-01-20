@@ -85,8 +85,16 @@
 
 ## TO DO: IMPROVEMENTS, OPTIMIZATIONS
 
-* WEB COMPONENT: Create a "radio-player" web component: Encapsulate the "audio" and "button" elements in a web component.
-  * Will improve HTML: Extends HTML with our custom elements, Easier to understand & Maintain, Encapsulation by using a component, Reusability, Reduced complexity etc.
+* Use "Tauri" instead of Electron to build a native app. 
+  * See <./docs_DEV/Tauri_alternative_to_Electron_for_crating_native_apps.md>
+
+* **"PWA"**: Also offer "Core Radio" as a "PWA".
+   * Web app ffline web appthat is stored locally on the device/computer. 
+
+* Create a "radio-player" web component
+  * A "custom HTML element": that encapsulate the "audio" and "button" elements in a web component.
+  * BENEFITS: Improves readability of the HTML. Encapsulates cmplex logic inside a component. Reuse. Reduced complexity etc.
+  * NOTE: The building blocks of HTML ("elements") can now be extended by creating "custom elements".
 
   * See: <https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements>
   * Consider using the "Lit" library: since it optimises DOM rendering and is already used by "Shoelace" web component library.
