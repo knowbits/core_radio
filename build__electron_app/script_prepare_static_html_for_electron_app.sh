@@ -1,12 +1,53 @@
 #!/usr/bin/env bash
 
+# ========================================================
+# This script prepares the static HTML page for use in the Electron app.
+# ========================================================
+
+# ========================================================
+# Define some common functions used in this script
+# ========================================================
+
+# Check if a linux utility is installed
+# Use: check_utility "curl"
+#
+check_utility() {
+  if ! command -v $1 &>/dev/null; then
+    echo "$1 could not be found, please install it."
+    exit
+  fi
+}
+
+# ========================================================
+# The main script starts here
+# ========================================================
+
 # Get the absolute path of the current folder (this script's folder)
 SCRIPT_FOLDER=$(
   cd "$(dirname "$0")" || exit
   pwd -P
 )
-# To be able to run locally installed node.js modules frmo shell script:
+
+# Location of locally installed "node.js modules" that are used in this shell script:
 NODE_BIN_FOLDER="$SCRIPT_FOLDER/node_modules/.bin"
+
+# Define path to some locally installed node.js/npm modules: eslint, prettier
+ESLINT__NPM_PACKAGE="$NODE_BIN_FOLDER/eslint"
+PRETTIER__NPM_PACKAGE="$NODE_BIN_FOLDER/prettier"
+
+# ========================================================
+# Verify that these linux/node.js utilities are installed:
+#  1. Linux utilities: realpath, awk, curl, node
+#  2. Node.js modules: eslint, prettier
+
+check_utility "realpath"
+check_utility "awk"
+check_utility "curl"
+check_utility "node"
+check_utility "$ESLINT__NPM_PACKAGE"
+check_utility "$PRETTIER__NPM_PACKAGE"
+
+# ========================================================
 
 # Folder of static HTML page as "absolute path"
 HTML_SOURCE_FOLDER="$(realpath "$SCRIPT_FOLDER/../src")"
@@ -134,7 +175,7 @@ awk '
 #       This will install Prettier globally, so you can use it from any directory on your system.
 #
 STEP_2_4_HTML_PRETTIFIED="$TMP_FOLDER/step_2_04_html_prettified.html"
-"$NODE_BIN_FOLDER/prettier" "$STEP_2_3_HTML_NO_HTML_COMMENT_BLOCKS" >"$STEP_2_4_HTML_PRETTIFIED"
+"$PRETTIER__NPM_PACKAGE" "$STEP_2_3_HTML_NO_HTML_COMMENT_BLOCKS" >"$STEP_2_4_HTML_PRETTIFIED"
 
 # ========================================================
 # Validate the HTML with "W3C Markup Validation Service API" with "curl"
@@ -257,7 +298,7 @@ STEP_2_8b_JAVASCRIPT__INDENTATION_FIXED="$TMP_FOLDER/step_2_08b_javascript_extra
 
 STEP_2_9_JS_VALIDATION_RESULT="$TMP_FOLDER/step_2_09_javascript_w3c_validation_result.txt"
 
-if ! node "$NODE_BIN_FOLDER/eslint" "$STEP_2_8b_JAVASCRIPT__INDENTATION_FIXED" >"$STEP_2_9_JS_VALIDATION_RESULT"; then
+if ! node "$ESLINT__NPM_PACKAGE" "$STEP_2_8b_JAVASCRIPT__INDENTATION_FIXED" >"$STEP_2_9_JS_VALIDATION_RESULT"; then
   echo "============================================"
   echo "Javascript validation failed!"
   echo "For details: '$STEP_2_9_JS_VALIDATION_RESULT'"
