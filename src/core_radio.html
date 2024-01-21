@@ -579,8 +579,8 @@
      */
     const streams = [
       {
-        // NOTE: NRK uses "Icecast Streaming Media Server"
-        categoryId: "NO",
+        // NRK uses "Icecast Streaming Media Server" for it's radio streams.
+
         categoryTitle: "NRK radio",
         streams: [
           { title: "P1", url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h", type: "audio/aac" },
@@ -597,7 +597,6 @@
         ]
       },
       {
-        categoryId: "SE",
         categoryTitle: "SR radio",
         streams: [
           { title: "P1", url: "https://sverigesradio.se/topsy/direkt/132-hi-aac", type: "audio/aac" },
@@ -608,7 +607,6 @@
         ]
       },
       {
-        categoryId: "DK",
         categoryTitle: "DK radio",
         streams: [
           { title: "P1", url: "http://live-icy.dr.dk/A/A03H.mp3", type: "audio/mpeg" },
@@ -691,6 +689,26 @@
       }); // End of "DOMContentLoaded" event listener
     };  // End of "displayErrors" function
 
+
+    /*
+     * Generate a valid and unique HTML "id" attribute from the "category title".
+     *
+     * An HTML "id" starts with a letter, followed by letters, digits,
+     * hyphens, underscores, colons, and periods.
+     *
+     * All other characters are invalid and will be removed, except for spaces.
+     * Spaces (" ") are replaced with hyphens ("-").
+     */
+    function generateCategoryId(categoryTitle) {
+      // Replace all spaces with a hyphen ("-")
+      var id = categoryTitle.replace(/\s+/g, "-");
+      // Remove characters not allowed in HTML "id" attributes
+      id = id.replace(/[^a-zA-Z0-9-_.:]/g, "");
+      return id.toLowerCase();
+    }
+
+    // ==================================================
+    // Define the event handler for clicking "audio stream" buttons:
 
     let currentAudio = null;
     let currentButton = null;
@@ -827,7 +845,9 @@
 
       // Now add the audio players and the buttons for each stream:
       const playerContainer = document.createElement("div");
-      playerContainer.id = "playerContainer" + category.categoryId.toUpperCase();
+      const categoryId_generated = generateCategoryId(category.categoryTitle);
+
+      playerContainer.id = "playerContainer_" + categoryId_generated;
       categoryContainer.appendChild(playerContainer);
 
       category.streams.forEach(stream => {

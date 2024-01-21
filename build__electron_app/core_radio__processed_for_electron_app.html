@@ -317,7 +317,7 @@
     const streams = [
       {
         
-        categoryId: "NO",
+
         categoryTitle: "NRK radio",
         streams: [
           { title: "P1", url: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_aac_h", type: "audio/aac" },
@@ -334,7 +334,6 @@
         ]
       },
       {
-        categoryId: "SE",
         categoryTitle: "SR radio",
         streams: [
           { title: "P1", url: "https://sverigesradio.se/topsy/direkt/132-hi-aac", type: "audio/aac" },
@@ -345,7 +344,6 @@
         ]
       },
       {
-        categoryId: "DK",
         categoryTitle: "DK radio",
         streams: [
           { title: "P1", url: "http://live-icy.dr.dk/A/A03H.mp3", type: "audio/mpeg" },
@@ -421,6 +419,17 @@
       }); 
     };  
 
+
+    function generateCategoryId(categoryTitle) {
+      
+      var id = categoryTitle.replace(/\s+/g, "-");
+      
+      id = id.replace(/[^a-zA-Z0-9-_.:]/g, "");
+      return id.toLowerCase();
+    }
+
+    
+    
 
     let currentAudio = null;
     let currentButton = null;
@@ -528,7 +537,9 @@
 
       
       const playerContainer = document.createElement("div");
-      playerContainer.id = "playerContainer" + category.categoryId.toUpperCase();
+      const categoryId_generated = generateCategoryId(category.categoryTitle);
+
+      playerContainer.id = "playerContainer_" + categoryId_generated;
       categoryContainer.appendChild(playerContainer);
 
       category.streams.forEach(stream => {
