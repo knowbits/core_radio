@@ -21,7 +21,7 @@
 #    Check against latest release: https://github.com/casey/just
 # ==============================================================================
 
-ELECTRON_BUILD_DIR := "./build__electron_app"
+ELECTRON_BUILD_DIR := "./"
 
 # Install dependencies
 install:

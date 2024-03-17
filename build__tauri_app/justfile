@@ -1,0 +1,56 @@
+# justfile
+
+# ==============================================================================
+# How to use "just" :
+# Run these commands with "just <command>".
+# For example: "just start" => To start the Tauri app locally.
+# ==============================================================================
+
+# ==============================================================================
+# INSTALL:
+#
+# 1. Use "cargo" to install "just", since it is a Rust app
+#   $ sudo apt update; sudo apt install rustc
+#   $ cargo install just
+#
+# 2. Add to ~/.bashrc or ~/.zshrc:
+#   export PATH="$HOME/.cargo/bin:$PATH"
+#
+# 3. Verify version:
+#    $ just --version""
+#    Check against latest release: https://github.com/casey/just
+# ==============================================================================
+
+TAURI_BUILD_DIR := "./"
+
+# Install dependencies
+install:
+    cd {{TAURI_BUILD_DIR}} && npm install
+
+# Validate, minify, and prettify HTML
+validate:
+    bash {{TAURI_BUILD_DIR}}/script_prepare_static_html_for_tauri_app.sh
+
+# Start the Tauri app locally
+start: validate
+    cd {{TAURI_BUILD_DIR}} && npm run tauri dev
+
+# Build the Tauri app for different platforms and architectures
+build-linux: validate
+    cd {{TAURI_BUILD_DIR}} && npm run tauri build --target linux
+
+build-windows: validate
+    cd {{TAURI_BUILD_DIR}} && npm run tauri build --target win32
+
+build-mac: validate
+    cd {{TAURI_BUILD_DIR}} && npm run tauri build --target macos
+
+# Clean the project
+clean:
+    cd {{TAURI_BUILD_DIR}} && rm -f core_radio__processed_for_tauri_app.html
+    cd {{TAURI_BUILD_DIR}} && rm -rf tmp_html_processing
+    cd {{TAURI_BUILD_DIR}} && rm -rf dist
+
+# Test the project
+test: install
+    cd {{TAURI_BUILD_DIR}} && npm test

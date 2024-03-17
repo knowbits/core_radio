@@ -15,8 +15,10 @@ Easily edit the list of stations by modifying the "streams" JSON in the "script"
 ## Third party libraries
 
 * Javascript framework: [Alpine.js](./docs_DEV/Alpine.js.md)
+
 * Web components: [Shoelace](https://shoelace.style)
   * Uses ["Lit"](https://lit.dev) to creating web components (custom HTML elements).
+
 * Icons: [Shoelace icons](https://shoelace.style/icons)
 
 ## Developer resources

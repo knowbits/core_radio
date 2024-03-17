@@ -9,20 +9,28 @@
   * E.g.: Section on how to set up a "Development environment" for Electron, yarn, etc:
     * <https://github.com/Zettlr/Zettlr?tab=readme-ov-file#contributing-code>
 
-## The `hub` utility for working with Github repositories
+----
+## DEV TOOL: TERMINAL: Use `gh` tool with "Github Copilot"
 
-* Install: `$ sudo apt-get install hub`
-* List of useful commands: `$ tldr hub`
+* `gh`: Commands: https://cli.github.com/manual/gh
+   * NOTE: OUTDATED? `hub`: Might be obsolete now..use `gh` instead. 
+   * INSTALL: `$ gh extension install github/gh-copilot`
 
-* A wrapper for `Git` that adds commands for working with GitHub-based projects.
-* If set up as instructed by hub alias, one can use `git` to run `hub` commands.
+* Authenticate `gh` with GitHub account: 
+   * `gh auth login`
 
-* More information: <https://hub.github.com>
+* "GitHub Copilot" is available as an "extension" in `gh`:
 
-* ARTICLE by `Alpine.js` creator Caleb Porzio:
-  * <https://calebporzio.com/give-your-git-command-superpowers>
+   * INSTALL `$ gh extension install github/gh-copilot`
+   * UPGRADE: `$ gh extension upgrade gh-copilot`
 
-## Validate HTML, CSS
+   * USAGE: `$ gh copilot config "The question"  # OR: explain, suggest.`
+
+   * Example: `$ gh copilot explain "How can i create a shell script that will compress, minify and bundle the tailwind classes that i use in my CSS and HTML?"`
+
+
+----
+## WEB DEV: Usefool tools: Validate HTML, CSS
 
 * _"W3C: Markup Validation Service"_ (HTML only)
   * <https://validator.w3.org/#validate_by_input>
@@ -62,7 +70,7 @@
       * "Shoelace" web components: <https://shoelace.style>
       * "Shoelace" icons: <https://shoelace.style/icons>
       * Lit library: <https://lit.dev> for creating web components (custome HTML elements).
-      
+
     * Native desktop app development tools:
       * Electron: <https://www.electronjs.org>
         * Tool to create a desktop app from a web app (static HTML).
@@ -85,11 +93,97 @@
 
 ## TO DO: IMPROVEMENTS, OPTIMIZATIONS
 
+* Use "Material Design Web Components"
+  * https://m3.material.io
+  * https://material-web.dev/about/intro
+  * https://github.com/material-components/material-web?tab=readme-ov-file
+  * Is a library that brings the Material Design system to web components using Lit. 
+  * It offers a collection of UI components inspired by Material Design guidelines. 
+  * These components can be customized to align with your design system's visual style.
+
+  * Material Web Components is developed and maintained by the Material Components team at Google. The team is responsible for creating and maintaining the Material Design system and its various implementations, including Material Web Components.
+
+  * The Material Components team at Google is composed of designers and developers who work together to ensure that the components adhere to the latest Material Design guidelines, are well-documented, and provide a high-quality user experience. They actively maintain and update the repository, addressing bug reports, adding new features, and providing support to the community.
+
+  * By leveraging their expertise and collaboration, the Material Components team ensures that Material Web Components remain up-to-date, reliable, and aligned with the evolving standards of Material Design.
+
+  * The repository for "Material Web Components" is located at https://github.com/material-components/material-components-web-components.
+
+  * Material Web Components is an implementation of the Material Design system using web components. The repository contains the source code, documentation, and examples for the library. It provides a collection of customizable and accessible web components that follow the Material Design guidelines. These components can be used to create modern and visually consistent user interfaces.
+
+  * Feel free to explore the repository to learn more about Material Web Components, contribute to the project, or integrate the components into your own web applications.
+
+Other web component frameworks: 
+
+In addition to ING's Lion and the libraries mentioned earlier, there are several other web component libraries created with Lit that you can explore for leveraging existing W3C web components. Here are a few more examples:
+
+Lit-UI: Lit-UI is a collection of UI components built with Lit. It provides a set of customizable and reusable components for building web applications. The components in Lit-UI follow the web component standards and can be easily customized to match your design system.
+
+Fast Lit: Fast Lit is a library that combines the power of Lit and the design principles of Microsoft's Fluent UI. It offers a set of composable and customizable components that follow the web component standards. These components can be tailored to fit your design system's requirements.
+
+Coral Spectrum: Coral Spectrum is an open-source library developed by Adobe that provides a set of web components built with Lit. These components follow the web component standards and can be customized to match your design system. Coral Spectrum offers a range of UI components such as buttons, forms, dialogs, and more.
+
+Vaadin Components: Vaadin Components is a collection of customizable web components created by Vaadin, a company specializing in web development tools and frameworks. These components are built with Lit and follow the Material Design guidelines. They cover a wide range of UI elements, including buttons, grids, forms, and more, making them a versatile choice for building modern web applications.
+
+
+* OR: Use "Lion" web components: 
+  * Based on "Lit".
+  * Guides: <https://lion-web.netlify.app/guides>
+  * GitHub: <https://github.com/ing-bank/lion>
+
+  * ING's Lion web components are generally well-regarded. 
+  * They are a set of highly performant, accessible, and flexible Web Components1. They provide an unopinionated, white-label layer that can be extended to your own layer of components123.
+  * Here are some key features of Lion web components:
+
+    1. High Performance: They are focused on great performance in all relevant browsers with a minimal number of dependencies1.
+    2. Accessibility: They aim at compliance with the WCAG 2.2 AA standard to create components that are accessible for everybody1.
+    3. Flexibility: They provide solutions through Web Components and JavaScript classes which can be used, adopted, and extended to fit all needs1.
+    4. Modern Code: Lion is distributed as pure es modules1.
+    5. Developers may extend Lion into their customized component library, either adding ad-hoc functionality or styling2. One user mentioned that they were pleased to update their implementation to use Lion3.
+
+  * ARTICLE (2021): [Create a design system with Lion web components](https://medium.com/ing-blog/create-a-design-system-with-lion-web-components-b9ff86a17a84)
+  * Q&A with Thomas Allmer (ING developer): 
+    * <https://www.infoq.com/articles/ing-open-sources-lion-web-component>
+
+* Use "Lightning CSS": 
+   * A Rust tool for: CSS parsing, transformation, bundling, and minifier.
+
+* Introduce CSS framework? 
+   * Candidates: "Open Props" (Google), Tailwind CSS, Bulma CSS (flexbox)
+   * Tailwind: Has "CSS reset" ?
+   * USER: "Tailwind Typography" (plugin) 
+      * I use it after Tailwind "*resets all the css*": 
+      * => Get consistent typography across the entire app and different browsers.
+
+* Add a "colour scheme": 
+   * READ: Stephanie Eckles: Colour scheme in CSS etc: 
+      * <https://moderncss.dev/12-modern-css-one-line-upgrades>
+
+   * READ: "Color for the Color-challenged" (if you suck at picking colors):
+      * <https://ferdychristant.com/color-for-the-color-challenged-884c7aa04a56>
+
+   * Use "Shoelace" built in "Theme" feature: Light/Dark/System
+      * Shoelace also provides a set of themes that are compatible with its components and can be easily customized with CSS variables1. These themes include a light theme, a dark theme, and a system theme that adapts to the user’s OS preference2. You can use any of these themes by adding a link to the corresponding CSS file in your HTML head3. 
+      * For example, to use the "light" theme, you can add this: `<link rel="stylesheet" href="https://www.npmjs.com/package/@shoelace-style/shoelace" />`
+      * Or, create your own theme by following the instructions on the Shoelace website: 
+         * https://shoelace.style/getting-started/themes#creating-themes
+
+* Create an "Audio Streams Editor" - as a "Web Component"
+   * Consider using: Lit, "Nano Stores" (state store), Open Props, Shoelace, Alpine.js.
+
 * Use "Tauri" instead of Electron to build a native app. 
+
   * See <./docs_DEV/Tauri_alternative_to_Electron_for_crating_native_apps.md>
 
+  * READ: "Making Rust binaries smaller by default"
+     * <https://kobzol.github.io/rust/cargo/2024/01/23/making-rust-binaries-smaller-by-default.html>
+     * Cargo by default now uses `strip = 'debuginfo'` for the `release` profile unless debuginfo is explicitly requested for some dependency. This new default will be used for any profile that does not enable debuginfo anywhere in its dependency chain. 
+     * => This article looks at how a developer noticed that Rust binaries were unnecessarily large and then developed and submitted a fix for it.
+
 * **"PWA"**: Also offer "Core Radio" as a "PWA".
-   * Web app ffline web appthat is stored locally on the device/computer. 
+   * As a "web app" that is stored locally on the device/computer. That works offline too.
+   * See [PowerPWA: Boilerplate for PWAs](https://github.com/mvneerven/pure-pwa)
+      *  An Ultra-Lean, Web Components enhanced, no-build, no-dependencies boilerplate for PWAs, using only the Modern Web
 
 * Create a "radio-player" web component
   * A "custom HTML element": that encapsulate the "audio" and "button" elements in a web component.

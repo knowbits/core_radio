@@ -11,6 +11,9 @@
 # Exclude VS CODE config folder
 .vscode/
 
+# Exclude the "experiments/" folders
+experiments/
+
 # Exclude any "tmp/" folders
 **/tmp*/
 
