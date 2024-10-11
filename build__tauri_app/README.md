@@ -4,50 +4,54 @@
 
 ----
 
-## 
+##
 
 ----
 
-## MISC: GO THROUGH THIS!
+## MISC: TAURI RESOURCES
 
-Open DevTools in a production build:
-https://tauri.app/v1/guides/debugging/application
-
-Custom title bar, max, min, close buttons etc
-https://tauri.app/v1/guides/features/window-customization
+Window customization: Custom title bar, max, min, close buttons etc
+  <https://tauri.app/v1/guides/features/window-customization>
+  Creating a Custom Titlebar
 
 Add a "Custom native menu":
-see the Rust code: at 1m45s
-https://youtu.be/-X8evddpu7M?si=90wUAPUarZtW2R67
-
-Creating a Custom Titlebar
-https://tauri.app/v1/guides/features/window-customization/
-Icons
+  see the Rust code: at 1m45s
+  <https://youtu.be/-X8evddpu7M?si=90wUAPUarZtW2R67>
 
 Icons
-Tauri ships with a default iconset based on its logo. This is NOT what you want when you ship your application.
-To remedy this common situation, Tauri provides the icon command that will take an input file ("./app-icon.png" by default) and create all the icons needed for the various platforms.
-https://tauri.app/v1/guides/features/icons
+  Tauri ships with a default iconset based on its logo.
+  This is NOT what you want when you ship your application.
+  To remedy this common situation, Tauri provides the icon command that will take an input file ("./app-icon.png" by default) and create all the icons needed for the various platforms.
+  <https://tauri.app/v1/guides/features/icons>
 
 Javascript API:
-@tauri-apps/api
-https://tauri.app/v1/api/js
+  @tauri-apps/api
+  <https://tauri.app/v1/api/js>
 
 Experimental: Build Windows apps on Linux and macOS
-https://tauri.app/v1/guides/building/cross-platform/#experimental-build-windows-apps-on-linux-and-macos
+  <https://tauri.app/v1/guides/building/cross-platform/#experimental-build-windows-apps-on-linux-and-macos>
+  => Build a Windows binary using the "x86_64-pc-windows-msvc" target on WSL2 Linux.
+
+Open "DevTools" in a production build:
+  <https://tauri.app/v1/guides/debugging/application>
 
 Opening Devtools Programmatically
-https://tauri.app/v1/guides/debugging/application/
-https://tauri.app/v1/guides/debugging/application/#opening-devtools-programmatically
+  <https://tauri.app/v1/guides/debugging/application/>
+  <https://tauri.app/v1/guides/debugging/application/#opening-devtools-programmatically>
 
+DEBUGGING: Using the "Inspector" in Production
+  To create a "debug" build, run the tauri build --debug command.
+  <https://tauri.app/v1/guides/debugging/application/#using-the-inspector-in-production>
 
-Using the Inspector in Production
-To create a debug build, run the tauri build --debug command.
-https://tauri.app/v1/guides/debugging/application/#using-the-inspector-in-production
+The @tauri-apps/api JavaScript library.
+  See <https://tauri.app/v1/guides/getting-started/setup/integrate>
+  It provides access to core functionality such as windows, the filesystem, and more through convenient JavaScript abstractions.
 
+  Enable withGlobalTauri in your tauri.conf.json file..
 
 ----
-## TODO: HOW TO: "FRAMELESS" Tauri app (from ChatGPT):
+
+## TODO: HOW TO: "FRAMELESS" Tauri app (from ChatGPT)
 
 To make a Tauri app frameless on Windows, you need to modify the Tauri configuration file (`tauri.conf.json`) and add some custom CSS styles.
 

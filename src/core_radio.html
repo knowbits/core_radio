@@ -14,23 +14,23 @@
   <meta charset="UTF-8">
 
   <!--
-      Set the Content Security Policy (CSP) directly in your HTML file using a <meta> tag.
-      This way, the CSP will be applied when the HTML file is loaded by the Electron app.
+    Set the Content Security Policy (CSP) directly in your HTML file using a <meta> tag.
+    This way, the CSP will be applied when the HTML file is loaded by the Electron app.
 
-      The CSP is a security feature that helps prevent cross-site scripting (XSS) attacks.
+    The CSP is a security feature that helps prevent cross-site scripting (XSS) attacks.
 
-      See: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+    See: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
 
-      Other "directives":
+    Other "directives":
 
-        https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
-        default-src 'self' : allows loading resources from the same origin.
-        script-src 'self' : allows inline and eval() JavaScript, but not JavaScript from other sources.
-          NOTE: You must explicitly allow other sources of JavaScript if you want to load them.
-        style-src 'self' : allows inline styles and style sheets loaded from the same origin.
-        img-src 'self' : allows loading images and favicons from the same origin.
-        font-src 'self' : allows loading fonts from the same origin.
+      default-src 'self' : allows loading resources from the same origin.
+      script-src 'self' : allows inline and eval() JavaScript, but not JavaScript from other sources.
+        NOTE: You must explicitly allow other sources of JavaScript if you want to load them.
+      style-src 'self' : allows inline styles and style sheets loaded from the same origin.
+      img-src 'self' : allows loading images and favicons from the same origin.
+      font-src 'self' : allows loading fonts from the same origin.
   -->
   <!--
     TODO: TOO RESTRICTIVE => NEEDS FIX: No "innerHTML" is shown in Electron app:

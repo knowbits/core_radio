@@ -1,5 +1,65 @@
 # Developer resources
 
+----
+## TODO: Access "Open AI" from the new Gitlab repos + use the "NextWeb" client
+
+* ARTICLE: Using gpt-4 for free with Github Copilot
+  * <https://dev.to/hoaitx/using-gpt-4-for-free-with-github-copilot-1a3p>
+
+* Gitlab repos of `copilot-gpt4-service` 
+
+  * <https://gitlab.com/fatelulu/copilot-gpt4-service
+copilot-gpt4-service>
+
+  * <https://gitlab.com/aaamoon/copilot-gpt4-service> 
+
+* Client app for AI chat: "NextWeb"
+  * REPO: "ChatGPT-Next-Web"
+  * A cross-platform ChatGPT/Gemini client app UI (Web / PWA / Linux / Win / MacOS).
+  * <https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web?tab=readme-ov-file>
+  * Use it as a web-based app: <https://app.nextchat.dev>
+  * Can be run locally..
+
+----
+## TODO: Configure the "history" shell utility
+
+* See instructions in the VQ file: 
+  * `LINUX - shell - history - How to use it effectively from terminal.txt`
+
+----
+`ag`: Quickly search the source code inside local files 
+
+* "Silver Searcher" = `ag`
+* `$ ag logging`  => Will list all files containing the string "logging"
+
+* __Options:__
+  * Example: `--json`: Search only JSON files.
+    * NOTE: `ag --list-file-types`: Lists all supported file types.
+  * `--files-with-matches`: Only list file names, not matched file content.
+
+Alternatives
+  * `jq`: Search inside JSON files.
+  * `yq`: Search inside YAML files.
+
+RELATED: `fzf` 
+  * Search part of file names in subfolders
+
+----
+## Shell related 
+* Web app: Explain a shell command: 
+  * <https://explainshell.com>
+
+* Use `gh` - the GitHub command utility 
+  * `gh explain "how to search inside files"`
+
+----
+## Java in VS Code: 
+
+* EXTENSION: "Oracle Java Platform Extension for Visual Studio Code"
+   * <https://marketplace.visualstudio.com/items?itemName=Oracle.oracle-java>
+   * Functionality, settings, keyboard shortcuts, VS Code commands, etc.
+
+----
 ## INSPIRATIONAL: Other Electron apps
 
 * LIST: [Electron apps](https://www.electronjs.org/apps)
@@ -45,6 +105,16 @@
 
 ## TO DO: FEATURE REQUESTS
 
+* HTML: Use the new "dialog" tag for dialogs, popus etc.
+  * https://medium.com/coding-beauty/html-dialog-tag-f3edf6d02413
+  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
+  * https://www.w3schools.com/tags/tag_dialog.asp
+
+* Use the "`dialog`" HTML element for these pop-up dialogs:
+
+* HTML: "Useful HTML tags that are underutilised"
+  * <https://www.codingbeautydev.com/blog/rare-html-tags-2>
+
 * MENU: Add "Help" button
   * Show a popup/modal with Help related info for the app.
   * Keyboard navigation
@@ -57,7 +127,7 @@
   * Customise the list of radio stations: by editing the "streams" array in the `./src/core_radio.html` file (save on Desktop or other local folder).
     * Link to the HTML in Github: <https://github.com/knowbits/core_radio/blob/main/src/core_radio.html>
 
-* About button:
+* MENU: "About" button:
   * Show a popup/modal with information about the app.
     * Version number.
     * Support.
@@ -66,7 +136,7 @@
     * Show a link to the GitHub repository.
     * Show a link to the "About" page on the GitHub repository.
 
-    * Web devevelopment libraries:
+    * Web development libraries:
       * "Shoelace" web components: <https://shoelace.style>
       * "Shoelace" icons: <https://shoelace.style/icons>
       * Lit library: <https://lit.dev> for creating web components (custome HTML elements).
@@ -91,7 +161,154 @@
 * FEATURE: Add "Auto-update" for the native Electron apps:
   * <https://www.electronjs.org/docs/latest/tutorial/updates>
 
+
 ## TO DO: IMPROVEMENTS, OPTIMIZATIONS
+
+* ARTICLE: "A (more) Modern CSS Reset"
+  * <https://piccalil.li/blog/a-more-modern-css-reset>
+  * Shows all the CSS code for the "CSS reset". 
+
+* CSS reset: Does "Simplecss" framework have a built-in "CSS reset"?
+  * <https://simplecss.org>
+  * <https://github.com/kevquirk/simple.css>
+
+* CSS reset: "Simple-CSS-Reset" (Repo)
+  * <https://github.com/msi-end/Simple-CSS-Reset>
+  * "This repository contains a lightweight and customisable CSS reset made for building a strong basis for your web projects. It eliminates browser discrepancies in element styling, providing a blank canvas for you to apply your own design preferences."
+
+* Use "CSS nesting"
+  * Native CSS nesting
+    * <https://www.codingbeautydev.com/blog/native-css-nesting>
+
+  * ARTICLE: "Native CSS nesting: What you need to know" 
+    <https://blog.logrocket.com/native-css-nesting>
+
+* Shoelace: Use "web components" from Shoelace
+
+  * <https://shoelace.style>
+  * Shoelace was created by Cory LaViska.
+  * FEATURES: Works with CDNs. Customizable with CSS. Includes "dark theme". Built-in localization. Open source. 
+
+  * We finally have a way to create our own HTML elements and use them in any framework we want:
+    * From the HTML standard: "4.13 Custom elements"
+    * <https://html.spec.whatwg.org/multipage/custom-elements.html>
+    * By the "WHATWG community": Maintaining and evolving HTML since 2004
+ 
+  * ARTICLE: "A Web Components Primer"
+    * https://www.abeautifulsite.net/posts/a-web-components-primer
+
+  * ARTICLE: "A Web Component Story"
+    * https://www.abeautifulsite.net
+
+  * Shoelace: Components are built with LitElement, a custom elements base class that provides an intuitive API and reactive data binding.
+    * Components are built with Lit: <https://lit.dev>
+    * Color primitives are inspired by Tailwind.
+    * Icons are courtesy of Bootstrap Icons: <https://icons.getbootstrap.com>
+    * Floating UI: Positioning of dropdowns, tooltips, et al is handled by "Floating UI"
+      * <https://floating-ui.com>
+      * A JavaScript library to position floating elements
+      * https://github.com/floating-ui/floating-ui
+
+  * BENEFITS:
+    * Separates how your components look (UI) from how they work (UX), allowing easy theming now and (more importantly) fast retheming later.
+    * Sandboxed styling means you can drop any web component into an existing site, and it won't break your site. 
+    * Highly readable markup. You can immediately understand what you're looking at.
+    * Easily create a translation layer to any JS framework we want (Vue, React, Angular, etc.). Write once, and use it everywhere.
+    * They're web standards. Unlike the latest fad, web components will be around for a long time.
+
+  * Github: Library of web components
+    * https://github.com/shoelace-style/shoelace
+
+  * HOW TO: Include Shoelace in HTML page: 
+
+    ```css
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"></script>
+    ```
+
+    * Uses Shoelace's experimental autoloader, which registers components on the fly as you use them.
+
+
+* Create "web component" using DSD (Declarative Shadow DOM) 
+  * NOTE: Some devs advice AGAINS usin the "Shadow DOM" for Web Components..
+
+  * E.g. for the "Radio station" control.
+  * Use standard HTML "web components"? 
+    * With DSD? Lit? Stencil?
+
+  * Can the web components be defined in separate files, and then included in the index.html?
+  * Should be: "#NoBuild Javascript".
+
+  * HTML standard: "4.13 Custom elements"
+    * <https://html.spec.whatwg.org/multipage/custom-elements.html>
+    * WHATWG community: Maintaining and evolving HTML since 2004
+
+  * ARTICLE: Authoring Web Components in a Spring Boot + Thymeleaf project
+    * By Wim Deblauwe. Date: 2024-10.
+    * <https://www.wimdeblauwe.com/blog/2024/10/03/authoring-web-components-in-a-spring-boot-thymeleaf-project>
+
+  * ARTICLE: Server-first Web Components with DSD (Declarative Shadow DOM), HTMX, and Javascript Islands
+    * By Rob Eisenberg (course on "web components")
+    * <https://tympanus.net/codrops/2024/08/20/server-first-web-components-with-dsd-htmx-and-islands>
+    * A simple yet powerful approach to Web Component server-rendering, declarative behaviors, and JavaScript islands.
+
+    > A simple yet powerful approach to Web Component server-rendering, declarative behaviors, and JavaScript islands.
+    > Streaming Declarative Shadow DOM (DSD) finally reached universal support when Firefox shipped its implementation in February 2024. 
+    > It is this strategic addition to the HTML standard that unlocks a number of new, powerful server possibilities.
+    >
+    > Enter Declarative Shadow DOM (DSD):
+    > With DSD we have an HTML-first mechanism for declaring instances of a component, along with its Shadow DOM content and styles.
+    > At first glance, this is fantastic: We can create basic components with no JavaScript, encapsulated HTML and CSS, slot-based composition, etc.
+    >
+    > But what if we have 100 cards on the page? 
+    > We no longer have our HTML and CSS in just one place where our component is defined, but instead it's duplicated everywhere we use the card. Yikes!
+    > But this is no new problem. It's as old as the web itself and is one of the reasons that web frameworks were created in the first place. 
+    > 
+    > And as we'll see throughout the rest of this article, we can use all our standard server-side tools to not only solve this problem, but make further improvements to the solution as well.
+  * Chrome team: "Building components - Best practices"
+    * <https://web.dev/articles/web-components>
+    * Sections: Custom Elements, Shadow DOM, Best Practices, Examples
+
+  * ARTICLE: Use "Declarative Shadow DOM": Define web components without Javascript
+    * Declarative Shadow DOM lets you create custom experiences and scoped styling without ever needing to use JavaScript. 
+    * You could theoretically create HTML / CSS web components without ever needing to write JavaScript.
+    * <https://konnorrogers.com/posts/2023/what-is-declarative-shadow-dom>
+
+  * USER ADVICE regarding "Web Components" (from an article):
+
+    * Just don't use Shadow DOM if multiple components come from the same trusted source and should have little barriers for sharing styles. 
+      * Custom Element tag names with light DOM are a great way to have unique block scopes for styles.
+
+    * Server-side rendering of Web Components is possible with any backend technology. 
+      * Just render HTML and bundle assets as we used to do 20 years ago. 
+
+    * Web Components don't have a state management solution. 
+      * But it's possible to build one that converts observed attributes to signals, sets them on user interaction and does only the necessary fine-grained updates in the DOM with effects. 
+      * It takes about 1 to 2 kB of gzipped library code to do so. 
+
+    * You simply can't have such a minimal footprint AND the full power of reactive frameworks with a full-blown JS framework that implement all the features Web Components already provide in JavaScript again.
+
+
+* Employ a "NoBuild" web app development environment
+   * ARTICLE: "You can't get faster than No Build"
+      * BY DAVID HEINEMEIER HANSSON (DHH)
+      * <https://world.hey.com/dhh/you-can-t-get-faster-than-no-build-7a44131c>
+
+  * ARTICLE: We tried that, didn't work
+    * <https://world.hey.com/dhh/we-tried-that-didn-t-work-d9c42fe1>
+
+ * ARTICLE: ONCE #1 is entirely #nobuild for the front-end
+  * <https://world.hey.com/dhh/once-1-is-entirely-nobuild-for-the-front-end-ce56f6d7>
+  * We load a lot of 68individual JavaScript files in "ONCE #1" via "import maps".
+    * "import maps": <https://caniuse.com/import-maps>
+    * => HTTP/2 ensures we scarcely pay any penalty for sending so many individual files, yet reap huge rewards with fine-grained cache expiration.
+    * Benefit: Looking at any of those individual .js files via "View Source" (F12) reveals exactly the same source code that I see in my editor. 
+  * Now also for CSS: Individual files, relying exclusively on standardized CSS available in the latest evergreen versions of Chrome
+  * => I can develop entirely against the superb runtime that’s shipped with every browser to handle JavaScript and CSS.
+    * nNothing is simpler than sending a plain-text JavaScript or CSS file straight to a browser and watch the magic play.
+  * Modern CSS:  Nesting! Variables! See example code in article..
+  * Performance: Use "PageSpeed Insights" => Gets a perfect 100% score. 
+
 
 * Use "Material Design Web Components"
   * https://m3.material.io
@@ -113,17 +330,18 @@
 
   * Feel free to explore the repository to learn more about Material Web Components, contribute to the project, or integrate the components into your own web applications.
 
+
 Other web component frameworks: 
 
-In addition to ING's Lion and the libraries mentioned earlier, there are several other web component libraries created with Lit that you can explore for leveraging existing W3C web components. Here are a few more examples:
+* In addition to ING's Lion and the libraries mentioned earlier, there are several other web component libraries created with Lit that you can explore for leveraging existing W3C web components. Here are a few more examples:
 
-Lit-UI: Lit-UI is a collection of UI components built with Lit. It provides a set of customizable and reusable components for building web applications. The components in Lit-UI follow the web component standards and can be easily customized to match your design system.
+* Lit-UI: Lit-UI is a collection of UI components built with Lit. It provides a set of customizable and reusable components for building web applications. The components in Lit-UI follow the web component standards and can be easily customized to match your design system.
 
-Fast Lit: Fast Lit is a library that combines the power of Lit and the design principles of Microsoft's Fluent UI. It offers a set of composable and customizable components that follow the web component standards. These components can be tailored to fit your design system's requirements.
+* Fast Lit: Fast Lit is a library that combines the power of Lit and the design principles of Microsoft's Fluent UI. It offers a set of composable and customizable components that follow the web component standards. These components can be tailored to fit your design system's requirements.
 
-Coral Spectrum: Coral Spectrum is an open-source library developed by Adobe that provides a set of web components built with Lit. These components follow the web component standards and can be customized to match your design system. Coral Spectrum offers a range of UI components such as buttons, forms, dialogs, and more.
+* Coral Spectrum: Coral Spectrum is an open-source library developed by Adobe that provides a set of web components built with Lit. These components follow the web component standards and can be customized to match your design system. Coral Spectrum offers a range of UI components such as buttons, forms, dialogs, and more.
 
-Vaadin Components: Vaadin Components is a collection of customizable web components created by Vaadin, a company specializing in web development tools and frameworks. These components are built with Lit and follow the Material Design guidelines. They cover a wide range of UI elements, including buttons, grids, forms, and more, making them a versatile choice for building modern web applications.
+* Vaadin Components: Vaadin Components is a collection of customizable web components created by Vaadin, a company specializing in web development tools and frameworks. These components are built with Lit and follow the Material Design guidelines. They cover a wide range of UI elements, including buttons, grids, forms, and more, making them a versatile choice for building modern web applications.
 
 
 * OR: Use "Lion" web components: 
@@ -145,11 +363,77 @@ Vaadin Components: Vaadin Components is a collection of customizable web compone
   * Q&A with Thomas Allmer (ING developer): 
     * <https://www.infoq.com/articles/ing-open-sources-lion-web-component>
 
+
+* HTML: Use the "CSS anchor positioning API"
+  * For: menus, dialog tag, tooltip positioning etc.
+  * https://developer.chrome.com/blog/anchor-positioning-api
+ 
+### CSS related
+
+* CSS: A formula for responsive font-size
+  * <https://jameshfisher.com/2024/03/12/a-formula-for-responsive-font-size>
+
+  ```css
+     :root {
+       font-size: calc(1rem + 0.25vw);
+     }```
+
+* ARTICLE: "Modern CSS layout approaches"
+  * <https://www.smashingmagazine.com/2024/05/modern-css-layouts-no-framework-needed>
+  * Strukturere LAYOUT paa en web-side med CSS og HTML.
+  * Viser masse CSS kode.
+
+* CSS: "An Interactive Guide to CSS Grid"
+  * Introduce a CSS grid? 
+    * Responsive design (for different screen sizes)?
+  * https://www.joshwcomeau.com/css/interactive-guide-to-grid
+
+  * TABLE OF CONTENTS (TOC):
+
+    Introduction
+    Mental model
+    Grid flow
+    Grid Construction
+    Implicit and explicit rows
+    The repeat helper
+    Assigning children
+    Grid areas
+    Being mindful of keyboard users
+    Alignment
+    Aligning rows
+    Two-line centering trick
+    Tip of the iceberg
+
+* CSS: Typography: Fonts and design
+  * ARTICLE: "Quick guide to web typography for developers"
+    * <https://sinja.io/blog/web-typography-quick-guide>
+    * TOC :
+      ```text
+	Choose fonts
+	  Consider local fonts
+	  External fonts
+	  Format for external fonts
+	  Prefer variable fonts
+	  Subsetting
+	Size and spacing
+	  Font size
+	  Line height or leading
+	  Limit line width
+	  Play with tracking
+	Establish hierarchy
+	Choose colors
+	Text wrapping
+	Browser quirks
+	  Font size on mobile
+	  Font smoothing on macOS
+	Further reading
+      ```
+
 * Use "Lightning CSS": 
    * A Rust tool for: CSS parsing, transformation, bundling, and minifier.
 
 * Introduce CSS framework? 
-   * Candidates: "Open Props" (Google), Tailwind CSS, Bulma CSS (flexbox)
+   * Candidates: "Open Props" (Google), Tailwind CSS, Bulma CSS (flexbox), w3c.css (Wium Lie).
    * Tailwind: Has "CSS reset" ?
    * USER: "Tailwind Typography" (plugin) 
       * I use it after Tailwind "*resets all the css*": 
@@ -244,6 +528,87 @@ Vaadin Components: Vaadin Components is a collection of customizable web compone
     * <https://leerob.io/blog/css#css-modules>
     * "Lightning CSS" supports "CSS Modules"
       * <https://lightningcss.dev>
+
+---
+## HTML and caching: Make caching of web resources (jpg, js, css) work in the browser and CDN
+
+You can achieve effective caching and updates by only using HTML and request headers: 
+
+### 1. **Cache-Control Headers**
+
+- **Set Cache-Control Headers**: Ensure your server sets appropriate cache-control headers to define how long the browser should cache the content.
+  ```apache
+  <FilesMatch "\.(jpg|jpeg|png|gif|css|js)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+  ```
+
+### 2. **ETag Headers**
+
+- **Use ETag Headers**: Ensure your server generates ETag headers for your files. This helps browsers determine if the cached version is still valid.
+  ```apache
+  <FilesMatch "\.(jpg|jpeg|png|gif|css|js)$">
+    Header set ETag "%{UNIQUE_ID}e"
+  </FilesMatch>
+  ```
+
+### 3. **Versioning with Query Parameters**
+
+- **Add a Version Query Parameter**: Append a version number to your file URLs. This ensures that when the file changes, the URL changes, prompting the browser to fetch the new version.
+  ```html
+  <img src="image.jpg?v=1">
+  <link rel="stylesheet" href="styles.css?v=1">
+  <script src="script.js?v=1"></script>
+  ```
+  - When the file is updated, change the version number:
+  ```html
+  <img src="image.jpg?v=2">
+  <link rel="stylesheet" href="styles.css?v=2">
+  <script src="script.js?v=2"></script>
+  ```
+
+### 4. **Last-Modified Headers**
+
+- **Use Last-Modified Headers**: Ensure your server sets the Last-Modified header to indicate the last time the file was changed.
+  ```apache
+  <FilesMatch "\.(jpg|jpeg|png|gif|css|js)$">
+    Header set Last-Modified "Wed, 21 Oct 2015 07:28:00 GMT"
+  </FilesMatch>
+  ```
+
+### Example Configuration
+
+Here'ss an example of how you might configure your server to use these headers:
+```apache
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js)$">
+  Header set Cache-Control "max-age=31536000, public"
+  Header set ETag "%{UNIQUE_ID}e"
+  Header set Last-Modified "Wed, 21 Oct 2015 07:28:00 GMT"
+</FilesMatch>
+```
+
+### HTML Example
+
+In your HTML, use versioning to ensure browsers fetch the latest versions when files are updated:
+```html
+<img src="image.jpg?v=1">
+<link rel="stylesheet" href="styles.css?v=1">
+<script src="script.js?v=1"></script>
+```
+
+By using these techniques, you can ensure that your images, CSS, and JavaScript files are efficiently cached by the browser while still allowing for updates to be downloaded when they are referred to in the HTML.
+
+EB: QUESTION: so, nothing extra needs to be done to make cahing work for both browsers and CDN?
+
+Correct! By using the techniques mentioned, setting appropriate cache-control headers, using ETag and Last-Modified headers, and implementing versioning with query parameters—you can ensure effective caching for both browsers and CDNs without needing additional interactions with the CDN.
+
+### Key Points:
+- **Cache-Control Headers**: Define how long the browser and CDN should cache the content.
+- **ETag Headers**: Help browsers and CDNs determine if the cached version is still valid.
+- **Last-Modified Headers**: Indicate the last time the file was changed.
+- **Versioning with Query Parameters**: Ensure that updated files are fetched by changing the URL.
+
+These methods ensure that both browsers and CDNs cache your files efficiently while still allowing for updates to be downloaded when they are referred to in the HTML.
 
 ----
 
