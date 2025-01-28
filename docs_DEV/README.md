@@ -164,6 +164,11 @@ RELATED: `fzf`
 
 ## TO DO: IMPROVEMENTS, OPTIMIZATIONS
 
+* ARTICLE: "My Modern CSS Reset"
+  * <https://jakelazaroff.com/words/my-modern-css-reset/>
+  * By Jake Lazaroff
+  * GODT FORKLART - de ulike delelne av CSS'en.
+
 * ARTICLE: "A (more) Modern CSS Reset"
   * <https://piccalil.li/blog/a-more-modern-css-reset>
   * Shows all the CSS code for the "CSS reset". 

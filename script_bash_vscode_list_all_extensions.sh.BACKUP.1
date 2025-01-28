@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# EITHER: ALTERNATIVE 1: Path to Extension folder (used by WSL) for "VS Code Insiders"
+EXTENSIONS_DIR="$HOME/.vscode-server-insiders/extensions"
+
+# OR: ALTERNATIVE 2: Path to Extension folder (used by Windows 11) for "VS Code Insiders"
+USERPROFILE="/mnt/c/Users/erlen"
+# EXTENSIONS_DIR="$USERPROFILE/.vscode-insiders/extensions"
+
+# Check if directory exists
+if [ ! -d "$EXTENSIONS_DIR" ]; then
+    echo "Extensions directory not found at $EXTENSIONS_DIR"
+    exit 1
+fi
+
+# Start JSON output
+echo '{'
+echo '  "name": "WSL Extensions Profile",'
+echo '  "extensions": ['
+
+# First extension flag to handle commas
+first=true
+
+# Array to keep track of processed IDs
+declare -A processed_ids
+
+# Loop through each extension directory
+for dir in "$EXTENSIONS_DIR"/*; do
+    package_json="$dir/package.json"
+    if [ -f "$package_json" ]; then
+        # Extract relevant fields from package.json using grep and sed
+        publisher=$(grep -m 1 '"publisher":' "$package_json" | sed 's/.*"publisher": *"\([^"]*\)".*/\1/')
+        name=$(grep -m 1 '"name":' "$package_json" | sed 's/.*"name": *"\([^"]*\)".*/\1/')
+        displayName=$(grep -m 1 '"displayName":' "$package_json" | sed 's/.*"displayName": *"\([^"]*\)".*/\1/')
+        description=$(grep -m 1 '"description":' "$package_json" | sed 's/.*"description": *"\([^"]*\)".*/\1/')
+
+        if [[ -z "$publisher" || -z "$name" ]]; then
+            continue
+        fi
+
+        # Replace placeholders with NO_NAME_FOUND or fallback to name
+        if [[ "$displayName" =~ ^%.*%$ || -z "$displayName" ]]; then
+            if [[ -n "$description" && ! "$description" =~ ^%.*%$ ]]; then
+                displayName="$description"
+            else
+                displayName="$name"
+            fi
+        fi
+
+        # Initialize repo as empty string
+        repo=""
+
+        # Check for repository field as string
+        if grep -q '"repository": *"[^"]*"' "$package_json"; then
+            repo=$(grep -m 1 '"repository":' "$package_json" | sed 's/.*"repository": *"\([^"]*\)".*/\1/')
+        # Check for repository field as object
+        elif grep -q '"repository": *{' "$package_json"; then
+            repo=$(grep -m 1 '"repository":' -A 5 "$package_json" | grep -m 1 '"url":' | sed 's/.*"url": *"\([^"]*\)".*/\1/')
+        fi
+
+        # Validate and clean repository URL
+        if [[ $repo == git+* ]]; then
+            repo=${repo#git+}
+        fi
+        if [[ $repo == git://* ]]; then
+            repo="https://${repo#git://}"
+        fi
+        if [[ $repo == git@* ]]; then
+            repo="https://${repo#git@}"
+            repo=${repo/:/\/}
+        fi
+
+        # Generate marketplace URL
+        marketplace_url="https://marketplace.visualstudio.com/items?itemName=$publisher.$name"
+
+        # Skip if ID has already been processed
+        id="$publisher.$name"
+        if [[ -n "${processed_ids[$id]}" ]]; then
+            continue
+        fi
+        processed_ids[$id]=1
+
+        # Output extension info
+        if [ "$first" = true ]; then
+            first=false
+        else
+            echo ","
+        fi
+
+        cat << EOF
+        {
+          "id": "$id",
+          "displayName": "$displayName",
+          "marketplaceUrl": "$marketplace_url",
+          "githubUrl": "$repo"
+        }
+EOF
+    fi
+done
+
+# Close extensions array and add settings
+echo '  ],'
+echo '  "settings": {'
+echo '    "editor.tabSize": 2'
+echo '  },'
+echo '  "colorTheme": "Dark+ (default dark)"'
+echo '}'
+
+
