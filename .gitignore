@@ -1,18 +1,26 @@
+# ======================================================
 # These are some examples of commonly ignored file patterns.
 # You should customize this list as applicable to your project.
+#
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
+# ======================================================
 
 # Exclude the "index.html" used to build the Electron app.
-# Note: the "index.html should be copied from "src/core_radio.html"
+#
+# NOTE: the "index.html should be copied from "src/core_radio.html"
 #       before each "Electron build"
+#
 # build__electron_app/*.html
 
 # Exclude the temporary HTML pages that are created during build of the Electron app.
+#
 build__electron_app/tmp_html_processing/
 
 # Exclude VS CODE config folder
+#
 # .vscode/
+# .devcontainer/
 
 # Exclude the "experiments/" folders
 experiments/
@@ -70,3 +78,4 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+

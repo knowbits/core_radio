@@ -1,0 +1,187 @@
+{
+  // ==============================================
+  // DOCUMENTATION - "Dev Containers"
+  //
+  //    Main doc: https://code.visualstudio.com/docs/devcontainers/containers
+  //      The "devcontainer.json" SPEC:
+  //         https://containers.dev/implementors/json_reference/
+  //
+  // ==============================================
+
+  "name": "Simple Web Dev (HTML/CSS/JS), nobuild",
+  "dockerFile": "Dockerfile",
+
+  "workspaceFolder": "/workspace",
+  // OLD: "workspaceFolder": "/workspace/${localWorkspaceFolderBasename}",
+
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+
+  "remoteUser": "vscode",
+
+  // "postCreateCommand": "mkdir -p ~/.config/fish && cp .devcontainer/config.fish ~/.config/fish/ && fish -c 'source ~/.config/fish/config.fish'",
+  // "postCreateCommand": "fish -c 'echo Fish shell setup completed!'",
+
+  "customizations": {
+    "vscode": {
+
+      "settings": {
+        "editor.tabSize": 2, // Standard for web development
+
+        // Make sure that only the extensions you list in the extensions array
+        // of your devcontainer.json will be available inside the dev container.
+        //
+        // NOTE: If you have other extensions installed locally or in WSL, they won’t interfere.
+        //
+        "remote.extensionKind": {
+          // Extensions are only enabled within the workspace ("Dev Container"):
+          "*": "workspace"
+        },
+
+        "files.exclude": {
+          "**/.git": true, // Ignore .git folder
+          "**/.DS_Store": true // Ignore macOS .DS_Store files
+        },
+
+        "files.watcherExclude": {
+          // Reduce file system watching overhead.
+          // Prevents unnecessary indexing of large directories.
+          "**/.git/objects/**": true,
+          "**/.git/subtree-cache/**": true
+        },
+
+        "terminal.integrated.defaultProfile.linux": "fish",
+
+        //  "terminal.integrated.profiles.linux": {
+        //    "fish": {
+        //      "path": "/usr/bin/fish"
+        //    }
+        // }
+
+        // Terminal Font Settings
+        "terminal.integrated.fontFamily": "'Cascadia Code PL', Consolas, 'Courier New', monospace",
+        "terminal.integrated.fontLigatures": true,
+        // Monospace font built into Alpine Linux:
+        //   "terminal.integrated.fontFamily": "'Liberation Mono', monospace",
+        // Monospace font built into Alpine Linux:
+        //   "terminal.integrated.fontFamily": "'DejaVu Sans Mono', monospace",
+        // NOTE: The "Cascadia Code" font must be explicitly installed in the Dev Container,
+        //       since it is not part of Alpine Linux:
+        //   "terminal.integrated.fontFamily": "'Cascadia Code', monospace",
+        "terminal.integrated.fontSize": 14,
+        "terminal.integrated.fontWeight": "normal",
+        "terminal.integrated.lineHeight": 1.2,
+
+        // These settings are is set in "User Settings (JSON)":
+        //   "editor.fontLigatures": true, // Enable font ligatures
+        //   "editor.fontFamily": "'Cascadia Code NF', Consolas, 'Courier New', monospace",
+
+        // ===========================
+        // Default formatters per language
+        "[shellscript]": {
+          "editor.defaultFormatter": "foxundermoon.shell-format",
+          "editor.formatOnSave": true
+        },
+        "[dockerfile]": {
+          "editor.defaultFormatter": "ms-azuretools.vscode-docker",
+          "editor.formatOnSave": true
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        },
+        "[markdown]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        },
+        "[yaml]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        },
+        // ===========================
+        // Extensions related settings
+
+        "extensions.autoCheckUpdates": true,
+        "extensions.autoUpdate": true,
+        "extensions.includePreRelease": true,
+
+        // Github Copilot settings
+        "github.copilot.enable": {
+          "*": true,
+          "plaintext": true,
+          "markdown": true,
+          "scminput": false
+        },
+
+      }, // END: settings
+
+      "extensions": [
+        // The "Visual Studio Code Dev Containers" extension is proably NOT neeeded here!
+        //
+        // NOTE: It seems the "Dev Containers" extension ONLY needs to be installed in VS Code "Locally"
+        //       (i.e. in Windows 11): to make Dev Containers work when opening a "VS Code"
+        //       project that residing in WSL 2
+        // "ms-vscode-remote.remote-containers",
+
+        // The "WSL" extension should (probably?) not be used when using "Dev Contnainers"
+        //
+        // NOTE: It needs to be installed "Locally" in Windows 11
+        //       to be able to open a VS CODE project that reside in WSL 2.
+        // "ms-vscode-remote.remote-wsl",
+
+        "GitHub.copilot@prerelease", // Github Copilot
+        "GitHub.copilot-chat@prerelease", // Github Copilot Chat
+        // "ms-vscode.vscode-speech",				// Speech ext. does not seem to work with "Dev Containers".
+
+        // Docker, remote (SSH etc)
+        // "ms-azuretools.vscode-docker",   // Docker tools
+        // "ms-vscode-remote.remote-ssh",  // Remote SSH
+
+
+        // VS Code tools
+        "vscode-icons-team.vscode-icons",
+        "christian-kohler.path-intellisense", // Path Intellisense: path completion
+        "usernamehw.errorlens", // Error Lens: Highlights errors and warnings in the code
+
+        // Web dev:
+        "esbenp.prettier-vscode", // Prettier
+        "ms-vscode.live-server",
+        "ecmel.vscode-html-css", // HTML and CSS support: Enhances IntelliSense and autocomplete features for HTML and CSS.
+
+        // Javascript:
+        // "dbaeumer.vscode-eslint",	// Javascript: ESLint: Requires "npm" installation of eslint packages
+        // "ms-vscode.js-debug-companion",
+
+        // REST, POST tools: Postman etc
+        // TODO: Find an ext. like Postman
+
+        // MarkDown related:
+        "yzhang.markdown-all-in-one", // Markdown All in One
+        "DavidAnson.vscode-markdownlint", // Markdown linting and style checking for Visual Studio Code
+
+        // Bash related:
+        "mads-hartmann.bash-ide-vscode", // Bash: A language server for Bash. IntelliSense, linting, and debugging.
+        // "timonwong.shellcheck", 		 // Bash: shellcheck tool. TODO: Needs work to install shellcheck in the Dockerfile image
+
+        // TODO, FIXME etc
+        // "Gruntfuggly.todo-tree",
+        "wayou.vscode-todo-highlight", // TODO Highlight
+
+        // Misc useful tools
+        // "chrmarti.regex",
+        "tamasfe.even-better-toml", // .toml files
+        "nefrob.vscode-just-syntax", // Justfile: Syntax etc for "Just" make files
+
+        // Diagrams etc
+        // "pomdtr.excalidraw-editor", Excalidraw : https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor
+
+		// Te "Workspace Explorer" extensions
+		// "tomsaunders-code.workspace-explorer",   // Browse, open, and manage your VSCode workspaces in this simple view.													
+													// https://github.com/sirfuzzalot/workspace-explorer
+													// https://marketplace.visualstudio.com/items?itemName=tomsaunders-code.workspace-explorer
+
+		
+      ] // END: extensions
+    } // END: vscode
+  }, // END: customizations
+
+}

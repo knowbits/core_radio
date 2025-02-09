@@ -1,3 +1,53 @@
 {
-  "CodeGPT.apiKey": "Groq"
+  // ==============================================
+  // SETTINGS for this WORKSPACE
+  // ==============================================
+  
+  // "remote.WSL2.connectionReuse": "enabled",
+  // "terminal.integrated.shell.linux": "/usr/bin/fish",
+
+  // "remote.WSL.enabled": false,
+
+
+   // Disable "git" source control
+   "git.enabled": false,
+
+
+  
+	// =====================================
+	// Disable Extensions in Local Settings:
+	 
+	// Enable/Disable automatic updates for extensions in this specific project:	
+	"extensions.autoUpdate": true,
+
+	// Prevents VS Code from suggesting extensions based on recommendations:	
+	"extensions.ignoreRecommendations": true,
+
+    // Ensures that extensions are only installed and enabled within the workspace, not globally or locally:
+    "remote.extensionKind": {
+       "*": "workspace"
+    }
+
+
+  // TODO: FUNGERER NOEN AV DISSE? :
+  //       Sjekk her: https://code.visualstudio.com/docs/devcontainers/containers
+           Og her:    https://containers.dev/implementors/json_reference/
+           
+  // Extension control
+  // "remote.containers.ignoreLocales": true,
+  // "remote.containers.localExtensionsInContainer": false,
+  // "remote.containers.localExtensionsStatus": false,
+
+  // "remote.containers.enabled": true,
+  // "remote.containers.autoStart": true,    
+  // "remote.containers.defaultExtensions": [],
+  // "remote.containers.showRemoteExtensionRecommendations": false,
+  // "remote.containers.defaultAction": "remote-containers.reopenInContainer",
+
+  // "dev.containers.enabled": true,
+  // "dev.containers.autoStart": true,
+  // "dev.containers.defaultExtensions": [],
+  // "dev.containers.showRemoteExtensionRecommendations": false,
+  // "dev.containers.defaultAction": "remote-containers.reopenInContainer",
+
 }
