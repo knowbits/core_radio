@@ -25,7 +25,9 @@
     "vscode": {
 
       "settings": {
+
         "editor.tabSize": 2, // Standard for web development
+		"editor.bracketPairColorization.enabled": true,
 
         // =============================================
         // "Github Copilot" settings:
@@ -245,21 +247,33 @@
 
         // VS Code tools
         "vscode-icons-team.vscode-icons",
-        "christian-kohler.path-intellisense", // Path Intellisense: path completion
+        // "pkief.material-icon-theme", 	// Material Design Icons. https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
+        
+        "christian-kohler.path-intellisense", // Path Intellisense: path autocompletion
         "usernamehw.errorlens", // Error Lens: Highlights errors and warnings in the code
-
+		"formulahendry.code-runner",  // Code Runner: Ctrl+Alt+N: Run code file of current active Text Editor
+		//   https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner
+		
         // Web dev:
         "esbenp.prettier-vscode", // Prettier
         "ms-vscode.live-server",
         "ecmel.vscode-html-css", // HTML and CSS support: Enhances IntelliSense and autocomplete features for HTML and CSS.
-
+		"formulahendry.auto-rename-tag",		// Automatically renames paired HTML, JSX, or XML tags.
+		
         // Javascript:
+        // "ms-vscode.js-debug",  // NOTE: "js-debug" is already installed in VS Code.
+        //    Debugs: Node.js, Chrome, Edge, WebView2, VS Code extensions, Blazor, React Native, and more. 
+        //    It is the default JavaScript debugger in VS Code.
+        // 	  https://marketplace.visualstudio.com/items?itemName=ms-vscode.js-debug
+        
         // "dbaeumer.vscode-eslint",	// Javascript: ESLint: Requires "npm" installation of eslint packages
         // "ms-vscode.js-debug-companion",
 
         // REST, POST tools: Postman etc
-        // TODO: Find an ext. like Postman
-
+		// "rangav.vscode-thunder-client",  // Thunder Client: Lightweight Rest API Client for quick API testing
+		"humao.rest-client",   // REST CLient: Write requests in plain text files. 
+		//     https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+		
         // MarkDown related:
         "yzhang.markdown-all-in-one", // Markdown All in One
         "DavidAnson.vscode-markdownlint", // Markdown linting and style checking for Visual Studio Code
@@ -269,21 +283,26 @@
         // "timonwong.shellcheck", 		 // Bash: shellcheck tool. TODO: Needs work to install shellcheck in the Dockerfile image
 
         // TODO, FIXME etc
-        // "Gruntfuggly.todo-tree",
         "wayou.vscode-todo-highlight", // TODO Highlight
-
+        // "Gruntfuggly.todo-tree",
+        
         // Misc useful tools
         // "chrmarti.regex",
         "tamasfe.even-better-toml", // .toml files
         "nefrob.vscode-just-syntax" // Justfile: Syntax etc for "Just" make files
+		// "mechatroner.rainbow-csv",  // Rainbow CSV: Highlight CSV and TSV files, Run SQL-like queries.
+		// 		https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv 
+		
+		// Collaboration tools
+		// "ms-vsliveshare.vslives",   // Live Share: Real-time collaborative development. Pair programming etc.
 
         // Diagrams etc
         // "pomdtr.excalidraw-editor", Excalidraw : https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor
 
         // Te "Workspace Explorer" extensions
         // "tomsaunders-code.workspace-explorer",   // Browse, open, and manage your VSCode workspaces in this simple view.
-        // https://github.com/sirfuzzalot/workspace-explorer
-        // https://marketplace.visualstudio.com/items?itemName=tomsaunders-code.workspace-explorer
+        //     https://github.com/sirfuzzalot/workspace-explorer
+        //     https://marketplace.visualstudio.com/items?itemName=tomsaunders-code.workspace-explorer
 
       ] // END: extensions
     } // END: vscode
