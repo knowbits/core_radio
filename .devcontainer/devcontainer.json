@@ -26,11 +26,64 @@
 
       "settings": {
 
-        "editor.tabSize": 2, // Standard for web development
-        "editor.bracketPairColorization.enabled": true,
+        "git.enabled": false,
+        // Automatically fetch commits from the "remote" of the current Github repo:
+        "git.autofetch": true,
+        // Never open a repository that reside in a parent folder of a workspace or an open file:
+        "git.openRepositoryInParentFolders": "never",
 
         // =============================================
-        // "Github Copilot" settings:
+        // Make sure that only the extensions you list in the "extensions" array
+        // of your "devcontainer.json" will be available inside the "Dev Container".
+        //
+        // NOTE: If you have other extensions installed locally or in WSL, they won’t interfere.
+        //
+        "remote.extensionKind": {
+          // Extensions are only enabled within the workspace ("Dev Container"):
+          "*": "workspace"
+        },
+
+        "files.exclude": {
+          "**/.git": true, // Ignore .git folder
+          "**/.DS_Store": true // Ignore macOS .DS_Store files
+        },
+
+        "files.watcherExclude": {
+          // Reduce file system watching overhead.
+          // Prevents unnecessary indexing of large directories.
+          "**/.git/objects/**": true,
+          "**/.git/subtree-cache/**": true
+        },
+
+        "terminal.integrated.defaultProfile.linux": "fish",
+
+        // ===========================
+        // DEFAULT FORMATTER: Set "Prettier" to be the "default formatter" for all file types:
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+        // Default formatters per language
+        //
+        //"[shellscript]": {
+        //  "editor.defaultFormatter": "foxundermoon.shell-format",
+        //  "editor.formatOnSave": true
+        //},
+        //"[dockerfile]": {
+        //  "editor.defaultFormatter": "ms-azuretools.vscode-docker",
+        //  "editor.formatOnSave": true
+        //},
+
+        // =============================================
+        // "Cline" AI / LLM extension:
+
+        // "cline.vsCodeLmModelSelector": {
+        //    "family": "",
+        // },
+
+        // =============================================
+        // "Github Copilot" extension:
+
+        "github.copilot.chat.localeOverride": "en",
+        "github.copilot.editor.enableAutoCompletions": true,
 
         // Guess the "Next Edit" that the user will do:
         "github.copilot.nextEditSuggestions.enabled": false,
@@ -53,7 +106,6 @@
         //	 1. Select the "Attach icon" (binders), then select "Prompt...", and choose the "prompt file" to attach.
         //
         "chat.promptFiles": true,
-
 
         // "Copilot Edits"
         //
@@ -106,84 +158,19 @@
         // Copilot Edits: enable "Temporal context" :
         "github.copilot.chat.edits.temporalContext.enabled": false,
 
-        // =============================================
-        // Make sure that only the extensions you list in the extensions array
-        // of your devcontainer.json will be available inside the dev container.
-        //
-        // NOTE: If you have other extensions installed locally or in WSL, they won’t interfere.
-        //
-        "remote.extensionKind": {
-          // Extensions are only enabled within the workspace ("Dev Container"):
-          "*": "workspace"
-        },
-
-        "files.exclude": {
-          "**/.git": true, // Ignore .git folder
-          "**/.DS_Store": true // Ignore macOS .DS_Store files
-        },
-
-        "files.watcherExclude": {
-          // Reduce file system watching overhead.
-          // Prevents unnecessary indexing of large directories.
-          "**/.git/objects/**": true,
-          "**/.git/subtree-cache/**": true
-        },
-
-        "terminal.integrated.defaultProfile.linux": "fish",
-
-        //  "terminal.integrated.profiles.linux": {
-        //    "fish": {
-        //      "path": "/usr/bin/fish"
-        //    }
-        // }
-
-        // Terminal Font Settings
-        "terminal.integrated.fontFamily": "'Cascadia Code PL', Consolas, 'Courier New', monospace",
-        "terminal.integrated.fontLigatures": true,
-        // Monospace font built into Alpine Linux:
-        //   "terminal.integrated.fontFamily": "'Liberation Mono', monospace",
-        // Monospace font built into Alpine Linux:
-        //   "terminal.integrated.fontFamily": "'DejaVu Sans Mono', monospace",
-        // NOTE: The "Cascadia Code" font must be explicitly installed in the Dev Container,
-        //       since it is not part of Alpine Linux:
-        //   "terminal.integrated.fontFamily": "'Cascadia Code', monospace",
-        "terminal.integrated.fontSize": 14,
-        "terminal.integrated.fontWeight": "normal",
-        "terminal.integrated.lineHeight": 1.2,
-
-        // These settings are is set in "User Settings (JSON)":
-        //   "editor.fontLigatures": true, // Enable font ligatures
-        //   "editor.fontFamily": "'Cascadia Code NF', Consolas, 'Courier New', monospace",
-
-        // ===========================
-        // Default formatters per language
-        //
-        //"[shellscript]": {
-        //  "editor.defaultFormatter": "foxundermoon.shell-format",
-        //  "editor.formatOnSave": true
-        //},
-        //"[dockerfile]": {
-        //  "editor.defaultFormatter": "ms-azuretools.vscode-docker",
-        //  "editor.formatOnSave": true
-        //},
-
-        // ===========================
-        // Extensions related settings
-
-        "extensions.autoCheckUpdates": true,
-        "extensions.autoUpdate": true,
-        "extensions.includePreRelease": true,
-
         // Github Copilot settings
         "github.copilot.enable": {
           "*": true,
           "plaintext": true,
           "markdown": true,
-          "scminput": false
+          "scminput": false,
+          "xml": true,
+          "java": true
         },
 
+
         // ====================================================
-        // "Live Server" extension:
+        // "Live Server" extension (Microsoft):
         //
         // USAGE: Open Chrome to view static html page:
         //    http://localhost:45067/core_radio.html
@@ -212,38 +199,56 @@
       }, // END: settings
 
       "extensions": [
-        // The "Visual Studio Code Dev Containers" extension is proably NOT neeeded here!
+
+        // =====================================================
+        // The "Visual Studio Code Dev Containers" extension does NOT neeed
+        // to be installed in the "Dev Container" project!
         //
-        // NOTE: It seems the "Dev Containers" extension ONLY needs to be installed in VS Code "Locally"
-        //       (i.e. in Windows 11): to make Dev Containers work when opening a "VS Code"
-        //       project that residing in WSL 2
+        // => It is sufficient to install the "Dev Containers" extension  "Locally" (in Windows 11).
         //
         // "ms-vscode-remote.remote-containers",
 
-        // The "WSL" extension should (probably?) not be used when using "Dev Contnainers"
+        // =====================================================
+        // The "WSL" extension does not need to be installed in the "Dev Contnainer" project.
         //
-        // NOTE: It needs to be installed "Locally" in Windows 11
-        //       to be able to open a VS CODE project that reside in WSL 2.
+        // => It is sufficient to install the "WSL" extension  "Locally" (in Windows 11).
+        //    Enables VS CODE to open a repo that resides in WSL 2.
         //
         // "ms-vscode-remote.remote-wsl",
 
-        // VS Code SPeech: (NOT WORKING in Dev Container?)
+
+        // =====================================================
+        // VS Code Speech:
+        // Does not seem to be WORKING in "Dev Container" project.
+        //
         // "ms-vscode.vscode-speech",
 
+        // =====================================================
         // AI / LLM tools:
-        "GitHub.copilot@prerelease", // Github Copilot
-        "GitHub.copilot-chat@prerelease", // Github Copilot Chat
 
-        // Other LLM / AI tools:
+        // LLM: Cline:
+        "saoudrizwan.claude-dev", // Cline: coding agent that uses "Claude 3.5 Sonnet"
+        //    https://cline.bot
+        //    https://github.com/cline/cline
+        //    https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev
+
+        // LLM: Github Copilot
+        // "GitHub.copilot@prerelease", // Github Copilot
+        // "GitHub.copilot-chat@prerelease", // Github Copilot Chat
+
+        // LLM: Continue:
         // "continue.continue", // https: //marketplace.visualstudio.com/items?itemName=Continue.continue
 
-        // Docker, remote (SSH etc)
-        // "ms-azuretools.vscode-docker",   // Docker tools
+        // Docker, remote (SSH etc):
+        "ms-azuretools.vscode-docker",   // Docker tools by Microsoft.
+        // 		https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker        
         // "ms-vscode-remote.remote-ssh",  // Remote SSH
+
 
         // Icon themes
         "vscode-icons-team.vscode-icons",
-        // "pkief.material-icon-theme", 	// Material Design Icons. https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
+        // "pkief.material-icon-theme", 	// Material Design Icons.
+        //     https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
 
         // Coding productivity tools:
         "christian-kohler.path-intellisense", // Path Intellisense: path autocompletion
