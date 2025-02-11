@@ -27,13 +27,13 @@
       "settings": {
 
         "editor.tabSize": 2, // Standard for web development
-		"editor.bracketPairColorization.enabled": true,
+        "editor.bracketPairColorization.enabled": true,
 
         // =============================================
         // "Github Copilot" settings:
 
         // Guess the "Next Edit" that the user will do:
-        "github.copilot.nextEditSuggestions.enabled": true,
+        "github.copilot.nextEditSuggestions.enabled": false,
 
         // "Prompt files"
         //
@@ -78,7 +78,7 @@
         //
         // EB: QUESTION: Is this in addition to using #codebase in a query to discover relevant files for a task?
         //
-        "github.copilot.chat.edits.codesearch.enabled": true,
+        "github.copilot.chat.edits.codesearch.enabled": false,
 
         // "Agent Mode"
         //
@@ -96,16 +96,15 @@
         //
         // Enable dropdown to switch between "edit mode" and "agent mode" (in the "Copilot Edits" view):
         //
-        // "chat.agent.enabled" : false,
-
+        "chat.agent.enabled": true,
 
         // Temporal context: Inform the LLM about files that you have recently interacted with.
         //
-        // Inline Chat: enable "Temporal context" :
-        "github.copilot.chat.editor.temporalContext.enabled": true,
+        // Inline Chat: enable "Temporal context":
+        "github.copilot.chat.editor.temporalContext.enabled": false,
 
         // Copilot Edits: enable "Temporal context" :
-        "github.copilot.chat.edits.temporalContext.enabled": true,
+        "github.copilot.chat.edits.temporalContext.enabled": false,
 
         // =============================================
         // Make sure that only the extensions you list in the extensions array
@@ -158,26 +157,16 @@
 
         // ===========================
         // Default formatters per language
-        "[shellscript]": {
-          "editor.defaultFormatter": "foxundermoon.shell-format",
-          "editor.formatOnSave": true
-        },
-        "[dockerfile]": {
-          "editor.defaultFormatter": "ms-azuretools.vscode-docker",
-          "editor.formatOnSave": true
-        },
-        "[json]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
-          "editor.formatOnSave": true
-        },
-        "[markdown]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
-          "editor.formatOnSave": true
-        },
-        "[yaml]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
-          "editor.formatOnSave": true
-        },
+        //
+        //"[shellscript]": {
+        //  "editor.defaultFormatter": "foxundermoon.shell-format",
+        //  "editor.formatOnSave": true
+        //},
+        //"[dockerfile]": {
+        //  "editor.defaultFormatter": "ms-azuretools.vscode-docker",
+        //  "editor.formatOnSave": true
+        //},
+
         // ===========================
         // Extensions related settings
 
@@ -228,73 +217,91 @@
         // NOTE: It seems the "Dev Containers" extension ONLY needs to be installed in VS Code "Locally"
         //       (i.e. in Windows 11): to make Dev Containers work when opening a "VS Code"
         //       project that residing in WSL 2
+        //
         // "ms-vscode-remote.remote-containers",
 
         // The "WSL" extension should (probably?) not be used when using "Dev Contnainers"
         //
         // NOTE: It needs to be installed "Locally" in Windows 11
         //       to be able to open a VS CODE project that reside in WSL 2.
+        //
         // "ms-vscode-remote.remote-wsl",
 
+        // VS Code SPeech: (NOT WORKING in Dev Container?)
+        // "ms-vscode.vscode-speech",
+
+        // AI / LLM tools:
         "GitHub.copilot@prerelease", // Github Copilot
         "GitHub.copilot-chat@prerelease", // Github Copilot Chat
-        // "ms-vscode.vscode-speech",				// Speech ext. does not seem to work with "Dev Containers".
+
+        // Other LLM / AI tools:
+        // "continue.continue", // https: //marketplace.visualstudio.com/items?itemName=Continue.continue
 
         // Docker, remote (SSH etc)
         // "ms-azuretools.vscode-docker",   // Docker tools
         // "ms-vscode-remote.remote-ssh",  // Remote SSH
 
-
-        // VS Code tools
+        // Icon themes
         "vscode-icons-team.vscode-icons",
         // "pkief.material-icon-theme", 	// Material Design Icons. https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
-        
+
+        // Coding productivity tools:
         "christian-kohler.path-intellisense", // Path Intellisense: path autocompletion
         "usernamehw.errorlens", // Error Lens: Highlights errors and warnings in the code
-		"formulahendry.code-runner",  // Code Runner: Ctrl+Alt+N: Run code file of current active Text Editor
-		//   https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner
-		
+        "formulahendry.code-runner", // Code Runner: Ctrl+Alt+N: Run code file of current active Text Editor
+        //    https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner
+        // "Wattenberger.footsteps", // Footsteps: Navigate back to where you were working: ctrl+alt+left/right
+
+        // Git related tools:
+        // "eamodio.gitlens", // GitLens: Git supercharged
+        // "GitHub.vscode-pull-request-github", // GitHub Pull Requests: Review and manage GitHub pull requests directly in VS Code
+        // "vivaxy.vscode-conventional-commits", // Conventional Commits: https://www.conventionalcommits.org
+
         // Web dev:
         "esbenp.prettier-vscode", // Prettier
         "ms-vscode.live-server",
         "ecmel.vscode-html-css", // HTML and CSS support: Enhances IntelliSense and autocomplete features for HTML and CSS.
-		"formulahendry.auto-rename-tag",		// Automatically renames paired HTML, JSX, or XML tags.
-		
+        "pranaygp.vscode-css-peek", // CSS Peek: Peek / Hover / Go To for  "CSS selector" definitions (classes, IDs, HTML tags).
+
         // Javascript:
         // "ms-vscode.js-debug",  // NOTE: "js-debug" is already installed in VS Code.
-        //    Debugs: Node.js, Chrome, Edge, WebView2, VS Code extensions, Blazor, React Native, and more. 
+        //    Debugs: Node.js, Chrome, Edge, WebView2, VS Code extensions, Blazor, React Native, and more.
         //    It is the default JavaScript debugger in VS Code.
         // 	  https://marketplace.visualstudio.com/items?itemName=ms-vscode.js-debug
-        
         // "dbaeumer.vscode-eslint",	// Javascript: ESLint: Requires "npm" installation of eslint packages
         // "ms-vscode.js-debug-companion",
+        //
+        // Is "IntelliSense: NEEDED/SMART when using Github Copilot? :
+        // "visualstudioexptteam.vscodeintellicode", // AI-assisted IntelliSense: Javascript, Java, Python.
+        //      https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode
 
-        // REST, POST tools: Postman etc
-		// "rangav.vscode-thunder-client",  // Thunder Client: Lightweight Rest API Client for quick API testing
-		"humao.rest-client",   // REST CLient: Write requests in plain text files. 
-		//     https://marketplace.visualstudio.com/items?itemName=humao.rest-client
-		
+        // REST, POST tools:
+        // "rangav.vscode-thunder-client",  // Thunder Client: Lightweight Rest API Client for quick API testing
+        "humao.rest-client", // REST CLient: Write requests in plain text files.
+        //     https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
         // MarkDown related:
         "yzhang.markdown-all-in-one", // Markdown All in One
         "DavidAnson.vscode-markdownlint", // Markdown linting and style checking for Visual Studio Code
 
         // Bash related:
         "mads-hartmann.bash-ide-vscode", // Bash: A language server for Bash. IntelliSense, linting, and debugging.
-        // "timonwong.shellcheck", 		 // Bash: shellcheck tool. TODO: Needs work to install shellcheck in the Dockerfile image
+        // "timonwong.shellcheck", 		 // Bash: shellcheck tool. TODO: Needs to install "shellcheck: in the Dockerfile image
 
         // TODO, FIXME etc
         "wayou.vscode-todo-highlight", // TODO Highlight
         // "Gruntfuggly.todo-tree",
-        
+
         // Misc useful tools
         // "chrmarti.regex",
+        "redhat.vscode-yaml", // YAML Language Support by Red Hat
         "tamasfe.even-better-toml", // .toml files
         "nefrob.vscode-just-syntax" // Justfile: Syntax etc for "Just" make files
-		// "mechatroner.rainbow-csv",  // Rainbow CSV: Highlight CSV and TSV files, Run SQL-like queries.
-		// 		https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv 
-		
-		// Collaboration tools
-		// "ms-vsliveshare.vslives",   // Live Share: Real-time collaborative development. Pair programming etc.
+        // "mechatroner.rainbow-csv",  // Rainbow CSV: Highlight CSV and TSV files, Run SQL-like queries.
+        // 		https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv
+
+        // Collaboration tools
+        // "ms-vsliveshare.vslives",   // Live Share: Real-time collaborative development. Pair programming etc.
 
         // Diagrams etc
         // "pomdtr.excalidraw-editor", Excalidraw : https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor
