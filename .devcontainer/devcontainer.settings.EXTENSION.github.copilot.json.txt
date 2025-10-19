@@ -1,0 +1,101 @@
+{
+  "customizations": {
+    "vscode": {
+
+      "settings": {
+        // =============================================
+        // "Github Copilot" extension:
+
+        "github.copilot.chat.localeOverride": "en",
+        "github.copilot.editor.enableAutoCompletions": true,
+
+        // Guess the "Next Edit" that the user will do:
+        "github.copilot.nextEditSuggestions.enabled": false,
+
+        // "Prompt files"
+        //
+        // https://code.visualstudio.com/docs/copilot/copilot-customization#_reusable-prompt-files-experimental
+        //
+        // Default location and naming convention: .github/prompts/*.prompt.md
+        //
+        // These are Markdown files that follows the same format used for writing prompts in Copilot Chat, and it can link to other files or even other prompts.
+        //
+        // You can attach prompt files for task-specific guidance, aid with code generation, or keep complete prompts for later use.
+        //
+        // NOTE: Uses the same format used for writing prompts in Copilot Chat, and it can link to other files or even other prompts
+        //   Reference additional workspace files as Markdown links ([index](../index.ts)), or as #file:../index.ts references within the prompt file.
+        //   You can also reference other .prompt.md files.//
+        //
+        // USAGE: in "Copilot Chat" or "Copilot Edits"
+        //	 1. Select the "Attach icon" (binders), then select "Prompt...", and choose the "prompt file" to attach.
+        //
+        "chat.promptFiles": {
+          // Specify location(s) of reusable prompt files (*.prompt.md) that can be attached in Chat, Edits, and Inline Chat sessions.
+          ".github/prompts": true
+        },
+
+        // "Copilot Edits"
+        //
+        // Specify a set of files to be edited and then make query to Copilot to make changes.
+        //
+        // Make inline code changes across multiple files in your workspace, directly from chat.
+        // Supports "side-by-side view".
+        //
+        // USEFUL: Keyboard shortcuts for navigating "Copilot edits":
+        //
+        //         Next       			: Alt+F5
+        //         Previous   			: Shift+Alt+F5
+        //         Accepting  			: Ctrl+Shift+Enter
+        //         Discarding 			: Ctrl+Shift+Backspace
+        //         Toggle "diff view" 	: Shift+Alt+F7
+
+        // Number of seconds after which "edit suggestions" are auto-accepted.
+        // "chat.editing.autoAcceptDelay": 10,
+
+        // Discover additional "relevant files" using:
+        //   file / text search results, Git repository state, and directory reads.
+        //
+        // EB: QUESTION: Is this in addition to using #codebase in a query to discover relevant files for a task?
+        //
+        "github.copilot.chat.edits.codesearch.enabled": false,
+
+        // "Agent Mode"
+        //
+        // https://code.visualstudio.com/docs/copilot/copilot-customization#_use-agent-mode-preview
+        //
+        // In agent mode, Copilot will iterate on not just its own output, but the result of that output.
+        // It will iterate until it has completed all the subtasks required to complete your prompt, inferring
+        // any additional tasks that were not specified, but are also necessary for the primary request to work.
+        //
+        // In agent mode, Copilot runs autonomously, but it can only edit files within your current workspace.
+        //
+        // Automatically search your workspace for relevant context, edit files, check them for errors,
+        // and run terminal commands (with your permission) to complete a task end-to-end.
+        // NOTE: When it wants to run a terminal command, it shows you the command and waits for you to review it and select Continue before proceeding.
+        //
+        // Enable agent mode for Copilot Edits.
+        // When this is enabled, a dropdown appears in the Copilot Edits view to toggle agent mode.
+        //
+        "chat.agent.enabled": true,
+
+        // Temporal context: Inform the LLM about files that you have recently interacted with.
+        //
+        // Inline Chat: enable "Temporal context":
+        "github.copilot.chat.editor.temporalContext.enabled": false,
+
+        // Copilot Edits: enable "Temporal context" :
+        "github.copilot.chat.edits.temporalContext.enabled": false,
+
+        // Github Copilot settings
+        "github.copilot.enable": {
+          "*": true,
+          "plaintext": true,
+          "markdown": true,
+          "scminput": false,
+          "xml": true,
+          "java": true
+        },
+
+      }
+    }
+  }

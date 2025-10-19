@@ -41,9 +41,8 @@ if status --is-interactive
         # NOT NEEDED: source ~/.config/fish/functions/fisher.fish
     end
       
-    # Source Fisher if it is installed
+    # Update Fisher plugins (if Fisher is installed):
     if type -q fisher
-        # Update Fisher plugins (if Fisher is installed):
         # NOT NEEEDED: fisher update
     end
     
