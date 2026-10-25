@@ -1,0 +1,5 @@
+# Dev tools for this repo (installed by `mise install`, run by `just bootstrap`).
+# Rust is pinned separately in build__tauri_app/src-tauri/rust-toolchain.toml (rustup).
+
+[tools]
+node = "26"

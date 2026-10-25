@@ -27,23 +27,20 @@ TAURI_BUILD_DIR := "./"
 install:
     cd {{TAURI_BUILD_DIR}} && npm install
 
-# Validate, minify, and prettify HTML
-validate:
-    bash {{TAURI_BUILD_DIR}}/script_prepare_static_html_for_tauri_app.sh
-
 # Start the Tauri app locally
-start: validate
+start:
     cd {{TAURI_BUILD_DIR}} && npm run tauri dev
 
 # Build the Tauri app for different platforms and architectures
-build-linux: validate
-    cd {{TAURI_BUILD_DIR}} && npm run tauri build --target linux
+# (Tauri builds for the host OS only: run build-windows on Windows, build-mac on macOS.)
+build-linux:
+    cd {{TAURI_BUILD_DIR}} && npm run tauri build -- --bundles deb,appimage
 
-build-windows: validate
-    cd {{TAURI_BUILD_DIR}} && npm run tauri build --target win32
+build-windows:
+    cd {{TAURI_BUILD_DIR}} && npm run tauri build -- --target x86_64-pc-windows-msvc
 
-build-mac: validate
-    cd {{TAURI_BUILD_DIR}} && npm run tauri build --target macos
+build-mac:
+    cd {{TAURI_BUILD_DIR}} && npm run tauri build -- --target aarch64-apple-darwin
 
 # Clean the project
 clean:
@@ -51,6 +48,6 @@ clean:
     cd {{TAURI_BUILD_DIR}} && rm -rf tmp_html_processing
     cd {{TAURI_BUILD_DIR}} && rm -rf dist
 
-# Test the project
+# Test the project: lint the Rust side (there are no JavaScript tests)
 test: install
-    cd {{TAURI_BUILD_DIR}} && npm test
+    cd {{TAURI_BUILD_DIR}}/src-tauri && cargo clippy --all-targets -- -D warnings

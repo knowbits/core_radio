@@ -134,10 +134,10 @@
     */
 
     // EXAMPLE: Access a "Tauri command" defined in "main.rs"
-    //    https://tauri.app/v1/guides/getting-started/setup/html-css-js/#invoke-commands
+    //    https://v2.tauri.app/develop/calling-rust/#commands
 
     // 1. Access the pre-bundled global "Tauri API" functions ("withGlobalTauri": true)
-    const { invoke } = window.__TAURI__.tauri
+    const { invoke } = window.__TAURI__.core
 
     // 2. Call our "Tauri Command"
     //    => Will replace the "h1" by "Hello, World!"!

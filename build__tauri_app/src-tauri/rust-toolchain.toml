@@ -1,0 +1,5 @@
+# Rust toolchain for the Tauri app; rustup installs it on first use (see scripts/bootstrap-linux-dev-env.sh).
+[toolchain]
+channel = "stable"
+components = ["clippy", "rustfmt"]
+profile = "minimal"

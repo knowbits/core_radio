@@ -130,7 +130,7 @@
 
     // Access the global "Tauri API" Javascript that has been bundled into this .html file:
     //
-    const { appWindow } = window.__TAURI__.window;
+    const appWindow = window.__TAURI__.window.getCurrentWindow();
 
     document
       .getElementById('titlebar-minimize')

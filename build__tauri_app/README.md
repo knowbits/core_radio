@@ -6,6 +6,16 @@
 
 ##
 
+## Known security alert: glib (dismissed, recheck on Tauri updates)
+
+Dependabot alert GHSA-wrw7-89jp-8q8g (`glib` `VariantStrIter` unsoundness, fixed in glib 0.20) is
+dismissed as "tolerable risk": Tauri 2's Linux stack pins gtk-rs 0.18, so `Cargo.lock` holds glib
+0.18.5 and no update can move it; this app never uses `glib::VariantStrIter`.
+
+**Recheck** whenever Tauri is updated: `cd src-tauri && cargo tree -i glib`. Once it shows glib
+>= 0.20, the alert no longer applies; if a later update still holds glib < 0.20 and the app starts
+using glib APIs directly, reopen the alert on GitHub (Security → Dependabot → closed alerts).
+
 ----
 
 ## MISC: TAURI RESOURCES
