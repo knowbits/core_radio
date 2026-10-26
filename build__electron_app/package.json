@@ -2,7 +2,7 @@
   "name": "core-radio",
   "version": "0.1.11",
   "description": "Core Radio - A simple radio for listening to your favourite audio streams",
-  "author": "Erlend Bleken <bleken@gmail.com>",
+  "author": "Erlend Bleken <1571664+knowbits@users.noreply.github.com>",
   "license": "MIT",
   "main": "main.js",
   "build": {
