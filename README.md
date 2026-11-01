@@ -4,6 +4,8 @@ A static .html file for playing audio streams from selected radio stations.
 
 Easily edit the list of stations by modifying the "streams" JSON in the "script" section of the HTML page.
 
+The web-app / installable PWA version, with its desktop-shortcut docs, lives in the [RadioNerds](https://github.com/knowbits/RadioNerds) repo (`../RadioNerds`).
+
 ## Build and run the "Electron app" from source
 
 * Clone the repository: `$ git clone https://github.com/knowbits/core_radio.git`
@@ -14,7 +16,7 @@ Easily edit the list of stations by modifying the "streams" JSON in the "script"
 
 ## Third party libraries
 
-* Javascript framework: [Alpine.js](./docs_DEV/Alpine.js.md)
+* Javascript framework: Alpine.js
 
 * Web components: [Shoelace](https://shoelace.style)
   * Uses ["Lit"](https://lit.dev) to creating web components (custom HTML elements).
@@ -32,8 +34,6 @@ Here is how the "Core Radio" app looks installed on Windows 11:
 ## Curated list of radio stations (streaming URLs)
 
 * See [Curated list of radio stations](./docs/curated_list_of_radio_stations.md)
-
-* See also [Related Radio Player prjects on GitHub](./docs/related_radio_player_projects.md)
 
 ## HOW TO: Play the radio streams on your local machine
 
@@ -61,16 +61,6 @@ Here is how the "Core Radio" app looks installed on Windows 11:
     ```
 
 3. Save the HTML page.
-
-## HOW TO: Create a desktop shurtcut to a minimal "web app"
-
-Create a shortcut on your desktop to open the html page as a minimal "web app".
-
-The static HTML file will open as a "minmal" web app on your local machine.
-
-* Windows: [How to create a "web app" shortcut on your desktop](docs/how_to__create_a_desktop_shortcut_on_Windows.md)
-
-* Mac: [How to create a "web app" shortcut on your desktop](docs/how_to__create_a_desktop_shortcut_on_Mac.md)
 
 ## HOW TO: Build an "Electron app" from the HTML page
 

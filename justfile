@@ -29,4 +29,29 @@ clean:
 # as "empty recipe -- nothing tested" -- fill it in once the repo has a fast test gate.
 [doc("Fast tests after a dependency update -- run by COMMON/scripts/deps-update-all-repos.sh")]
 test-after-deps-update *CHANGED:
-    @: # no fast tests yet
+    #!/usr/bin/env bash
+    # Per changed part: Tauri (cargo:..., npm:build__tauri_app) = locked build + 10 s headless
+    # start; Electron (npm:build__electron_app) = headless start, station buttons rendered
+    # (scripts/smoke-electron.mjs; add --play by hand to also prove a stream plays, needs network).
+    set -euo pipefail
+    changed="{{CHANGED}}"
+    [ -n "$changed" ] || changed="cargo:build__tauri_app/src-tauri npm:build__electron_app"
+    x=(); [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ] || x=(xvfb-run -a)
+    tauri=0 electron=0
+    for part in $changed; do
+        case "$part" in
+        cargo:* | npm:build__tauri_app) tauri=1 ;;
+        npm:build__electron_app) electron=1 ;;
+        esac
+    done
+    if ((tauri)); then
+        echo "== Tauri: cargo build --locked + headless start"
+        (cd build__tauri_app/src-tauri && cargo build --locked --quiet)
+        rc=0; timeout 10 "${x[@]}" build__tauri_app/src-tauri/target/debug/core-radio >/dev/null 2>&1 || rc=$?
+        [ "$rc" -eq 124 ] || { echo "FAIL: Tauri app exited ($rc) before 10 s"; exit 1; }
+        echo "ok: Tauri app still running after 10 s"
+    fi
+    if ((electron)); then
+        echo "== Electron: headless start"
+        "${x[@]}" node scripts/smoke-electron.mjs 2>/dev/null
+    fi

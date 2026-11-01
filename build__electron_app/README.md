@@ -239,9 +239,10 @@ __Misc. options:__
 
 ### To build for a specific Linux platform
 
+Electron 45+ builds 64-bit only (x64, arm64): 32-bit Linux (ia32, armv7l) and Windows ia32 are no longer supported.
+
+
 * Build an executable file for Linux 64-bit: `npx electron-packager . --platform=linux --arch=x64`
-* Build an executable file for Linux 32-bit: `npx electron-packager . --platform=linux --arch=ia32`
-* Build an executable file for Linux ARM: `npx electron-packager . --platform=linux --arch=armv7l`
 * Build an executable file for Linux ARM64: `npx electron-packager . --platform=linux --arch=arm64`
 * Build an executable file for Linux all architectures: `npx electron-packager . --platform=linux --all`
 
@@ -250,4 +251,4 @@ __Misc. options:__
 * TODO: NOTE: The following commands need to be verified:
 
 * Build an executable file for all platforms: `npx electron-packager . --all`
-* Build an executable file for all platforms and all architectures: `npx electron-packager . --all --arch=all`
+* Build an executable file for all platforms and all architectures: `npx electron-packager . --all --arch=x64,arm64`

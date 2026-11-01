@@ -36,23 +36,15 @@ start: validate
     cd {{ELECTRON_BUILD_DIR}} && npm start
 
 # Build the Electron app for different platforms and architectures
+# (64-bit only: Electron 45 dropped 32-bit Windows ia32 and Linux armv7l)
 build-linux-Intel-x64: validate
     cd {{ELECTRON_BUILD_DIR}} && npm run dist-linux-Intel-x64
-
-build-linux-Intel-ia32: validate
-    cd {{ELECTRON_BUILD_DIR}} && npm run dist-linux-Intel-ia32
-
-build-linux-ARM: validate
-    cd {{ELECTRON_BUILD_DIR}} && npm run dist-linux-ARM
 
 build-linux-ARM64: validate
     cd {{ELECTRON_BUILD_DIR}} && npm run dist-linux-ARM64
 
 build-windows-x64: validate
     cd {{ELECTRON_BUILD_DIR}} && npm run dist-windows-x64
-
-build-windows-ia32: validate
-    cd {{ELECTRON_BUILD_DIR}} && npm run dist-windows-ia32
 
 build-mac-on-Intel: validate
     cd {{ELECTRON_BUILD_DIR}} && npm run dist-mac-on-Intel
